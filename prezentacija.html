@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ordinacija Raović — Web dizajn prezentacija</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple:     #50256b;
+      --lila:       #8e568f;
+      --pink:       #bf1f6f;
+      --light-pink: #f7deef;
+      --ink:        #1a0e1f;
+      --muted:      #6b4f68;
+      --soft:       #fdf7fb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      background: #cfc6d8;
+      color: var(--ink);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @page { size: A4 landscape; margin: 0; }
+
+    .slide {
+      width: 297mm;
+      height: 210mm;
+      overflow: hidden;
+      position: relative;
+      page-break-after: always;
+      break-after: page;
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+    }
+
+    @media screen {
+      .slide {
+        margin: 28px auto;
+        box-shadow: 0 8px 60px rgba(0,0,0,0.3);
+      }
+    }
+
+    /* ── Utility ── */
+    .eyebrow {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .slide-num {
+      position: absolute;
+      bottom: 14px;
+      right: 20px;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      opacity: 0.22;
+    }
+
+
+    /* ══════════════════════════════════════════════
+       SLIDE 1 — COVER
+    ══════════════════════════════════════════════ */
+    .s-cover {
+      background: linear-gradient(135deg, var(--ink) 0%, var(--purple) 55%, #612870 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 50px 62px;
+    }
+
+    .cover-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .cover-deco--a { width: 400px; height: 400px; top: -150px; right: -120px; background: var(--pink); opacity: 0.07; }
+    .cover-deco--b { width: 200px; height: 200px; bottom: -50px; left: 46%; background: var(--lila); opacity: 0.09; }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-tag {
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(247,222,239,0.35);
+      padding: 7px 16px;
+      border: 1px solid rgba(247,222,239,0.12);
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    .cover-main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-eyebrow {
+      color: rgba(247,222,239,0.4);
+      margin-bottom: 16px;
+    }
+
+    .cover-title {
+      font-size: 66px;
+      font-weight: 900;
+      color: white;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .cover-title span {
+      color: var(--light-pink);
+      font-weight: 300;
+    }
+
+    .cover-sub {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: rgba(247,222,239,0.5);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .cover-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-info {
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.28);
+      line-height: 2;
+    }
+
+    .cover-pills {
+      display: flex;
+      gap: 8px;
+    }
+
+    .cover-pill {
+      padding: 6px 14px;
+      background: rgba(247,222,239,0.05);
+      border: 1px solid rgba(247,222,239,0.1);
+      border-radius: 3px;
+      font-size: 8.5px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: rgba(247,222,239,0.38);
+    }
+
+
+    /* ══════════════════════════════════════════════
+       SLIDE 2 — BREND IDENTITET
+    ══════════════════════════════════════════════ */
+    .s-brand {
+      display: flex;
+    }
+
+    .brand-left {
+      width: 50%;
+      background: var(--purple);
+      padding: 48px 52px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-left-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .brand-left-deco--a { width: 240px; height: 240px; bottom: -70px; left: -65px; background: var(--lila); opacity: 0.25; }
+    .brand-left-deco--b { width: 120px; height: 120px; top: -30px; right: 40px; background: var(--pink); opacity: 0.14; }
+
+    .brand-right {
+      flex: 1;
+      background: var(--soft);
+      padding: 48px 46px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-eye {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-eye::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 28px;
+    }
+
+    /* Swatches */
+    .swatches {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .swatch {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .swatch-box {
+      width: 60px;
+      height: 42px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .swatch-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 3px;
+    }
+
+    .swatch-hex {
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.42);
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+    }
+
+    /* Font cards */
+    .font-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .font-card {
+      background: white;
+      border-radius: 4px;
+      padding: 16px 20px;
+      border-left: 3px solid var(--purple);
+      box-shadow: 0 1px 6px rgba(80,37,107,0.08);
+    }
+
+    .font-card--pink { border-left-color: var(--pink); }
+
+    .font-card-sample {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .font-card-meta { font-size: 10px; font-weight: 400; color: var(--muted); margin-bottom: 3px; }
+    .font-card-use  { font-size: 10px; font-weight: 700; color: var(--pink); }
+
+    .usage-row {
+      background: white;
+      border-radius: 4px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 6px rgba(80,37,107,0.08);
+    }
+
+    .usage-label {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      padding: 5px 12px;
+      border-radius: 3px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .chip--purple { background: var(--purple); color: white; }
+    .chip--pink   { background: var(--pink);   color: white; }
+    .chip--lila   { background: var(--lila);   color: white; }
+    .chip--lp     { background: var(--light-pink); color: var(--purple); }
+
+
+    /* ══════════════════════════════════════════════
+       SLIDE 3 — STRUKTURA SAJTA
+    ══════════════════════════════════════════════ */
+    .s-struktura {
+      background: linear-gradient(140deg, var(--ink) 0%, var(--purple) 100%);
+      padding: 42px 50px 38px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .str-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .str-deco--a { width: 260px; height: 260px; top: -90px; right: -60px; background: var(--pink); opacity: 0.06; }
+    .str-deco--b { width: 160px; height: 160px; bottom: -50px; left: -35px; background: var(--lila); opacity: 0.1; }
+
+    .str-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .str-title {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+
+    .str-note {
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(247,222,239,0.32);
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pg {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .pg--p { border-top: 2px solid var(--pink); }
+    .pg--l { border-top: 2px solid var(--lila); }
+    .pg--w { border-top: 2px solid rgba(255,255,255,0.3); }
+
+    .pg-num {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--pink);
+      margin-bottom: 7px;
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .pg-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.01em;
+      margin-bottom: 9px;
+      line-height: 1.2;
+    }
+
+    .pg-items {
+      list-style: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pg-item {
+      font-size: 8.5px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.6);
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      line-height: 1.4;
+    }
+    .pg-item::before { content: '—'; color: rgba(191,31,111,0.7); flex-shrink: 0; font-size: 8px; }
+
+    .pg-url {
+      font-size: 7.5px;
+      color: rgba(142,86,143,0.55);
+      margin-top: 9px;
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+    }
+
+
+    /* ══════════════════════════════════════════════
+       SCREENSHOT SLIDES (4–9)
+       Header ~52mm, image fills rest (~158mm)
+       Image aspect is 1.93:1 → at 297mm wide, h = 154mm
+    ══════════════════════════════════════════════ */
+    .s-screen {
+      display: flex;
+      flex-direction: column;
+      background: var(--ink);
+    }
+
+    /* Header strip */
+    .screen-header {
+      flex-shrink: 0;
+      height: 53mm;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .screen-hd-left {
+      padding: 22px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .screen-hd-right {
+      width: 310px;
+      padding: 22px 36px 22px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    .screen-page-eye {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,222,239,0.38);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .screen-page-eye::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: currentColor;
+    }
+
+    .screen-page-title {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: white;
+      line-height: 1.0;
+    }
+
+    .screen-page-url {
+      font-size: 9px;
+      font-weight: 400;
+      color: rgba(142,86,143,0.7);
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+      margin-top: 5px;
+    }
+
+    .screen-feat {
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    .screen-feat-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--pink);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .screen-feat-text {
+      font-size: 10.5px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.5);
+      line-height: 1.45;
+    }
+    .screen-feat-text strong {
+      font-weight: 700;
+      color: rgba(247,222,239,0.75);
+    }
+
+    /* Image area */
+    .screen-img-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen-img-wrap img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    /* Browser address bar overlay */
+    .screen-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 22px;
+      background: rgba(26,14,31,0.82);
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      gap: 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .screen-bar-dots { display: flex; gap: 5px; }
+    .screen-bar-dot  { width: 8px; height: 8px; border-radius: 50%; }
+    .screen-bar-dot--r { background: #ff5f57; }
+    .screen-bar-dot--y { background: #febc2e; }
+    .screen-bar-dot--g { background: #28c840; }
+
+    .screen-bar-url {
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      padding: 2px 10px;
+      font-size: 8.5px;
+      color: rgba(247,222,239,0.45);
+      font-family: 'Roboto Mono', 'Courier New', monospace;
+    }
+
+
+    /* ══════════════════════════════════════════════
+       SLIDE 10 — SLEDEĆI KORACI
+    ══════════════════════════════════════════════ */
+    .s-next {
+      background: linear-gradient(130deg, var(--ink) 0%, var(--purple) 60%, #612870 100%);
+      padding: 50px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .next-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .next-deco--a { width: 320px; height: 320px; top: -120px; right: 40px; background: var(--pink); opacity: 0.06; }
+    .next-deco--b { width: 180px; height: 180px; bottom: -55px; left: -35px; background: var(--lila); opacity: 0.08; }
+
+    .next-head { position: relative; z-index: 1; }
+    .next-eyebrow { color: rgba(247,222,239,0.38); margin-bottom: 12px; }
+
+    .next-title {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+
+    .next-title span { color: var(--light-pink); font-weight: 300; }
+
+    .next-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+      align-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .next-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 4px;
+      padding: 18px 22px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .next-card-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(191,31,111,0.2);
+      border: 1px solid rgba(191,31,111,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--light-pink);
+      flex-shrink: 0;
+    }
+
+    .next-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .next-card-desc {
+      font-size: 10.5px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.48);
+      line-height: 1.55;
+    }
+
+    .next-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+      z-index: 1;
+    }
+
+    .next-contact {
+      font-size: 10.5px;
+      font-weight: 400;
+      color: rgba(247,222,239,0.32);
+      line-height: 2;
+    }
+
+    .next-cta {
+      padding: 11px 24px;
+      background: var(--pink);
+      color: white;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 01 — COVER
+══════════════════════════════════════════════ -->
+<section class="slide s-cover">
+  <div class="cover-deco cover-deco--a"></div>
+  <div class="cover-deco cover-deco--b"></div>
+
+  <div class="cover-top">
+    <div class="cover-logo">R</div>
+    <div class="cover-tag">Dizajn prezentacija · 2026</div>
+  </div>
+
+  <div class="cover-main">
+    <div class="eyebrow cover-eyebrow">Web sajt · Brend · Dizajn</div>
+    <div class="cover-title">Ordinacija<br /><span>Raović.</span></div>
+    <p class="cover-sub">
+      Kompletan web sajt za ginekološku ordinaciju — moderan dizajn,
+      online zakazivanje i sve potrebne informacije o ordinaciji.
+    </p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-info">
+      raovic.rs<br />
+      Beograd, Vračar
+    </div>
+    <div class="cover-pills">
+      <span class="cover-pill">React 18 + Vite</span>
+      <span class="cover-pill">7 stranica</span>
+      <span class="cover-pill">Online zakazivanje</span>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">01 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 02 — BREND IDENTITET
+══════════════════════════════════════════════ -->
+<section class="slide s-brand">
+  <div class="brand-left">
+    <div class="brand-left-deco brand-left-deco--a"></div>
+    <div class="brand-left-deco brand-left-deco--b"></div>
+
+    <div class="section-eye" style="color:rgba(247,222,239,0.4);">Brend identitet</div>
+    <div class="section-title" style="color:white;">Paleta<br />boja.</div>
+
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-box" style="background:#50256b;"></div>
+        <div><div class="swatch-name">Purple</div><div class="swatch-hex">#50256B</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#8e568f;"></div>
+        <div><div class="swatch-name">Lila</div><div class="swatch-hex">#8E568F</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#bf1f6f;"></div>
+        <div><div class="swatch-name">Pink</div><div class="swatch-hex">#BF1F6F</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-box" style="background:#f7deef; outline:1px solid rgba(255,255,255,0.1);"></div>
+        <div><div class="swatch-name">Light Pink</div><div class="swatch-hex">#F7DEEF</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brand-right">
+    <div class="section-eye" style="color:var(--muted);">Tipografija &amp; primena</div>
+    <div class="section-title" style="color:var(--purple);">Fontovi &amp;<br />stil.</div>
+
+    <div class="font-cards">
+      <div class="font-card">
+        <div class="font-card-sample" style="font-weight:900; font-size:22px; letter-spacing:-0.02em;">Roboto</div>
+        <div class="font-card-meta">Sans-serif · weight 300 / 400 / 500 / 700 / 900</div>
+        <div class="font-card-use">Svi tekstovi — naslovi, body, navigacija, dugmad</div>
+      </div>
+      <div class="usage-row">
+        <div class="usage-label">Primena boja</div>
+        <div class="chips">
+          <span class="chip chip--purple">Header &amp; nav</span>
+          <span class="chip chip--pink">CTA dugmad</span>
+          <span class="chip chip--lila">Akcenti</span>
+          <span class="chip chip--lp">Pozadine</span>
+        </div>
+      </div>
+      <div style="background:white; border-radius:4px; padding:14px 18px; box-shadow:0 1px 6px rgba(80,37,107,0.08);">
+        <div class="usage-label">Veličine tipografije</div>
+        <div style="display:flex; flex-direction:column; gap:5px;">
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <span style="font-size:22px; font-weight:900; color:var(--purple); letter-spacing:-0.02em; line-height:1;">Aa</span>
+            <span style="font-size:9.5px; color:var(--muted);">Display · 36–64px · weight 900 · Naslovi stranica</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <span style="font-size:15px; font-weight:700; color:var(--purple); line-height:1;">Aa</span>
+            <span style="font-size:9.5px; color:var(--muted);">Heading · 18–28px · weight 700 · Sekcije</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:12px;">
+            <span style="font-size:11px; font-weight:400; color:var(--ink); line-height:1;">Aa</span>
+            <span style="font-size:9.5px; color:var(--muted);">Body · 14–16px · weight 400 · Opisi i sadržaj</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-num">02 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 03 — STRUKTURA SAJTA
+══════════════════════════════════════════════ -->
+<section class="slide s-struktura">
+  <div class="str-deco str-deco--a"></div>
+  <div class="str-deco str-deco--b"></div>
+
+  <div class="str-header">
+    <div>
+      <div class="eyebrow" style="color:rgba(247,222,239,0.35); margin-bottom:10px;">Arhitektura sajta</div>
+      <div class="str-title">7 stranica — kompletan sajt.</div>
+    </div>
+    <div class="str-note">
+      Svaka stranica vodi pacijentkinju<br />
+      prema zakazivanju pregleda.
+    </div>
+  </div>
+
+  <div class="pages-grid">
+    <div class="pg pg--p">
+      <div class="pg-num">01</div>
+      <div class="pg-name">Početna</div>
+      <ul class="pg-items">
+        <li class="pg-item">Hero slideshow</li>
+        <li class="pg-item">Stats traka</li>
+        <li class="pg-item">6 usluga (grid)</li>
+        <li class="pg-item">FAQ accordion</li>
+        <li class="pg-item">CTA sekcija</li>
+      </ul>
+      <div class="pg-url">raovic.rs/</div>
+    </div>
+
+    <div class="pg pg--l">
+      <div class="pg-num">02</div>
+      <div class="pg-name">O nama</div>
+      <ul class="pg-items">
+        <li class="pg-item">Istorijat</li>
+        <li class="pg-item">20+ god. iskustva</li>
+        <li class="pg-item">Vrednosti</li>
+        <li class="pg-item">Asim. layout</li>
+      </ul>
+      <div class="pg-url">raovic.rs/o-nama</div>
+    </div>
+
+    <div class="pg pg--p">
+      <div class="pg-num">03</div>
+      <div class="pg-name">Naš tim</div>
+      <ul class="pg-items">
+        <li class="pg-item">2 osnivača</li>
+        <li class="pg-item">7 specijalista</li>
+        <li class="pg-item">Med. sestre</li>
+        <li class="pg-item">Portrait kartice</li>
+      </ul>
+      <div class="pg-url">raovic.rs/tim</div>
+    </div>
+
+    <div class="pg pg--l">
+      <div class="pg-num">04</div>
+      <div class="pg-name">Usluge</div>
+      <ul class="pg-items">
+        <li class="pg-item">6 oblasti</li>
+        <li class="pg-item">Opisi + cene</li>
+        <li class="pg-item">Zakazivanje</li>
+        <li class="pg-item">Grid kartice</li>
+      </ul>
+      <div class="pg-url">raovic.rs/usluge</div>
+    </div>
+
+    <div class="pg pg--p">
+      <div class="pg-num">05</div>
+      <div class="pg-name">Kontakt</div>
+      <ul class="pg-items">
+        <li class="pg-item">Kontakt forma</li>
+        <li class="pg-item">Google Maps</li>
+        <li class="pg-item">Radno vreme</li>
+        <li class="pg-item">Adresa &amp; tel.</li>
+      </ul>
+      <div class="pg-url">raovic.rs/kontakt</div>
+    </div>
+
+    <div class="pg pg--l">
+      <div class="pg-num">06</div>
+      <div class="pg-name">Cenovnik</div>
+      <ul class="pg-items">
+        <li class="pg-item">Sve cene</li>
+        <li class="pg-item">Kategorisano</li>
+        <li class="pg-item">CTA zakazivanje</li>
+      </ul>
+      <div class="pg-url">raovic.rs/cenovnik</div>
+    </div>
+
+    <div class="pg pg--w">
+      <div class="pg-num">07</div>
+      <div class="pg-name">Blog</div>
+      <ul class="pg-items">
+        <li class="pg-item">Zdravstveni saveti</li>
+        <li class="pg-item">Stručni tekstovi</li>
+        <li class="pg-item">SEO sadržaj</li>
+        <li class="pg-item" style="color:rgba(191,31,111,0.7); font-style:italic;">U pripremi</li>
+      </ul>
+      <div class="pg-url">raovic.rs/blog</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">03 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 04 — POČETNA STRANICA
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, var(--purple) 0%, #3a1450 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye">Stranica 01</div>
+      <div class="screen-page-title">Početna stranica</div>
+      <div class="screen-page-url">raovic.rs/</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Hero sekcija</strong> — animirani slideshow, gradient overlay, CTA dugmad i trust badges</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>6 usluga</strong> — grid kartice sa ikonama, opisima i direktnim zakazivanjem</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--lila);"></div>
+        <div class="screen-feat-text"><strong>FAQ accordion</strong> — najčešća pitanja pacijenata i statistike ordinacije</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-pocetna.png" alt="Početna stranica" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs/</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">04 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 05 — O NAMA
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, #3a1450 0%, var(--purple) 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye">Stranica 02</div>
+      <div class="screen-page-title">O nama</div>
+      <div class="screen-page-url">raovic.rs/o-nama</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Istorijat</strong> — priča ordinacije, osnivanje i razvoj kroz decenije</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>20+ godina</strong> iskustva, vrednosti ordinacije i filozofija pristupa pacijentu</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--lila);"></div>
+        <div class="screen-feat-text"><strong>Asimetričan layout</strong> — fotografija i tekst u naizmeničnim sekcijama</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-onama.png" alt="O nama" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs/o-nama</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">05 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 06 — NAŠ TIM
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, var(--purple) 0%, var(--lila) 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye">Stranica 03</div>
+      <div class="screen-page-title">Naš tim</div>
+      <div class="screen-page-url">raovic.rs/tim</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>2 osnivača</strong> + 7 specijalista — svaki lekar sa kratkom biografijom i specijalizacijom</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Medicinske sestre</strong> i stručni saradnici — kompletna slika tima</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--lila);"></div>
+        <div class="screen-feat-text"><strong>Portrait kartice</strong> — gradient efekti, hover animacije</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-tim.png" alt="Naš tim" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs/tim</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">06 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 07 — USLUGE
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, #2a0e3f 0%, var(--purple) 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye">Stranica 04</div>
+      <div class="screen-page-title">Usluge</div>
+      <div class="screen-page-url">raovic.rs/usluge</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>6 oblasti</strong> — ginekologija, ultrazvuk, kolposkopija i više</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Cene i opisi</strong> — svaka usluga sa trajanjem i cenom pregleda</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--lila);"></div>
+        <div class="screen-feat-text"><strong>Direktno zakazivanje</strong> — dugme otvara booking wizard za tu uslugu</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-usluge.png" alt="Usluge" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs/usluge</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">07 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 08 — ONLINE ZAKAZIVANJE
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, #3a0e2a 0%, var(--pink) 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye">Ključna funkcionalnost</div>
+      <div class="screen-page-title">Online zakazivanje</div>
+      <div class="screen-page-url">Booking modal — 3 koraka</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Korak 1</strong> — izbor usluge sa prikazom cene i trajanja pregleda</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Korak 2</strong> — izbor slobodnog termina iz kalendara</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--light-pink);"></div>
+        <div class="screen-feat-text"><strong>Korak 3</strong> — pregled i potvrda rezervacije. Sve bez telefona.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-zakazivanje.png" alt="Online zakazivanje" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs — Zakaži pregled</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">08 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 09 — BLOG
+══════════════════════════════════════════════ -->
+<section class="slide s-screen">
+  <div class="screen-header" style="background:linear-gradient(90deg, var(--ink) 0%, #3a1450 100%);">
+    <div class="screen-hd-left">
+      <div class="screen-page-eye" style="color:rgba(191,31,111,0.7);">Stranica 07 · U pripremi</div>
+      <div class="screen-page-title">Blog</div>
+      <div class="screen-page-url">raovic.rs/blog</div>
+    </div>
+    <div class="screen-hd-right">
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Zdravstveni saveti</strong> — stručni tekstovi doktora ordinacije</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot"></div>
+        <div class="screen-feat-text"><strong>Kategorisani sadržaj</strong> — prevencija, dijagnostika, trudnoća, zdravlje žene</div>
+      </div>
+      <div class="screen-feat">
+        <div class="screen-feat-dot" style="background:var(--lila);"></div>
+        <div class="screen-feat-text"><strong>SEO vrednost</strong> — dugoročni organski saobraćaj putem kvalitetnog sadržaja</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-img-wrap">
+    <img src="ss-blog.png" alt="Blog" />
+    <div class="screen-bar">
+      <div class="screen-bar-dots">
+        <div class="screen-bar-dot screen-bar-dot--r"></div>
+        <div class="screen-bar-dot screen-bar-dot--y"></div>
+        <div class="screen-bar-dot screen-bar-dot--g"></div>
+      </div>
+      <div class="screen-bar-url">raovic.rs/blog</div>
+    </div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">09 / 10</div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 10 — SLEDEĆI KORACI
+══════════════════════════════════════════════ -->
+<section class="slide s-next">
+  <div class="next-deco next-deco--a"></div>
+  <div class="next-deco next-deco--b"></div>
+
+  <div class="next-head">
+    <div class="eyebrow next-eyebrow">Roadmap</div>
+    <div class="next-title">Sledeći koraci &amp; <span>šta ide dalje.</span></div>
+  </div>
+
+  <div class="next-grid">
+    <div class="next-card">
+      <div class="next-card-num">01</div>
+      <div>
+        <div class="next-card-title">Domena &amp; hosting</div>
+        <div class="next-card-desc">Postavljanje na raovic.rs, SSL sertifikat, CDN, produkcioni build</div>
+      </div>
+    </div>
+
+    <div class="next-card">
+      <div class="next-card-num">02</div>
+      <div>
+        <div class="next-card-title">Profesionalne fotografije</div>
+        <div class="next-card-desc">Slike doktora, ordinacije i prostora — zamena placeholder fotografija</div>
+      </div>
+    </div>
+
+    <div class="next-card">
+      <div class="next-card-num">03</div>
+      <div>
+        <div class="next-card-title">Backend zakazivanja</div>
+        <div class="next-card-desc">Stvarna integracija termina, email notifikacije i potvrde rezervacija</div>
+      </div>
+    </div>
+
+    <div class="next-card">
+      <div class="next-card-num">04</div>
+      <div>
+        <div class="next-card-title">SEO &amp; analytics</div>
+        <div class="next-card-desc">Google Analytics 4, lokalni SEO, meta tagovi, Google Business profil</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-footer">
+    <div class="next-contact">
+      raovic.rs &nbsp;·&nbsp; ordinacijaraovic@gmail.com<br />
+      011 244 77 63 &nbsp;·&nbsp; Golsvordijeva 6, Vračar, Beograd
+    </div>
+    <div class="next-cta">Zakaži pregled →</div>
+  </div>
+
+  <div class="slide-num" style="color:rgba(247,222,239,0.2);">10 / 10</div>
+</section>
+
+</body>
+</html>
