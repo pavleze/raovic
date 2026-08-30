@@ -15,7 +15,7 @@ const bookableArticleTitles = new Set(
 /* ── Per-category visual config ────────────────────────────── */
 const catConfig = {
   ginekologija: {
-    image: "/usluga-ginekologija.jpg",
+    image: "/images/usluge/ginekologija.jpg",
     gradient: "linear-gradient(140deg, #50256b 0%, #7a3a96 100%)",
     desc: "Grana medicine koja se bavi proučavanjem ženskog reproduktivnog sistema, njegovim bolestima, lečenjem i prevencijom.",
     icon: (
@@ -27,7 +27,7 @@ const catConfig = {
     ),
   },
   intervencije: {
-    image: "/usluga-intervencije.webp",
+    image: "/images/usluge/intervencije.webp",
     gradient: "linear-gradient(140deg, #bf1f6f 0%, #e0478e 100%)",
     desc: "Manji hirurški poduhvati koje je obično moguće uraditi u ambulantnim uslovima.",
     icon: (
@@ -39,7 +39,7 @@ const catConfig = {
     ),
   },
   trudnoca: {
-    image: "/usluga-trudnoca.jpg",
+    image: "/images/usluge/trudnoca.jpg",
     gradient: "linear-gradient(140deg, #8e568f 0%, #b07ab1 100%)",
     desc: "Praćenje i kontrola trudnoće - briga kako o trudnici tako i o fetusu, kroz sve faze gestacije.",
     icon: (
@@ -51,7 +51,7 @@ const catConfig = {
     ),
   },
   endokrinologija: {
-    image: "/vodic-endokrinologija.jpg",
+    image: "/images/vodic/endokrinologija.jpg",
     gradient: "linear-gradient(140deg, #3a1050 0%, #7a3a96 100%)",
     desc: "Poremećaji u radu žlezda sa unutrašnjim lučenjem i oboljenja koja nastaju kao njihova posledica.",
     icon: (

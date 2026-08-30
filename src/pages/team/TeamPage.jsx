@@ -1,11 +1,8 @@
 import { PageHeader } from "../../shared/ui/PageHeader";
 import { TeamCard } from "../../shared/ui/TeamCard";
-import { useBooking } from "../../app/context/BookingContext";
 import { founders, associates, staff } from "../../shared/data/teamData";
 
 export function TeamPage() {
-  const { openBooking } = useBooking();
-
   return (
     <div className="inner-page">
       <PageHeader
@@ -63,16 +60,6 @@ export function TeamPage() {
           </div>
 
         </section>
-
-        <div className="cta-band">
-          <div className="cta-band__text">
-            <p className="eyebrow">Zakazivanje</p>
-            <h2>Zakažite pregled kod naših specijalista.</h2>
-          </div>
-          <div className="cta-band__action">
-            <button className="button button--light" onClick={openBooking}>Zakažite pregled</button>
-          </div>
-        </div>
 
       </div>
     </div>

@@ -1,6 +1,6 @@
-export function PageHeader({ eyebrow, title, lead }) {
+export function PageHeader({ eyebrow, title, lead, className = "" }) {
   return (
-    <div className="page-header">
+    <div className={`page-header ${className}`}>
       <div className="site-shell page-header__inner">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h1>{title}</h1>

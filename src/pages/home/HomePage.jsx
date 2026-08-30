@@ -1,30 +1,36 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useBooking } from "../../app/context/BookingContext";
+import { ImageCarousel } from "../../shared/ui/ImageCarousel";
+import { TeamCard } from "../../shared/ui/TeamCard";
+import { ordinacijaGallery } from "../../shared/data/galleryData";
+import { founders, associates } from "../../shared/data/teamData";
+
+const homeTeam = [...founders, ...associates];
 
 const services = [
   {
     title: "Ginekologija",
     text: "Konsultativni pregledi, ultrazvuk, Papa test, pregled dojki, kontracepcija i bakteriološke analize.",
-    image: "/usluga-ginekologija.jpg",
+    image: "/images/usluge/ginekologija.jpg",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="5"/><line x1="12" y1="13" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="18"/></svg>,
   },
   {
     title: "Trudnoća",
     text: "Praćenje trudnoće kroz redovne kontrole, ultrazvučne preglede i Kolor Dopler u svakom trimestru.",
-    image: "/usluga-trudnoca.jpg",
+    image: "/images/usluge/trudnoca.jpg",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>,
   },
   {
     title: "Intervencije",
     text: "Ambulantne procedure, Papa test, kolposkopija i dijagnostičko-terapijske intervencije.",
-    image: "/usluga-intervencije.webp",
+    image: "/images/usluge/intervencije.webp",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>,
   },
   {
     title: "Konsultativni pregledi",
     text: "Specijalistički konsultativni pregledi - endokrinologija, hematologija, radiologija i drugi.",
-    image: "/usluga-konsultativni.webp",
+    image: "/images/usluge/konsultativni.webp",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>,
   },
 ];
@@ -110,6 +116,16 @@ const testimonials = [
 
 export function HomePage() {
   const { openBooking } = useBooking();
+  const { state } = useLocation();
+  const teamRailRef = useRef(null);
+
+  const slideTeam = (dir) => {
+    const rail = teamRailRef.current;
+    if (!rail) return;
+    // Pomeraj za ceo vidljivi set kartica, da nijedna ne ostane presecena.
+    const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
+    rail.scrollBy({ left: dir * (rail.clientWidth + gap), behavior: "smooth" });
+  };
   const [openFaq, setOpenFaq] = useState(null);
   const [activeT, setActiveT] = useState(0);
   const viewRef = useRef(null);
@@ -129,6 +145,13 @@ export function HomePage() {
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
   }, []);
+
+  // Link iz navigacije moze da cilja sekciju na pocetnoj strani
+  useEffect(() => {
+    if (!state?.scrollTo) return;
+    const el = document.getElementById(state.scrollTo);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [state]);
 
   // Scroll-reveal: elementi sa klasom .reveal se pojave kad uđu u vidokrug
   useEffect(() => {
@@ -157,6 +180,7 @@ export function HomePage() {
       <section className="site-hero">
         <div className="site-hero__bg site-hero__bg--1" />
         <div className="site-hero__bg site-hero__bg--2" />
+        <div className="site-hero__bg site-hero__bg--3" />
         <div className="site-hero__overlay" />
         <div className="site-shell site-hero__inner">
           <div className="site-hero__content">
@@ -242,34 +266,10 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Services preview */}
-      <section className="home-section">
-        <div className="site-shell">
-          <div className="service-grid reveal">
-            {services.map((service) => (
-              <article className="service-card" key={service.title}>
-                <div className="service-card__body">
-                  <div className="service-card__icon" aria-hidden="true">{service.icon}</div>
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
-                  <button className="service-card__link" onClick={openBooking}>Zakažite pregled →</button>
-                </div>
-                <div className="service-card__media">
-                  {service.image && (
-                    <img src={service.image} alt={service.title} loading="lazy" />
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Why Raović */}
       <section className="why-section">
         <div className="site-shell">
           <div className="section-header reveal">
-            <p className="eyebrow eyebrow--dash">Sve što vam je potrebno na jednom mestu</p>
             <h2>Zašto izabrati ordinaciju Raović?</h2>
           </div>
 
@@ -338,21 +338,52 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Services preview */}
+      <section className="home-section services-preview">
+        <div className="site-shell">
+          <div className="section-header reveal">
+            <h2>Naše usluge</h2>
+          </div>
+
+          <div className="service-grid reveal">
+            {services.map((service) => (
+              <article className="service-card" key={service.title}>
+                <div className="service-card__body">
+                  <div className="service-card__icon" aria-hidden="true">{service.icon}</div>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <button className="service-card__link" onClick={openBooking}>Zakažite pregled →</button>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="service-grid__more reveal">
+            <Link className="text-link" to="/usluge">
+              Pogledaj sve usluge
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="13 6 19 12 13 18" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* O nama */}
-      <section className="home-section">
+      <section className="home-section about-preview" id="o-nama">
         <div className="site-shell">
           <div className="about-intro reveal">
-            <p className="eyebrow eyebrow--dash">O nama</p>
-            <h2>Dobrodošli u Ginekološku Ordinaciju Raović</h2>
-            <p className="about-intro__lead">
-              Specijalistička ginekološko-akušerska ordinacija Raović smeštena u samom
-              srcu Vračara, brine o Vašem zdravlju od 2004. godine.
-            </p>
+            <h2>O nama</h2>
           </div>
 
           <div className="about-section about-section--textleft reveal">
             <div className="about-content">
-              <h3 className="about-content__title">Ginekološka ordinacija Raović</h3>
+              <p>
+                Dobrodošli u Ginekološku Ordinaciju Raović. Specijalistička
+                ginekološko-akušerska ordinacija Raović smeštena je u samom srcu Vračara i
+                brine o Vašem zdravlju od 2004. godine.
+              </p>
               <p>
                 Naša ordinacija pruža potpunu ginekološku zaštitu i negu ženama u svim fazama
                 života - od puberteta do menopauzalnog perioda. Pored toga, uspešno se bavimo
@@ -370,18 +401,89 @@ export function HomePage() {
                 Sa Vama ćemo proći kroz sve lepe, neizvesne i teške trenutke, jer su naši pacijenti
                 stub ordinacije Raović.
               </p>
-              <blockquote className="about-quote">
+              <blockquote className="about-quote about-quote--plain">
                 <span className="about-quote__label">Cilj naše ginekološke ordinacije</span>
                 <p className="about-quote__text">
                   Pružiti potpunu ginekološku zaštitu i negu ženama u svim fazama života
                 </p>
                 <footer className="about-quote__author">Slađana i Zoran Raović</footer>
               </blockquote>
+
+              <div className="about-features about-features--duo">
+                <div className="about-feature">
+                  <span className="about-feature-dot" />
+                  <p>Više od 20 godina iskustva u ginekologiji i akušerstvu</p>
+                </div>
+                <div className="about-feature">
+                  <span className="about-feature-dot" />
+                  <p>9 lekara specijalista, uključujući profesora i docenta medicine</p>
+                </div>
+                <div className="about-feature">
+                  <span className="about-feature-dot" />
+                  <p>Saradnja sa nefrologom, kardiologom, hematologom i ostalim specijalistima</p>
+                </div>
+                <div className="about-feature">
+                  <span className="about-feature-dot" />
+                  <p>Golsvordijeva 6, Vračar - diskretan ambijent u srcu Beograda</p>
+                </div>
+              </div>
             </div>
             <div className="about-visual">
               <div className="about-card">
-                <img src="/o-nama.png" alt="Ginekološka ordinacija Raović" className="about-card__img" />
+                <ImageCarousel images={ordinacijaGallery} className="gallery--fill" />
               </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Tim lekara */}
+      <section className="home-section team-preview">
+        <div className="site-shell">
+          <div className="section-header reveal">
+            <h2>Naš tim lekara</h2>
+          </div>
+
+          <div className="at-group at-group--founders-preview reveal">
+            <div className="team-rail">
+              <button
+                type="button"
+                className="team-rail__nav team-rail__nav--prev"
+                onClick={() => slideTeam(-1)}
+                aria-label="Prethodni lekari"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              <div className="team-rail__track" ref={teamRailRef}>
+                {homeTeam.map((d) => (
+                  <TeamCard key={d.name} {...d} accent />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="team-rail__nav team-rail__nav--next"
+                onClick={() => slideTeam(1)}
+                aria-label="Sledeći lekari"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="at-section__more">
+              <Link className="text-link" to="/tim">
+                Pogledajte ceo tim
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="13 6 19 12 13 18" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
@@ -391,7 +493,6 @@ export function HomePage() {
       <section className="faq-section">
         <div className="site-shell">
           <div className="faq-section__header reveal">
-            <p className="eyebrow eyebrow--dash">Imate pitanja?</p>
             <h2>Najčešća pitanja</h2>
             <p className="faq-section__lead">
               Odgovorili smo na pitanja koja pacijentkinje najčešće postavljaju.

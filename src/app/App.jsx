@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { AppShell } from "./layout/AppShell";
+import { ScrollToTop } from "./layout/ScrollToTop";
 import { BookingProvider } from "./context/BookingContext";
 import { HomePage } from "../pages/home/HomePage";
 import { AboutPage } from "../pages/about/AboutPage";
@@ -12,6 +13,7 @@ export function App() {
   return (
     <HashRouter>
       <BookingProvider>
+      <ScrollToTop />
       <AppShell>
         <Routes>
           <Route path="/" element={<HomePage />} />

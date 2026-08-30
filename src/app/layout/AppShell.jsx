@@ -37,7 +37,7 @@ export function AppShell({ children }) {
       <header className="site-header">
         <div className="site-shell site-header__inner">
           <Link className="site-brand" to="/" aria-label="RAOVIC početna" onClick={closeMenu}>
-            <img className="site-brand__logo" src="/logo_bg.jpg" alt="RAOVIC" />
+            <img className="site-brand__logo" src="/images/brand/logo.jpg" alt="RAOVIC" />
           </Link>
           <nav className="site-nav" aria-label="Glavna navigacija">
             <NavLink to="/" end>Početna</NavLink>
@@ -50,7 +50,7 @@ export function AppShell({ children }) {
               }))}
             />
             <NavLink to="/tim">Tim</NavLink>
-            <NavLink to="/o-nama">O nama</NavLink>
+            <NavLink to="/" state={{ scrollTo: "o-nama" }}>O nama</NavLink>
             <NavDropdown
               to="/vodic"
               label="Vodič"
@@ -83,7 +83,7 @@ export function AppShell({ children }) {
             <NavLink to="/" end onClick={closeMenu}>Početna</NavLink>
             <NavLink to="/usluge" onClick={closeMenu}>Usluge</NavLink>
             <NavLink to="/tim" onClick={closeMenu}>Tim</NavLink>
-            <NavLink to="/o-nama" onClick={closeMenu}>O nama</NavLink>
+            <NavLink to="/" state={{ scrollTo: "o-nama" }} onClick={closeMenu}>O nama</NavLink>
             <NavLink to="/vodic" onClick={closeMenu}>Vodič</NavLink>
             <NavLink to="/kontakt" onClick={closeMenu}>Kontakt</NavLink>
           </nav>
@@ -124,7 +124,7 @@ export function AppShell({ children }) {
 
           <div className="site-footer__brand">
             <Link className="site-brand" to="/" aria-label="RAOVIC početna">
-              <img className="site-brand__logo site-footer__logo" src="/logo_bg.jpg" alt="RAOVIC" />
+              <img className="site-brand__logo site-footer__logo" src="/images/brand/logo.jpg" alt="RAOVIC" />
             </Link>
             <p>
               Kompletna ginekološka zaštita i nega žena u svim fazama života.
@@ -152,7 +152,7 @@ export function AppShell({ children }) {
               <Link to="/">Početna</Link>
               <Link to="/usluge">Usluge</Link>
               <Link to="/tim">Tim</Link>
-              <Link to="/o-nama">O nama</Link>
+              <Link to="/" state={{ scrollTo: "o-nama" }}>O nama</Link>
               <Link to="/vodic">Vodič</Link>
               <Link to="/kontakt">Kontakt</Link>
             </nav>

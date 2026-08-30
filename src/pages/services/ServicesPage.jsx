@@ -53,6 +53,7 @@ export function ServicesPage() {
   return (
     <div className="inner-page">
       <PageHeader
+        className="page-header--usluge"
         eyebrow="Šta nudimo"
         title="Naše usluge"
         lead="Kompletna ginekološka zaštita u svim fazama ženskog života - od preventive do složenih dijagnostičkih procedura."
