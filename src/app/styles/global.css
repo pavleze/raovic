@@ -565,7 +565,7 @@ img {
 /*
   Slojevi se ne gase istovremeno: donji sloj je uvek pun, a gornji se
   pretapaju preko njega. Time se izbegava da kroz dve poluprozirne slike
-  probije pozadina hero sekcije. Ciklus: 3 x 15s = 45s.
+  probije pozadina hero sekcije. Ciklus: 3 x 10s = 30s.
 */
 .site-hero__bg--1 {
   background-image: url('/images/hero/hero-nova.jpg');
@@ -574,24 +574,25 @@ img {
 
 .site-hero__bg--2 {
   background-image: url('/images/hero/hero-nova-2.jpg');
-  animation: hero-fade-2 45s linear infinite;
+  animation: hero-fade-2 30s linear infinite;
 }
 
 .site-hero__bg--3 {
   background-image: url('/images/hero/hero-nova-3.jpg');
-  animation: hero-fade-3 45s linear infinite;
+  animation: hero-fade-3 30s linear infinite;
 }
 
+/* 3.33% od 30s je oko 1s pretapanja */
 @keyframes hero-fade-2 {
   0%, 33.33%   { opacity: 0; }
-  35.55%, 100% { opacity: 1; }
+  36.66%, 100% { opacity: 1; }
 }
 
 @keyframes hero-fade-3 {
   0%           { opacity: 1; }
-  2.22%        { opacity: 0; }
+  3.33%        { opacity: 0; }
   66.66%       { opacity: 0; }
-  68.88%, 100% { opacity: 1; }
+  70%, 100%    { opacity: 1; }
 }
 
 
@@ -1764,10 +1765,11 @@ img {
   scroll-margin-top: 90px;
 }
 
+/* Kartice se dodiruju, pa unakrsne lila i bele polja daju sahovnicu */
 .service-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 0;
   padding-top: 40px;
 }
 
@@ -1963,18 +1965,17 @@ img {
 
 .service-card {
   display: grid;
+  grid-template-columns: 1fr 42%;
   overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 0;
   border-radius: 0;
-  box-shadow: var(--shadow-sm);
   font-family: var(--font-body);
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition: box-shadow 0.2s;
 }
 
 .service-card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
 }
 
 /* Poslednja kartica sama u redu — centriraj je */
@@ -2070,6 +2071,23 @@ img {
 .service-card__link:hover {
   gap: 10px;
   color: var(--color-purple);
+}
+
+/* Unakrsno: prva i cetvrta kartica na svetlo lila podlozi */
+.service-grid .service-card:nth-child(1),
+.service-grid .service-card:nth-child(4) {
+  background: linear-gradient(135deg, #efe9f8 0%, #e6dcf4 100%);
+}
+
+.service-card__media {
+  background: linear-gradient(135deg, #efe9f8 0%, #e6dcf4 100%);
+}
+
+.service-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ─── Process band ──────────────────────────── */
@@ -2717,6 +2735,15 @@ a.contact-quick__val:hover {
     grid-template-columns: 1fr;
   }
 
+  .service-card {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card__media {
+    min-height: 180px;
+    order: -1;
+  }
+
   .service-grid .service-card:last-child:nth-child(odd) {
     max-width: none;
   }
@@ -2853,19 +2880,18 @@ a.contact-quick__val:hover {
   padding: 64px 0;
 }
 
-/* Galerija se rasteze po visini tekstualne kolone */
-.about-preview .about-section {
-  align-items: stretch;
-  gap: 56px;
+/* Tekst ide punom sirinom, galerija je u traci ispod njega */
+.about-section--full {
+  grid-template-columns: 1fr;
+  margin-bottom: 48px;
 }
 
-/* Pasusi su deo jednog toka teksta, pa im treba manji razmak */
 /* Sticky header ne sme da prekrije naslov kad se skroluje do sekcije */
 #o-nama {
   scroll-margin-top: 96px;
 }
 
-/* Kolona se rasteze do visine slike, pa grid redovi ne smeju da bubre */
+/* Pasusi su deo jednog toka teksta, pa im treba manji razmak */
 .about-preview .about-content {
   gap: 12px;
   align-content: start;
@@ -2876,38 +2902,9 @@ a.contact-quick__val:hover {
   margin-top: 20px;
 }
 
-.about-preview .about-section--textleft {
-  grid-template-columns: 1.45fr 0.55fr;
-}
-
-.about-preview .about-visual {
-  display: flex;
-}
-
-.about-preview .about-card {
-  aspect-ratio: auto;
-  width: 100%;
-  min-height: 420px;
-  max-height: 620px;
-}
-
 .about-features--duo {
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-}
-
-/* Na uzim ekranima tekst i galerija idu jedno pod drugo */
-@media (max-width: 1020px) {
-  .about-preview .about-section--textleft {
-    grid-template-columns: 1fr;
-  }
-
-  .about-preview .about-card {
-    min-height: 0;
-    max-height: none;
-    aspect-ratio: 4 / 3;
-  }
-
 }
 
 @media (max-width: 700px) {
@@ -2922,11 +2919,11 @@ a.contact-quick__val:hover {
 
 
 /* Horizontalna traka sa lekarima + strelice */
-.team-rail {
+.rail {
   position: relative;
 }
 
-.team-rail__track {
+.rail__track {
   --rail-gap: 20px;
   --rail-visible: 5;
   display: flex;
@@ -2937,19 +2934,21 @@ a.contact-quick__val:hover {
   padding: 4px 0;
 }
 
-.team-rail__track::-webkit-scrollbar {
+.rail__track::-webkit-scrollbar {
   display: none;
 }
 
 /* Kartice se uklapaju u ceo broj po ekranu - nema polovicnih */
-.team-rail__track > * {
+.rail__track > * {
+  /* Bez min-width slika bi se sirila do svoje prirodne velicine */
+  min-width: 0;
   flex: 0 0 calc(
     (100% - (var(--rail-visible) - 1) * var(--rail-gap)) / var(--rail-visible)
   );
   scroll-snap-align: start;
 }
 
-.team-rail__nav {
+.rail__nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -2967,87 +2966,125 @@ a.contact-quick__val:hover {
   transition: background 0.2s, color 0.2s;
 }
 
-.team-rail__nav:hover {
+.rail__nav:hover {
   background: var(--color-baby-lilac);
 }
 
-.team-rail__nav svg {
+.rail__nav svg {
   width: 20px;
   height: 20px;
 }
 
-.team-rail__nav--prev {
+/* Galerija u traci: uske portretne slike jedna do druge */
+/* Galerija je uza od ostatka sekcije, sa vazduhom levo i desno */
+.rail--photos {
+  width: min(100%, 1320px);
+  margin: 0 auto;
+}
+
+.rail--photos .rail__track {
+  --rail-visible: 4;
+}
+
+@media (max-width: 980px) {
+  .rail--photos .rail__track {
+    --rail-visible: 3;
+  }
+}
+
+@media (max-width: 700px) {
+  .rail--photos .rail__track {
+    --rail-visible: 2;
+  }
+}
+
+@media (max-width: 460px) {
+  .rail--photos .rail__track {
+    --rail-visible: 1;
+  }
+}
+
+.rail--photos .rail__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: #efe9f8;
+}
+
+.rail__nav--prev {
   left: -22px;
 }
 
-.team-rail__nav--next {
+.rail__nav--next {
   right: -22px;
 }
 
 @media (max-width: 1200px) {
-  .team-rail__track {
+  .rail__track {
     --rail-visible: 4;
   }
 }
 
 @media (max-width: 980px) {
-  .team-rail__track {
+  .rail__track {
     --rail-visible: 3;
   }
 }
 
 /* Na uzim ekranima nema mesta za strelice van trake, pa idu unutar ivica */
 @media (max-width: 1180px) {
-  .team-rail__nav--prev {
+  .rail__nav--prev {
     left: 6px;
   }
 
-  .team-rail__nav--next {
+  .rail__nav--next {
     right: 6px;
   }
 
-  .team-rail__nav {
+  .rail__nav {
     background: rgba(255, 255, 255, 0.92);
   }
 }
 
 @media (max-width: 700px) {
-  .team-rail__track {
+  .rail__track {
     --rail-visible: 2;
   }
 
-  .team-rail__nav {
+  .rail__nav {
     width: 38px;
     height: 38px;
   }
 
   /* Kartice u traci su uske, pa im treba portretni format */
-  .team-rail .at-card--photo,
-  .team-rail .at-card--photo.at-card--accent,
-  .team-rail .at-card__avatar,
-  .team-rail .at-card--accent .at-card__avatar {
+  .rail .at-card--photo,
+  .rail .at-card--photo.at-card--accent,
+  .rail .at-card__avatar,
+  .rail .at-card--accent .at-card__avatar {
     aspect-ratio: 3 / 4;
   }
 
-  .team-rail .at-card--photo .at-card__avatar {
+  .rail .at-card--photo .at-card__avatar {
     aspect-ratio: auto;
   }
 
-  .team-rail .at-card--photo .at-card__body {
+  .rail .at-card--photo .at-card__body {
     padding: 32px 14px 14px;
   }
 
-  .team-rail .at-card--photo .at-card__name {
+  .rail .at-card--photo .at-card__name {
     font-size: 0.92rem;
   }
 
-  .team-rail .at-card--photo .at-card__role {
+  .rail .at-card--photo .at-card__role {
     font-size: 0.76rem;
   }
 }
 
 @media (max-width: 460px) {
-  .team-rail__track {
+  .rail__track {
     --rail-visible: 1;
   }
 }

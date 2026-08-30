@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useBooking } from "../../app/context/BookingContext";
-import { ImageCarousel } from "../../shared/ui/ImageCarousel";
 import { TeamCard } from "../../shared/ui/TeamCard";
 import { ordinacijaGallery } from "../../shared/data/galleryData";
 import { founders, associates } from "../../shared/data/teamData";
@@ -118,10 +117,25 @@ export function HomePage() {
   const { openBooking } = useBooking();
   const { state } = useLocation();
   const teamRailRef = useRef(null);
+  const galleryRailRef = useRef(null);
 
-  const slideTeam = (dir) => {
-    const rail = teamRailRef.current;
+  const slideRail = (ref, dir) => {
+    const rail = ref.current;
     if (!rail) return;
+    const maxScroll = rail.scrollWidth - rail.clientWidth;
+    const atEnd = rail.scrollLeft >= maxScroll - 4;
+    const atStart = rail.scrollLeft <= 4;
+
+    // Sa poslednjeg seta skace na prvi i obrnuto - traka radi u krug.
+    if (dir > 0 && atEnd) {
+      rail.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+    if (dir < 0 && atStart) {
+      rail.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
+
     // Pomeraj za ceo vidljivi set kartica, da nijedna ne ostane presecena.
     const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
     rail.scrollBy({ left: dir * (rail.clientWidth + gap), behavior: "smooth" });
@@ -354,6 +368,11 @@ export function HomePage() {
                   <p>{service.text}</p>
                   <button className="service-card__link" onClick={openBooking}>Zakažite pregled →</button>
                 </div>
+                <div className="service-card__media">
+                  {service.image && (
+                    <img src={service.image} alt={service.title} loading="lazy" />
+                  )}
+                </div>
               </article>
             ))}
           </div>
@@ -377,7 +396,7 @@ export function HomePage() {
             <h2>O nama</h2>
           </div>
 
-          <div className="about-section about-section--textleft reveal">
+          <div className="about-section about-section--full reveal">
             <div className="about-content">
               <p>
                 Dobrodošli u Ginekološku Ordinaciju Raović. Specijalistička
@@ -428,13 +447,43 @@ export function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="about-visual">
-              <div className="about-card">
-                <ImageCarousel images={ordinacijaGallery} className="gallery--fill" />
-              </div>
-            </div>
           </div>
 
+          <div className="rail rail--photos reveal">
+            <button
+              type="button"
+              className="rail__nav rail__nav--prev"
+              onClick={() => slideRail(galleryRailRef, -1)}
+              aria-label="Prethodne slike"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
+            </button>
+
+            <div className="rail__track" ref={galleryRailRef}>
+              {ordinacijaGallery.map((img) => (
+                <img
+                  key={img.src}
+                  className="rail__img"
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="rail__nav rail__nav--next"
+              onClick={() => slideRail(galleryRailRef, 1)}
+              aria-label="Sledeće slike"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -446,11 +495,11 @@ export function HomePage() {
           </div>
 
           <div className="at-group at-group--founders-preview reveal">
-            <div className="team-rail">
+            <div className="rail">
               <button
                 type="button"
-                className="team-rail__nav team-rail__nav--prev"
-                onClick={() => slideTeam(-1)}
+                className="rail__nav rail__nav--prev"
+                onClick={() => slideRail(teamRailRef, -1)}
                 aria-label="Prethodni lekari"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -458,7 +507,7 @@ export function HomePage() {
                 </svg>
               </button>
 
-              <div className="team-rail__track" ref={teamRailRef}>
+              <div className="rail__track" ref={teamRailRef}>
                 {homeTeam.map((d) => (
                   <TeamCard key={d.name} {...d} accent />
                 ))}
@@ -466,8 +515,8 @@ export function HomePage() {
 
               <button
                 type="button"
-                className="team-rail__nav team-rail__nav--next"
-                onClick={() => slideTeam(1)}
+                className="rail__nav rail__nav--next"
+                onClick={() => slideRail(teamRailRef, 1)}
                 aria-label="Sledeći lekari"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">

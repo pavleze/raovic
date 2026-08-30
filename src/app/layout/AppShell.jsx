@@ -50,7 +50,8 @@ export function AppShell({ children }) {
               }))}
             />
             <NavLink to="/tim">Tim</NavLink>
-            <NavLink to="/" state={{ scrollTo: "o-nama" }}>O nama</NavLink>
+            {/* Sekcija na pocetnoj - obican link, da se ne pali kao aktivna strana */}
+            <Link to="/" state={{ scrollTo: "o-nama" }}>O nama</Link>
             <NavDropdown
               to="/vodic"
               label="Vodič"
@@ -83,7 +84,7 @@ export function AppShell({ children }) {
             <NavLink to="/" end onClick={closeMenu}>Početna</NavLink>
             <NavLink to="/usluge" onClick={closeMenu}>Usluge</NavLink>
             <NavLink to="/tim" onClick={closeMenu}>Tim</NavLink>
-            <NavLink to="/" state={{ scrollTo: "o-nama" }} onClick={closeMenu}>O nama</NavLink>
+            <Link to="/" state={{ scrollTo: "o-nama" }} onClick={closeMenu}>O nama</Link>
             <NavLink to="/vodic" onClick={closeMenu}>Vodič</NavLink>
             <NavLink to="/kontakt" onClick={closeMenu}>Kontakt</NavLink>
           </nav>
