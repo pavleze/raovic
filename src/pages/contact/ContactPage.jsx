@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { PageHeader } from "../../shared/ui/PageHeader";
-import { useBooking } from "../../app/context/BookingContext";
-
 const quickInfo = [
   {
     label: "Telefon",
@@ -56,7 +54,6 @@ const quickInfo = [
 ];
 
 export function ContactPage() {
-  const { openBooking } = useBooking();
   const [sent, setSent] = useState(false);
 
   return (
@@ -95,7 +92,7 @@ export function ContactPage() {
           {/* Form */}
           <div className="contact-form-card">
             <div className="contact-form-card__header">
-              <p className="eyebrow">Pišite nam</p>
+              <p className="eyebrow eyebrow--dash">Pišite nam</p>
               <h2>Pošaljite upit</h2>
               <p>Odgovorićemo u toku radnog dana. Za hitne slučajeve pozovite direktno.</p>
             </div>
@@ -127,7 +124,7 @@ export function ContactPage() {
                   <label>Poruka</label>
                   <textarea placeholder="Za koji pregled se javljate ili šta vas zanima?" rows={5} />
                 </div>
-                <button className="button button--primary" type="submit">
+                <button className="button button--lilac" type="submit">
                   Pošalji upit →
                 </button>
               </form>
@@ -157,17 +154,6 @@ export function ContactPage() {
             </div>
           </div>
 
-        </div>
-
-        {/* ── CTA ── */}
-        <div className="cta-band">
-          <div className="cta-band__text">
-            <p className="eyebrow">Brže zakazivanje</p>
-            <h2>Volite da zakažete odmah?</h2>
-          </div>
-          <div className="cta-band__action">
-            <button className="button button--light" onClick={openBooking}>Zakažite pregled</button>
-          </div>
         </div>
 
       </div>
