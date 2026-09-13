@@ -1996,9 +1996,15 @@ img {
 @media (max-width: 640px) {
   .services-tabs {
     flex-wrap: nowrap;
+    gap: 28px;
+    padding-right: 28px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    /* Bledi poslednji tab ka providnosti - vizuelni nagovestaj da ima jos
+       kategorija desno, jer sakriven scrollbar sam po sebi to ne pokazuje. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent 100%);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent 100%);
   }
   .services-tabs::-webkit-scrollbar {
     display: none;
