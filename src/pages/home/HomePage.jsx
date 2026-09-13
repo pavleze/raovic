@@ -149,22 +149,27 @@ export function HomePage() {
   const maxT = Math.max(0, testimonials.length - visibleT);
 
   useEffect(() => {
-    const calc = () => {
+    const calc = (observedWidth) => {
       if (!viewRef.current) return;
-      const w = viewRef.current.offsetWidth;
+      // Ogranicava sirinu na razumne vrednosti - stiti od ResizeObserver-a
+      // koji ume da prijavi ogromnu (privremenu, "intrinsic") sirinu flex
+      // kontejnera i tako "naduva" kartice van ekrana.
+      const raw = observedWidth ?? viewRef.current.offsetWidth;
+      const w = Math.max(0, Math.min(raw, 2400));
       const vis = w < 560 ? 1 : w < 900 ? 2 : 3;
       setVisibleT(vis);
       setCardW((w - GAP * (vis - 1)) / vis);
     };
     calc();
     const ro = typeof ResizeObserver !== "undefined"
-      ? new ResizeObserver(calc)
+      ? new ResizeObserver((entries) => calc(entries[0]?.contentRect.width))
       : null;
     if (ro && viewRef.current) ro.observe(viewRef.current);
-    window.addEventListener("resize", calc);
+    const onResize = () => calc();
+    window.addEventListener("resize", onResize);
     return () => {
       ro?.disconnect();
-      window.removeEventListener("resize", calc);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 

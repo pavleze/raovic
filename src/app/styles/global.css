@@ -790,6 +790,7 @@ img {
 /* ─── Page layout ───────────────────────────── */
 .home-page {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0;
 }
 
@@ -1022,6 +1023,7 @@ img {
 .inner-page__content {
   padding: 72px 0 100px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 48px;
 }
 
@@ -4698,6 +4700,16 @@ a.contact-quick__val:hover {
     flex-wrap: wrap;
     align-items: center;
     gap: 12px 20px;
+  }
+  /*
+    align-items: flex-start na .testimonials-layout znaci da se
+    .t-slider bez eksplicitne sirine skuplja na sirinu sadrzaja
+    (fit-content) umesto da zauzme ceo red - sto naduva slajder
+    (i sa njim cardW/ResizeObserver racunicu) van ekrana.
+  */
+  .t-slider {
+    width: 100%;
+    min-width: 0;
   }
   .t-panel__score { font-size: 2.4rem; }
   .t-panel__verified { display: none; }
