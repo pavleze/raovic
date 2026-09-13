@@ -157,8 +157,15 @@ export function HomePage() {
       setCardW((w - GAP * (vis - 1)) / vis);
     };
     calc();
+    const ro = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(calc)
+      : null;
+    if (ro && viewRef.current) ro.observe(viewRef.current);
     window.addEventListener("resize", calc);
-    return () => window.removeEventListener("resize", calc);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", calc);
+    };
   }, []);
 
   useEffect(() => {
@@ -201,11 +208,11 @@ export function HomePage() {
         <div className="site-hero__bg site-hero__bg--2" />
         <div className="site-hero__bg site-hero__bg--3" />
         <div className="site-hero__overlay" />
-        <div className="site-shell site-hero__inner">
+        <div className="site-hero__inner">
           <div className="site-hero__content">
             <p className="eyebrow">Ginekološka ordinacija · Beograd</p>
             <h1>
-              Savremena ginekologija<br />
+              Savremena ginekologija
               <em>na jednom mestu.</em>
             </h1>
             <p className="site-hero__lead">
@@ -672,11 +679,11 @@ export function HomePage() {
 
               <div className="t-footer">
                 <div className="t-dots">
-                  {testimonials.map((_, i) => (
+                  {Array.from({ length: maxT + 1 }, (_, i) => (
                     <button
                       key={i}
                       className={`t-dot${i === activeT ? " t-dot--active" : ""}`}
-                      onClick={() => setActiveT(Math.min(i, maxT))}
+                      onClick={() => setActiveT(i)}
                       aria-label={`Recenzija ${i + 1}`}
                     />
                   ))}
@@ -708,7 +715,6 @@ export function HomePage() {
               src="https://www.google.com/maps?q=Ginekolo%C5%A1ka+ordinacija+Raovi%C4%87,+Golsvordijeva+6,+Beograd&output=embed"
               title="Lokacija ordinacije Raović na mapi"
               width="100%"
-              height="440"
               style={{ border: 0, display: "block" }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
