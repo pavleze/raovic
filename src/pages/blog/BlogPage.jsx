@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useBooking } from "../../app/context/BookingContext";
 import { blogCategories, blogArticles } from "../../shared/data/blogData";
 import { serviceCategories } from "../../shared/data/servicesData";
 import { PostCard } from "../../shared/ui/PostCard";
@@ -96,7 +95,6 @@ const catConfig = {
 
 /* ── Main page ──────────────────────────────────────────────── */
 export function BlogPage() {
-  const { openBooking } = useBooking();
   const [searchParams, setSearchParams] = useSearchParams();
   const clanak = searchParams.get("clanak");
   const kategorija = searchParams.get("kategorija");
@@ -184,7 +182,6 @@ export function BlogPage() {
           catIcon={catConfig[selectedCategory]?.icon}
           hasBooking={bookableArticleTitles.has(selectedArticle.title)}
           onBack={closeArticle}
-          onBooking={openBooking}
         />
 
       ) : (

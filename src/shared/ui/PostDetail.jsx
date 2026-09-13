@@ -14,7 +14,7 @@ function renderContent(content) {
   });
 }
 
-export function PostDetail({ article, catLabel, catGradient, catIcon, hasBooking, onBack, onBooking }) {
+export function PostDetail({ article, catLabel, catGradient, catIcon, hasBooking, onBack }) {
   return (
     <div className="post-detail">
       <div className="post-detail__hero" style={{ background: "linear-gradient(135deg, #b09cd6 0%, #9c85c9 100%)" }}>
@@ -41,10 +41,10 @@ export function PostDetail({ article, catLabel, catGradient, catIcon, hasBooking
               {hasBooking && (
                 <div className="post-detail__cta-card">
                   <h4>Zakažite pregled</h4>
-                  <p>Imate pitanja ili brige? Naš tim je tu za vas - zakažite konsultaciju.</p>
-                  <button className="button button--light" onClick={onBooking}>
-                    Zakažite pregled
-                  </button>
+                  <p>Imate pitanja ili brige? Naš tim je tu za vas — pozovite nas.</p>
+                  <a className="button button--light" href="tel:+381112447763">
+                    011 244 77 63
+                  </a>
                 </div>
               )}
               <p className="post-detail__disclaimer">

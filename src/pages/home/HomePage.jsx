@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useBooking } from "../../app/context/BookingContext";
 import { TeamCard } from "../../shared/ui/TeamCard";
 import { ordinacijaGallery } from "../../shared/data/galleryData";
 import { founders, associates } from "../../shared/data/teamData";
@@ -113,8 +112,9 @@ const testimonials = [
   },
 ];
 
+const PHONE_HREF = "tel:+381112447763";
+
 export function HomePage() {
-  const { openBooking } = useBooking();
   const { state } = useLocation();
   const teamRailRef = useRef(null);
   const galleryRailRef = useRef(null);
@@ -214,13 +214,13 @@ export function HomePage() {
               standard medicinske nege.
             </p>
             <div className="site-hero__actions">
-              <button className="button button--primary" onClick={openBooking}>
-                Kontakt
+              <a className="button button--primary" href={PHONE_HREF}>
+                Pozovite nas
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="7" y1="17" x2="17" y2="7" />
                   <polyline points="7 7 17 7 17 17" />
                 </svg>
-              </button>
+              </a>
               <Link className="button button--ghost" to="/usluge">Naše usluge</Link>
             </div>
           </div>
@@ -371,7 +371,7 @@ export function HomePage() {
                   <div className="service-card__icon" aria-hidden="true">{service.icon}</div>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
-                  <button className="service-card__link" onClick={openBooking}>Zakažite pregled →</button>
+                  <a className="service-card__link" href={PHONE_HREF}>Zakažite pregled →</a>
                 </div>
                 <div className="service-card__media">
                   {service.image && (

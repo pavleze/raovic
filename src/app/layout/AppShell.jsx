@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useBooking } from "../context/BookingContext";
-import { BookingModal } from "../../shared/ui/BookingModal";
 import { serviceCategories } from "../../shared/data/servicesData";
 import { blogCategories } from "../../shared/data/blogData";
+
+const PHONE_HREF = "tel:+381112447763";
 
 // Nav stavka sa dropdown-om (otvara se na hover, zatvara na klik i na izlazak miša)
 function NavDropdown({ to, label, links }) {
@@ -27,7 +27,6 @@ function NavDropdown({ to, label, links }) {
 }
 
 export function AppShell({ children }) {
-  const { openBooking } = useBooking();
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
   return (
@@ -61,13 +60,13 @@ export function AppShell({ children }) {
             />
             <NavLink to="/kontakt">Kontakt</NavLink>
           </nav>
-          <button className="button button--primary site-header__cta" onClick={openBooking}>
+          <a className="button button--primary site-header__cta" href={PHONE_HREF}>
             Zakažite pregled
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
             </svg>
-          </button>
+          </a>
           <button
             className={`site-header__burger ${menuOpen ? "is-open" : ""}`}
             aria-label="Meni"
@@ -88,21 +87,17 @@ export function AppShell({ children }) {
             <NavLink to="/vodic" onClick={closeMenu}>Vodič</NavLink>
             <NavLink to="/kontakt" onClick={closeMenu}>Kontakt</NavLink>
           </nav>
-          <button
-            className="button button--primary"
-            onClick={() => { closeMenu(); openBooking(); }}
-          >
+          <a className="button button--primary" href={PHONE_HREF} onClick={closeMenu}>
             Zakažite pregled
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="7" y1="17" x2="17" y2="7" />
               <polyline points="7 7 17 7 17 17" />
             </svg>
-          </button>
+          </a>
         </div>
       </header>
 
       <main className="site-main">{children}</main>
-      <BookingModal />
 
       {/* Plutajući brzi linkovi */}
       <div className="quick-contact" aria-label="Brzi kontakt">

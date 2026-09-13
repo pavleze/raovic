@@ -1,15 +1,15 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { PageHeader } from "../../shared/ui/PageHeader";
-import { useBooking } from "../../app/context/BookingContext";
 import { serviceCategories } from "../../shared/data/servicesData";
 import { blogArticles } from "../../shared/data/blogData";
 
 // Članci iz Vodiča po naslovu (za tizer + "Pročitaj više")
 const articleByTitle = new Map(blogArticles.map((a) => [a.title, a]));
 
+const PHONE_HREF = "tel:+381112447763";
+
 export function ServicesPage() {
-  const { openBooking } = useBooking();
   const [searchParams] = useSearchParams();
   const katParam = searchParams.get("kat");
   const validKat = serviceCategories.some((c) => c.id === katParam);
@@ -107,9 +107,9 @@ export function ServicesPage() {
                     </Link>
                   )}
                 </div>
-                <button className="button button--primary button--sm" onClick={openBooking}>
+                <a className="button button--primary button--sm" href={PHONE_HREF}>
                   Zakažite termin
-                </button>
+                </a>
               </article>
             );
           })}
