@@ -144,21 +144,26 @@ export function HomePage() {
   const [activeT, setActiveT] = useState(0);
   const viewRef = useRef(null);
   const [cardW, setCardW] = useState(0);
+  const [visibleT, setVisibleT] = useState(1);
   const GAP = 20;
-  const VISIBLE = 3;
-  const maxT = testimonials.length - VISIBLE;
+  const maxT = Math.max(0, testimonials.length - visibleT);
 
   useEffect(() => {
     const calc = () => {
-      if (viewRef.current) {
-        const w = viewRef.current.offsetWidth;
-        setCardW((w - GAP * (VISIBLE - 1)) / VISIBLE);
-      }
+      if (!viewRef.current) return;
+      const w = viewRef.current.offsetWidth;
+      const vis = w < 560 ? 1 : w < 900 ? 2 : 3;
+      setVisibleT(vis);
+      setCardW((w - GAP * (vis - 1)) / vis);
     };
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
   }, []);
+
+  useEffect(() => {
+    setActiveT((i) => Math.min(i, Math.max(0, testimonials.length - visibleT)));
+  }, [visibleT]);
 
   // Link iz navigacije moze da cilja sekciju na pocetnoj strani
   useEffect(() => {
