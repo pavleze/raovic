@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { PageHeader } from "../../shared/ui/PageHeader";
+
+const PHONE_HREF = "tel:+381112447763";
+
 const quickInfo = [
   {
     label: "Telefon",
     values: [
       { text: "011 244 77 63", href: "tel:+381112447763" },
-      { text: "063 687 889",   href: "tel:+381636878890" },
+      { text: "063 687 889", href: "tel:+381636878890" },
     ],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -57,15 +59,9 @@ export function ContactPage() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="inner-page">
-      <PageHeader
-        eyebrow="Stupite u kontakt"
-        title="Zakazivanje i informacije"
-        lead="Zakažite pregled telefonom, porukom ili putem forme. Odgovaramo u toku radnog vremena."
-      />
+    <div className="inner-page inner-page--kontakt">
       <div className="site-shell inner-page__content">
 
-        {/* ── Quick info ── */}
         <div className="contact-quick">
           {quickInfo.map((item) => (
             <div className="contact-quick__card" key={item.label}>
@@ -86,13 +82,9 @@ export function ContactPage() {
           ))}
         </div>
 
-        {/* ── Form + Map ── */}
         <div className="contact-main">
-
-          {/* Form */}
           <div className="contact-form-card">
             <div className="contact-form-card__header">
-              <p className="eyebrow eyebrow--dash">Pišite nam</p>
               <h2>Pošaljite upit</h2>
               <p>Odgovorićemo u toku radnog dana. Za hitne slučajeve pozovite direktno.</p>
             </div>
@@ -105,7 +97,13 @@ export function ContactPage() {
                 <p>Poruka je poslata! Javićemo vam se uskoro.</p>
               </div>
             ) : (
-              <form className="contact-form-inner" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+              <form
+                className="contact-form-inner"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSent(true);
+                }}
+              >
                 <div className="form-row">
                   <div className="form-field">
                     <label>Ime</label>
@@ -124,14 +122,13 @@ export function ContactPage() {
                   <label>Poruka</label>
                   <textarea placeholder="Za koji pregled se javljate ili šta vas zanima?" rows={5} />
                 </div>
-                <button className="button button--lilac" type="submit">
-                  Pošalji upit →
+                <button className="contact-form__submit" type="submit">
+                  Pošalji upit
                 </button>
               </form>
             )}
           </div>
 
-          {/* Map */}
           <div className="contact-map-wrap">
             <div className="contact-map">
               <iframe
@@ -152,8 +149,10 @@ export function ContactPage() {
                 Otvori u Google Maps →
               </a>
             </div>
+            <a className="contact-call" href={PHONE_HREF}>
+              Pozovite nas
+            </a>
           </div>
-
         </div>
 
       </div>

@@ -1,10 +1,66 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { TeamCard } from "../../shared/ui/TeamCard";
-import { ordinacijaGallery } from "../../shared/data/galleryData";
+import { FocusGallery } from "../../shared/ui/FocusGallery";
 import { founders, associates } from "../../shared/data/teamData";
+import { ordinacijaGallery } from "../../shared/data/galleryData";
+import heroDoktor from "../../assets/doktor-i-trudnica-hero.png";
+import heroStolice from "../../assets/stolice-landscape.png";
+import heroBeba from "../../assets/beba-i-mama-hero.png";
+import orbitLogo from "../../assets/mauve-braon-krug.png";
+import missionMark from "../../assets/mauve-krug-beli.png";
+import photoWhy from "../../assets/novaslika-zxast-izabrati.png";
+import servicesBandBg from "../../assets/usluge-bg-soft.png";
+import dnaPattern from "../../assets/dna-helix-pattern.svg";
+import missionVisual from "../../assets/prostor_lepse.png";
 
+const HERO_SLIDES = [heroStolice, heroBeba, heroDoktor];
 const homeTeam = [...founders, ...associates];
+
+function CountUp({ to, suffix = "", duration = 1600 }) {
+  const ref = useRef(null);
+  const [value, setValue] = useState(0);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) {
+      setValue(to);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+        io.disconnect();
+
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - (1 - t) ** 3;
+          setValue(Math.round(to * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.45 }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to, duration]);
+
+  return (
+    <strong ref={ref}>
+      {value}
+      {suffix}
+    </strong>
+  );
+}
 
 const services = [
   {
@@ -33,41 +89,12 @@ const services = [
   },
 ];
 
-const faqs = [
-  {
-    q: "Koliko često treba da obavim ginekološki pregled?",
-    a: "Preporučuje se redovni ginekološki pregled jednom godišnje za sve žene starije od 18 godina, ili od početka seksualne aktivnosti. Kod pojave simptoma kao što su bol, neuobičajeno krvarenje ili promene u ciklusu, pregled treba zakazati odmah.",
-  },
-  {
-    q: "Kako da zakažem pregled i šta da ponesem?",
-    a: "Pregled možete zakazati telefonom (011 244 77 63 ili 063 687 889), e-mailom ili putem forme na sajtu. Na prvi pregled nije potrebna uputnica. Ponesite ličnu kartu, a ako imate ranije nalaze ili dokumentaciju - i njih.",
-  },
-  {
-    q: "Da li su pregledi poverljivi?",
-    a: "Apsolutno. Svaki razgovor i nalaz ostaje isključivo između vas i vašeg lekara. Ordinacija Raović u potpunosti poštuje medicinsku tajnu i privatnost svake pacijentkinje.",
-  },
-  {
-    q: "Šta je Papa test i koliko često treba da se radi?",
-    a: "Papa test (cervikalni bris) je brza, bezbolna procedura kojom se utvrđuju eventualne promene na grliću materice. Preporučuje se jednom u dve do tri godine kod žena između 25 i 65 godina, a češće ukoliko postoje rizični faktori.",
-  },
-  {
-    q: "Da li se bave i problemima neplodnosti?",
-    a: "Da. Dr Zoran Raović je specijalizovan za dijagnostiku i lečenje steriliteta. Parovima koji imaju poteškoće sa začećem ordinacija pruža kompletnu obradu i upućuje ka odgovarajućim terapijskim opcijama.",
-  },
-  {
-    q: "Koje su mogućnosti plaćanja?",
-    a: "Usluge ordinacije plaćaju se privatno - gotovinom ili karticom. Cenovnik je dostupan na upit telefonom ili e-mailom. Neke usluge mogu biti pokrivene dopunskim zdravstvenim osiguranjem.",
-  },
-];
-
 const processSteps = [
   "Zakazivanje termina telefonom ili porukom",
   "Kratak razgovor o tegobama ili cilju pregleda",
   "Pregled i dijagnostika u mirnom, diskretnom ambijentu",
   "Jasan nalaz, preporuke i plan sledećih koraka",
 ];
-
-const GOOGLE_MAPS_URL = "https://www.google.com/maps/place/Ginekolo%C5%A1ka+ordinacija+Raovi%C4%87/@44.8024123,20.4732801,17z/data=!3m1!4b1!4m6!3m5!1s0x475a7a9fc7cca91b:0x120c20fa7a5e4749!8m2!3d44.8024123!4d20.475855!16s%2Fg%2F1hc2x6r3d";
 
 const testimonials = [
   {
@@ -116,31 +143,46 @@ const PHONE_HREF = "tel:+381112447763";
 
 export function HomePage() {
   const { state } = useLocation();
-  const teamRailRef = useRef(null);
-  const galleryRailRef = useRef(null);
+  const heroRef = useRef(null);
+  const [heroIndex, setHeroIndex] = useState(0);
 
-  const slideRail = (ref, dir) => {
-    const rail = ref.current;
-    if (!rail) return;
-    const maxScroll = rail.scrollWidth - rail.clientWidth;
-    const atEnd = rail.scrollLeft >= maxScroll - 4;
-    const atStart = rail.scrollLeft <= 4;
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setHeroIndex((i) => (i + 1) % HERO_SLIDES.length);
+    }, 5500);
+    return () => window.clearInterval(id);
+  }, []);
 
-    // Sa poslednjeg seta skace na prvi i obrnuto - traka radi u krug.
-    if (dir > 0 && atEnd) {
-      rail.scrollTo({ left: 0, behavior: "smooth" });
-      return;
-    }
-    if (dir < 0 && atStart) {
-      rail.scrollTo({ left: maxScroll, behavior: "smooth" });
-      return;
-    }
+  // Hero: pri skrolu krug ide desno, beli panel se produzava
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
 
-    // Pomeraj za ceo vidljivi set kartica, da nijedna ne ostane presecena.
-    const gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
-    rail.scrollBy({ left: dir * (rail.clientWidth + gap), behavior: "smooth" });
-  };
-  const [openFaq, setOpenFaq] = useState(null);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const range = Math.max(220, hero.offsetHeight * 0.6);
+      const scrolled = Math.min(range, Math.max(0, -hero.getBoundingClientRect().top));
+      hero.style.setProperty("--hero-drift", String(scrolled / range));
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   const [activeT, setActiveT] = useState(0);
   const viewRef = useRef(null);
   const [cardW, setCardW] = useState(0);
@@ -208,32 +250,46 @@ export function HomePage() {
     <div className="home-page">
 
       {/* Hero */}
-      <section className="site-hero">
-        <div className="site-hero__bg site-hero__bg--1" />
-        <div className="site-hero__bg site-hero__bg--2" />
-        <div className="site-hero__bg site-hero__bg--3" />
-        <div className="site-hero__overlay" />
+      <section className="site-hero" ref={heroRef}>
+        <div className="site-hero__bg-stack" aria-hidden="true">
+          {HERO_SLIDES.map((src, i) => (
+            <div
+              key={src}
+              className={`site-hero__bg${i === heroIndex ? " is-active" : ""}`}
+              style={{ backgroundImage: `url(${src})` }}
+            />
+          ))}
+        </div>
         <div className="site-hero__inner">
           <div className="site-hero__content">
-            <p className="eyebrow">Ginekološka ordinacija · Beograd</p>
-            <h1>
-              Savremena ginekologija
-              <em>na jednom mestu.</em>
-            </h1>
-            <p className="site-hero__lead">
-              Kompletna ginekološka zaštita i nega žena u svim fazama života.
-              Više od 20 godina iskustva, savremena dijagnostika i visok
-              standard medicinske nege.
-            </p>
-            <div className="site-hero__actions">
-              <a className="button button--primary" href={PHONE_HREF}>
-                Pozovite nas
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="7" y1="17" x2="17" y2="7" />
-                  <polyline points="7 7 17 7 17 17" />
-                </svg>
-              </a>
-              <Link className="button button--ghost" to="/usluge">Naše usluge</Link>
+            <div className="site-hero__orbit" aria-hidden="true">
+              <span className="site-hero__orbit-ring" />
+              <span className="site-hero__orbit-ring site-hero__orbit-ring--slow" />
+              <span className="site-hero__orbit-logo">
+                <img src={orbitLogo} alt="" />
+              </span>
+            </div>
+            <div className="site-hero__copy">
+              <p className="eyebrow">Ginekološka ordinacija Raović · Beograd</p>
+              <h1>
+                <span className="site-hero__title-line">Savremena ginekologija</span>
+                <em>na jednom mestu.</em>
+              </h1>
+              <p className="site-hero__lead">
+                Kompletna ginekološka zaštita i nega žena u svim fazama života.
+                Više od 22 godine iskustva, savremena dijagnostika i visok standard
+                medicinske nege.
+              </p>
+              <div className="site-hero__actions">
+                <a className="button button--primary" href={PHONE_HREF}>
+                  Pozovite nas
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </a>
+                <Link className="button button--ghost" to="/usluge">Naše usluge</Link>
+              </div>
             </div>
           </div>
         </div>
@@ -245,35 +301,35 @@ export function HomePage() {
           <div className="quick-info__grid reveal">
 
               <article className="info-card">
-                <div className="info-card__icon">
+                <div className="info-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
                   </svg>
                 </div>
                 <h3>Pozovite nas</h3>
-                <p>Zakažite pregled telefonom. Call centar je dostupan svakoga dana u periodu od 08.00 do 20.00h.</p>
+                <p>Zakažite pregled telefonom. Call centar je dostupan svakog dana od 08:00 do 20:00h.</p>
                 <div className="info-card__phones">
-                  <span><span className="info-card__phone-label">Fiksni:</span> <a href="tel:+381112447763">011 244 77 63</a></span>
-                  <span><span className="info-card__phone-label">Mobilni:</span> <a href="tel:+381636878890">063 687 889</a></span>
+                  <a href="tel:+381112447763"><span>Fiksni</span>011 244 77 63</a>
+                  <a href="tel:+38163687889"><span>Mobilni</span>063 687 889</a>
                 </div>
               </article>
 
-              <article className="info-card">
-                <div className="info-card__icon">
+              <article className="info-card info-card--accent">
+                <div className="info-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>
                   </svg>
                 </div>
                 <h3>Radno vreme</h3>
                 <p>
-                  Radnim danom: 08:00 – 20:00h<br />
-                  Subotom: 08:00 – 14:00h
+                  Radnim danom: 08:00 - 20:00h<br />
+                  Subotom: 08:00 - 14:00h
                 </p>
                 <Link className="info-card__link" to="/kontakt">Kontaktirajte nas →</Link>
               </article>
 
               <article className="info-card">
-                <div className="info-card__icon">
+                <div className="info-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
@@ -299,30 +355,19 @@ export function HomePage() {
 
       {/* Why Raović */}
       <section className="why-section">
-        <div className="site-shell">
-          <div className="section-header reveal">
-            <h2>Zašto izabrati ordinaciju Raović?</h2>
-          </div>
+        <div className="site-shell why-layout">
+          <div className="why-layout__main">
+            <div className="why-header reveal">
+              <h2>Zašto izabrati <span className="why-header__accent">ordinaciju Raović</span>?</h2>
+              <p>
+                Uz vas u svakoj fazi života - od prvih pregleda, kroz trudnoću
+                i majčinstvo, do negovanja zdravlja u zrelim godinama.
+              </p>
+            </div>
 
-          <div className="why-track">
-            <svg
-              className="why-wave"
-              viewBox="0 0 1000 320"
-              preserveAspectRatio="none"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M125,223 C230,223 270,63 375,63 C480,63 520,223 625,223 C730,223 770,63 875,63 C935,63 965,30 1010,8"
-                stroke="rgba(80,37,107,0.13)"
-                strokeWidth="2"
-                strokeDasharray="8 6"
-              />
-            </svg>
-
-            <div className="why-items reveal">
-              <div className="why-item why-item--low">
-                <div className="why-item__icon">
+            <div className="why-features">
+              <article className="why-card reveal reveal--left">
+                <div className="why-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
                     <circle cx="9" cy="7" r="4"/>
@@ -331,265 +376,237 @@ export function HomePage() {
                   </svg>
                 </div>
                 <h3>Tim specijalista</h3>
-                <p>Dr Slađana i dr Zoran Raović - više od 20 godina zajedničkog iskustva u ginekologiji, akušerstvu i endokrinologiji.</p>
-              </div>
+                <p>Dr Slađana i dr Zoran Raović — više od 20 godina zajedničkog iskustva u ginekologiji, akušerstvu i endokrinologiji.</p>
+              </article>
 
-              <div className="why-item why-item--high">
-                <div className="why-item__icon">
+              <article className="why-card reveal reveal--right">
+                <div className="why-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                   </svg>
                 </div>
                 <h3>Savremena dijagnostika</h3>
-                <p>Ultrazvučna dijagnostika najnovije generacije - brza, precizna i pouzdana, od rutinskog pregleda do složene analize.</p>
-              </div>
+                <p>Ultrazvučna dijagnostika najnovije generacije — brza, precizna i pouzdana, od rutinskog pregleda do složene analize.</p>
+              </article>
 
-              <div className="why-item why-item--low">
-                <div className="why-item__icon">
+              <article className="why-card reveal reveal--left">
+                <div className="why-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                     <path d="M7 11V7a5 5 0 0110 0v4"/>
                   </svg>
                 </div>
                 <h3>Privatnost i diskrecija</h3>
-                <p>Prostor projektovan za komfor i poverljivost. Svaka poseta ostaje između vas i vašeg lekara - bez kompromisa.</p>
-              </div>
+                <p>Prostor projektovan za komfor i poverljivost. Svaka poseta ostaje između vas i vašeg lekara — bez kompromisa.</p>
+              </article>
 
-              <div className="why-item why-item--high">
-                <div className="why-item__icon">
+              <article className="why-card reveal reveal--right">
+                <div className="why-card__icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                   </svg>
                 </div>
                 <h3>Individualan pristup</h3>
                 <p>Nema standardizovane rutine. Svaka pacijentkinja dobija punu pažnju, jasno objašnjenje i plan prilagođen njoj.</p>
-              </div>
+              </article>
             </div>
           </div>
+
+          <figure className="why-media reveal">
+            <img
+              src={photoWhy}
+              alt="Pregled u ordinaciji Raović — lekar i trudnica uz ultrazvučni snimak"
+              loading="lazy"
+            />
+          </figure>
         </div>
       </section>
 
       {/* Services preview */}
-      <section className="home-section services-preview">
+      <section
+        className="services-band"
+        style={{
+          "--services-band-bg": `url(${servicesBandBg})`,
+          "--services-dna": `url(${dnaPattern})`,
+        }}
+      >
         <div className="site-shell">
-          <div className="section-header reveal">
-            <h2>Naše usluge</h2>
+          <div className="services-band__header reveal">
+            <h2>Usluge koje nudimo</h2>
+            <p>
+              Spajamo stručnost, savremenu dijagnostiku i pažljiv pristup, kako
+              bismo bili uz vas u svakoj fazi života.
+            </p>
           </div>
 
-          <div className="service-grid reveal">
-            {services.map((service) => (
-              <article className="service-card" key={service.title}>
-                <div className="service-card__body">
-                  <div className="service-card__icon" aria-hidden="true">{service.icon}</div>
+          <div className="services-band__grid">
+            {services.slice(0, 3).map((service, index) => (
+              <article
+                className={`services-band__card reveal reveal--up`}
+                key={service.title}
+                style={{ "--reveal-delay": `${0.08 + index * 0.12}s` }}
+              >
+                <div className="services-band__card-top">
+                  <div className="services-band__icon" aria-hidden="true">
+                    {service.icon}
+                  </div>
                   <h3>{service.title}</h3>
-                  <p>{service.text}</p>
-                  <a className="service-card__link" href={PHONE_HREF}>Zakažite pregled →</a>
                 </div>
-                <div className="service-card__media">
-                  {service.image && (
-                    <img src={service.image} alt={service.title} loading="lazy" />
-                  )}
-                </div>
+                <p>{service.text}</p>
+                <Link className="services-band__more" to="/usluge">
+                  Pročitaj više
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="13 6 19 12 13 18" />
+                  </svg>
+                </Link>
               </article>
             ))}
           </div>
 
-          <div className="service-grid__more reveal">
-            <Link className="text-link" to="/usluge">
+          <div className="services-band__cta reveal">
+            <Link className="services-band__all" to="/usluge">
               Pogledaj sve usluge
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="13 6 19 12 13 18" />
-              </svg>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* O nama */}
-      <section className="home-section about-preview" id="o-nama">
+      {/* Cilj ordinacije */}
+      <section className="mission-band" aria-label="Cilj ordinacije">
         <div className="site-shell">
-          <div className="about-intro reveal">
-            <h2>O nama</h2>
-          </div>
-
-          <div className="about-section about-section--full reveal">
-            <div className="about-content">
-              <p>
-                Dobrodošli u Ginekološku Ordinaciju Raović. Specijalistička
-                ginekološko-akušerska ordinacija Raović smeštena je u samom srcu Vračara i
-                brine o Vašem zdravlju od 2004. godine.
-              </p>
-              <p>
-                Naša ordinacija pruža potpunu ginekološku zaštitu i negu ženama u svim fazama
-                života - od puberteta do menopauzalnog perioda. Pored toga, uspešno se bavimo
-                lečenjem ženskog i muškog steriliteta, i pomažemo budućim roditeljima da planiraju
-                trudnoću. Vodimo trudnoću od prvog trenutka, pa sve do postporođajnog perioda, jer
-                znamo da je ovo najlepši, ali i najneizvesniji period u životu jedne žene. U svakom
-                trenutku pružamo podršku našim pacijentima, i nastojimo da u najkraćem roku
-                odgovorimo na sva pitanja, rešimo sve nedoumice, nađemo najbolja rešenja za probleme
-                i damo najbolje savete. U potpunosti smo posvećeni ne samo ka lečenju, već i ka
-                preventivi i očuvanju dragocenog ženskog zdravlja. Uvek smo okrenuti ka budućnosti i
-                daljem stručnom usavršavanju i uvođenju najsavremenije opreme, prateći najnovije
-                svetske standarde u oblasti medicine, a naročito ginekologije i akušerstva.
-              </p>
-              <p>
-                Sa Vama ćemo proći kroz sve lepe, neizvesne i teške trenutke, jer su naši pacijenti
-                stub ordinacije Raović.
-              </p>
-              <blockquote className="about-quote about-quote--plain">
-                <span className="about-quote__label">Cilj naše ginekološke ordinacije</span>
-                <p className="about-quote__text">
-                  Pružiti potpunu ginekološku zaštitu i negu ženama u svim fazama života
+          <div className="mission-pill">
+            <img
+              className="mission-pill__mark"
+              src={missionMark}
+              alt=""
+              aria-hidden="true"
+            />
+            <div className="mission-pill__copy">
+              <blockquote className="mission-pill__quote">
+                <p className="mission-pill__title">Cilj ordinacije</p>
+                <p>
+                  <q>
+                    Pružiti potpunu ginekološku zaštitu i negu ženama u svim
+                    fazama života.
+                  </q>
                 </p>
-                <footer className="about-quote__author">Slađana i Zoran Raović</footer>
+                <footer>Slađana i Zoran Raović</footer>
               </blockquote>
-
-              <div className="about-features about-features--duo">
-                <div className="about-feature">
-                  <span className="about-feature-dot" />
-                  <p>Više od 20 godina iskustva u ginekologiji i akušerstvu</p>
-                </div>
-                <div className="about-feature">
-                  <span className="about-feature-dot" />
-                  <p>9 lekara specijalista, uključujući profesora i docenta medicine</p>
-                </div>
-                <div className="about-feature">
-                  <span className="about-feature-dot" />
-                  <p>Saradnja sa nefrologom, kardiologom, hematologom i ostalim specijalistima</p>
-                </div>
-                <div className="about-feature">
-                  <span className="about-feature-dot" />
-                  <p>Golsvordijeva 6, Vračar - diskretan ambijent u srcu Beograda</p>
-                </div>
-              </div>
             </div>
-          </div>
-
-          <div className="rail rail--photos reveal">
-            <button
-              type="button"
-              className="rail__nav rail__nav--prev"
-              onClick={() => slideRail(galleryRailRef, -1)}
-              aria-label="Prethodne slike"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-            </button>
-
-            <div className="rail__track" ref={galleryRailRef}>
-              {ordinacijaGallery.map((img) => (
-                <img
-                  key={img.src}
-                  className="rail__img"
-                  src={img.src}
-                  alt={img.alt}
-                  loading="lazy"
-                />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="rail__nav rail__nav--next"
-              onClick={() => slideRail(galleryRailRef, 1)}
-              aria-label="Sledeće slike"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Tim lekara */}
-      <section className="home-section team-preview">
-        <div className="site-shell">
-          <div className="section-header reveal">
-            <h2>Naš tim lekara</h2>
-          </div>
-
-          <div className="at-group at-group--founders-preview reveal">
-            <div className="rail">
-              <button
-                type="button"
-                className="rail__nav rail__nav--prev"
-                onClick={() => slideRail(teamRailRef, -1)}
-                aria-label="Prethodni lekari"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
-              </button>
-
-              <div className="rail__track" ref={teamRailRef}>
-                {homeTeam.map((d) => (
-                  <TeamCard key={d.name} {...d} accent />
-                ))}
-              </div>
-
-              <button
-                type="button"
-                className="rail__nav rail__nav--next"
-                onClick={() => slideRail(teamRailRef, 1)}
-                aria-label="Sledeći lekari"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-            </div>
-
-            <div className="at-section__more">
-              <Link className="text-link" to="/tim">
-                Pogledajte ceo tim
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="13 6 19 12 13 18" />
-                </svg>
-              </Link>
+            <div className="mission-pill__visual" aria-hidden="true">
+              <img src={missionVisual} alt="" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="faq-section">
+      {/* O nama + Tim */}
+      <section
+        className="about-band"
+        id="o-nama"
+        style={{
+          "--doctor-card-bg": `url(${servicesBandBg})`,
+          "--doctor-dna": `url(${dnaPattern})`,
+        }}
+      >
         <div className="site-shell">
-          <div className="faq-section__header reveal">
-            <h2>Najčešća pitanja</h2>
-            <p className="faq-section__lead">
-              Odgovorili smo na pitanja koja pacijentkinje najčešće postavljaju.
-              Ukoliko ne pronađete odgovor - slobodno nas pozovite.
-            </p>
-          </div>
+          <div className="about-band__layout">
+            <div className="about-band__main">
+              <div className="about-band__copy reveal">
+                <h2>O nama</h2>
+                <p className="about-band__lead">
+                  Dobrodošli u Ginekološku Ordinaciju Raović. Specijalistička
+                  ginekološko-akušerska ordinacija Raović smeštena je u samom srcu
+                  Vračara i brine o Vašem zdravlju od 2004. godine.
+                </p>
+                <p>
+                  Naša ordinacija pruža potpunu ginekološku zaštitu i negu ženama
+                  u svim fazama života - od puberteta do menopauzalnog perioda.
+                  Pored toga, uspešno se bavimo lečenjem ženskog i muškog
+                  steriliteta, i pomažemo budućim roditeljima da planiraju
+                  trudnoću. Vodimo trudnoću od prvog trenutka, pa sve do
+                  postporođajnog perioda, jer znamo da je ovo najlepši, ali i
+                  najneizvesniji period u životu jedne žene. U svakom trenutku
+                  pružamo podršku našim pacijentima, i nastojimo da u najkraćem
+                  roku odgovorimo na sva pitanja, rešimo sve nedoumice, nađemo
+                  najbolja rešenja za probleme i damo najbolje savete. U potpunosti
+                  smo posvećeni ne samo ka lečenju, već i ka preventivi i
+                  očuvanju dragocenog ženskog zdravlja. Uvek smo okrenuti ka
+                  budućnosti i daljem stručnom usavršavanju i uvođenju
+                  najsavremenije opreme, prateći najnovije svetske standarde u
+                  oblasti medicine, a naročito ginekologije i akušerstva.
+                </p>
+                <p>
+                  Sa Vama ćemo proći kroz sve lepe, neizvesne i teške trenutke, jer
+                  su naši pacijenti stub ordinacije Raović.
+                </p>
+              </div>
 
-          <div className="faq-list reveal">
-            {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className={`faq-item ${openFaq === i ? "faq-item--open" : ""}`}
-              >
-                <button
-                  className="faq-item__question"
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  aria-expanded={openFaq === i}
-                >
-                  <span className="faq-item__badge" aria-hidden="true">?</span>
-                  <span className="faq-item__text">{faq.q}</span>
-                  <span className="faq-item__chevron" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="6 9 12 15 18 9"/>
-                    </svg>
-                  </span>
-                </button>
-                <div className="faq-item__answer">
-                  <p>{faq.a}</p>
+              <div className="about-band__team">
+                <div className="team-band__header reveal">
+                  <h2>Naš tim lekara</h2>
+                  <p>
+                    Specijalisti koji spajaju iskustvo, savremenu dijagnostiku i
+                    pažljiv pristup - uz vas u svakoj fazi života.
+                  </p>
+                </div>
+
+                <div className="team-band__founders">
+                  {founders.map((d) => (
+                    <TeamCard key={d.name} {...d} accent panel />
+                  ))}
+                </div>
+
+                <div className="team-band__rail">
+                  <div className="rail">
+                    <div className="rail__track">
+                      {homeTeam.map((d) => (
+                        <TeamCard key={d.name} {...d} accent panel />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="team-band__cta">
+                  <Link className="team-band__all" to="/tim">
+                    Pogledajte ceo tim
+                  </Link>
                 </div>
               </div>
-            ))}
+            </div>
+
+            <aside className="about-band__facts" aria-label="Ključne činjenice">
+              <article className="about-band__fact">
+                <CountUp to={22} suffix="+" />
+                <span>godina iskustva u ginekologiji i akušerstvu</span>
+              </article>
+              <article className="about-band__fact">
+                <CountUp to={10} />
+                <span>lekara specijalista, uključujući profesora i docenta</span>
+              </article>
+              <article className="about-band__fact">
+                <strong>Tim</strong>
+                <span>saradnja sa nefrologom, kardiologom i hematologom</span>
+              </article>
+              <article className="about-band__fact">
+                <strong>Vračar</strong>
+                <span>Golsvordijeva 6 - diskretan ambijent u Beogradu</span>
+              </article>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* Galerija */}
+      <section className="home-gallery" aria-label="Galerija ordinacije">
+        <div className="site-shell">
+          <div className="home-gallery__header reveal">
+            <h2>Galerija</h2>
+            <p>Pogled u prostor ordinacije Raović.</p>
+          </div>
+          <div className="home-gallery__stage reveal">
+            <FocusGallery images={ordinacijaGallery} />
           </div>
         </div>
       </section>
@@ -597,117 +614,72 @@ export function HomePage() {
       {/* Testimonials */}
       <section className="testimonials-section">
         <div className="site-shell">
-          <div className="testimonials-layout">
+          <div className="testimonials-header reveal">
+            <h2>Šta kažu naše pacijentkinje</h2>
+            <p>Iskustva pacijentkinja koje nam ukazuju poverenje.</p>
+          </div>
 
-            {/* Left: Google summary panel */}
-            <div className="t-panel">
-              <div className="t-panel__logo">
-                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                <span>Google recenzije</span>
-              </div>
-              <div className="t-panel__score">4.9</div>
-              <div className="t-panel__stars" aria-label="4.9 od 5 zvezdica">
-                {[...Array(5)].map((_, i) => (
-                  <svg key={i} width="22" height="22" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
+          <div className="t-slider reveal">
+            <div className="t-viewport" ref={viewRef}>
+              <div
+                className="t-track"
+                style={{
+                  transform: `translateX(-${activeT * (cardW + GAP)}px)`,
+                  gap: `${GAP}px`,
+                }}
+              >
+                {testimonials.map((t) => (
+                  <article
+                    className="t-card"
+                    key={t.name}
+                    style={cardW ? { width: `${cardW}px` } : undefined}
+                  >
+                    <div className="t-card__quote" aria-hidden="true">❝</div>
+                    <div className="t-card__stars" aria-label="5 od 5 zvezdica">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
+                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="t-card__text">{t.text}</p>
+                    <div className="t-card__author">
+                      <div className="t-card__avatar">{t.name[0]}</div>
+                      <div>
+                        <div className="t-card__name">{t.name}</div>
+                        <div className="t-card__date">{t.date}</div>
+                      </div>
+                    </div>
+                  </article>
                 ))}
               </div>
-              <div className="t-panel__label">Odlično</div>
-              <div className="t-panel__count">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-                </svg>
-                <span>59 recenzija</span>
-              </div>
-              <a
-                href={GOOGLE_MAPS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="t-panel__cta"
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-                Pogledajte sve recenzije
-              </a>
-              <div className="t-panel__verified">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-                Google verifikovane recenzije
-              </div>
             </div>
 
-            {/* Right: Slider */}
-            <div className="t-slider">
-              <div className="t-viewport" ref={viewRef}>
-                <div
-                  className="t-track"
-                  style={{
-                    transform: `translateX(-${activeT * (cardW + GAP)}px)`,
-                    gap: `${GAP}px`,
-                  }}
-                >
-                  {testimonials.map((t) => (
-                    <article
-                      className="t-card"
-                      key={t.name}
-                      style={cardW ? { width: `${cardW}px` } : undefined}
-                    >
-                      <div className="t-card__quote" aria-hidden="true">❝</div>
-                      <div className="t-card__stars" aria-label="5 od 5 zvezdica">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" aria-hidden="true">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                          </svg>
-                        ))}
-                      </div>
-                      <p className="t-card__text">{t.text}</p>
-                      <div className="t-card__author">
-                        <div className="t-card__avatar">{t.name[0]}</div>
-                        <div>
-                          <div className="t-card__name">{t.name}</div>
-                          <div className="t-card__date">{t.date}</div>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </div>
+            <div className="t-footer">
+              <div className="t-dots">
+                {Array.from({ length: maxT + 1 }, (_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`t-dot${i === activeT ? " t-dot--active" : ""}`}
+                    onClick={() => setActiveT(i)}
+                    aria-label={`Recenzija ${i + 1}`}
+                  />
+                ))}
               </div>
-
-              <div className="t-footer">
-                <div className="t-dots">
-                  {Array.from({ length: maxT + 1 }, (_, i) => (
-                    <button
-                      key={i}
-                      className={`t-dot${i === activeT ? " t-dot--active" : ""}`}
-                      onClick={() => setActiveT(i)}
-                      aria-label={`Recenzija ${i + 1}`}
-                    />
-                  ))}
-                </div>
-                <div className="t-navs">
-                  <button className="t-nav" onClick={prevT} disabled={activeT === 0} aria-label="Prethodna">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="15 18 9 12 15 6"/>
-                    </svg>
-                  </button>
-                  <button className="t-nav" onClick={nextT} disabled={activeT >= maxT} aria-label="Sledeća">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 18 15 12 9 6"/>
-                    </svg>
-                  </button>
-                </div>
+              <div className="t-navs">
+                <button type="button" className="t-nav" onClick={prevT} disabled={activeT === 0} aria-label="Prethodna">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6"/>
+                  </svg>
+                </button>
+                <button type="button" className="t-nav" onClick={nextT} disabled={activeT >= maxT} aria-label="Sledeća">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6"/>
+                  </svg>
+                </button>
               </div>
             </div>
-
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 // Jedini izvor istine za usluge (ono što se zakazuje).
-// `article` (opciono) povezuje uslugu sa člankom u Vodiču — tada se prikazuje
-// mali tizer (iz opisa članka) i "Pročitaj više →". Bez article-a: samo naziv.
+// `article` (opciono) povezuje uslugu sa člankom — tada se prikazuje
+// mali tizer i "Pročitaj više" otvara /usluge?clanak=...
+// `category` (opciono) vodi na prvi članak te teme.
 
 export const serviceCategories = [
   {
@@ -10,7 +11,6 @@ export const serviceCategories = [
       "Ginekologija je grana medicine koja se bavi proučavanjem ženskog reproduktivnog sistema, njegovim bolestima i načinima lečenja, kao i prevencijom.",
     items: [
       { name: "Ginekološki pregled", article: "Ginekološki pregled", dur: "15 min", price: "4.000 RSD" },
-      { name: "Osnovni sistematski pregled", article: "Ginekološki pregled", dur: "30 min", price: "od 14.000 RSD" },
       { name: "Ultrazvuk i ginekološki pregled", article: "Ginekološki ultrazvuk", dur: "30 min", price: "10.000 RSD" },
       { name: "Kolposkopija i papa test", article: "Kolposkopija", dur: "15 min", price: "7.000 RSD", note: "U okviru ginekološkog pregleda i trudnoće" },
       { name: "Kolposkopija – Papa test – Ultrazvuk", article: "Kolposkopija", dur: "30 min", price: "12.000 RSD" },
@@ -23,7 +23,6 @@ export const serviceCategories = [
       { name: "Folikulometrija", article: "Folikulometrija", dur: "15 min", price: "3.000 RSD" },
       { name: "SIS – ultrazvučno dokazivanje polipa", article: "Endometrijalni polipi", dur: "30 min", price: "8.600 RSD" },
       { name: "Biopsija horionskih čupica", article: "Biopsija horionskih čupica", dur: "15 min", price: "61.000 RSD" },
-      { name: "Kolposkopija – Papa test – Dr A. Pikula", article: "Kolposkopija", dur: "30 min", price: "14.500 RSD" },
     ],
   },
   {
@@ -85,6 +84,19 @@ export const serviceCategories = [
     label: "Konsultativni pregledi",
     items: [
       {
+        name: "Menopauza",
+        teaser: "Praćenje i terapija u perimenopauzi i menopauzi - od simptoma do hormonske terapije i prevencije komplikacija.",
+        category: "menopauza",
+        dur: "30 min",
+      },
+      {
+        name: "Endokrinologija – dr Milina Tančić Gajić",
+        teaser: "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
+        category: "endokrinologija",
+        dur: "30 min",
+        price: "9.000 RSD",
+      },
+      {
         name: "Endokrinologija – dr Ljiljana Marina",
         teaser: "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
         category: "endokrinologija",
@@ -93,13 +105,6 @@ export const serviceCategories = [
       },
       { name: "Hematologija", dur: "30 min", price: "9.000 RSD" },
       { name: "Radiologija", dur: "30 min", price: "8.000 RSD" },
-      {
-        name: "Endokrinologija – dr Milina Tančić Gajić",
-        teaser: "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
-        category: "endokrinologija",
-        dur: "30 min",
-        price: "9.000 RSD",
-      },
       { name: "Ultrazvuk i pregled – Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
     ],
   },

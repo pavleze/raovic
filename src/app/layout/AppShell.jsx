@@ -1,72 +1,175 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { serviceCategories } from "../../shared/data/servicesData";
-import { blogCategories } from "../../shared/data/blogData";
+import logoRaovic from "../../assets/logo_raovic.png";
+import logoWordmark from "../../assets/Ravovic-bez-kruga.png";
+import logoWordmarkScrolled from "../../assets/Ravovic-mauve-bez-kruga.png";
+import logoCircle from "../../assets/mauve-krug-beli.png";
+import logoCircleScrolled from "../../assets/roze-lila-krug.png";
 
 const PHONE_HREF = "tel:+381112447763";
+
+/** Unutrašnje stranice - beli header sa radijusom odmah, bez čekanja skrola */
+const SOLID_HEADER_PATHS = ["/usluge", "/tim", "/blog", "/kontakt"];
+
+const PAGE_TITLES = {
+  "/usluge": {
+    title: "Usluge",
+    lead: "Kompletna ginekološka zaštita u svim fazama ženskog života - od preventive do složenih dijagnostičkih procedura.",
+  },
+  "/tim": {
+    title: "Tim",
+    lead: "Iskusni specijalisti posvećeni tome da svaka poseta bude profesionalna, pažljiva i prijatna.",
+  },
+  "/blog": {
+    title: "Blog",
+    lead: "Saveti i novosti iz ordinacije Raović.",
+  },
+  "/kontakt": {
+    title: "Kontakt",
+    lead: "Zakažite pregled telefonom, porukom ili putem forme. Odgovaramo u toku radnog vremena.",
+  },
+};
 
 // Nav stavka sa dropdown-om (otvara se na hover, zatvara na klik i na izlazak miša)
 function NavDropdown({ to, label, links }) {
   const [open, setOpen] = useState(false);
+  const { pathname, search } = useLocation();
+  const currentQuery = search.startsWith("?") ? search.slice(1) : search;
+
   return (
     <div
       className="site-nav__item"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <NavLink to={to} onClick={() => setOpen(false)}>{label}</NavLink>
+      <NavLink to={to} onClick={() => setOpen(false)} className="site-nav__link">
+        {label}
+        <svg className="site-nav__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </NavLink>
       <div className={`nav-dropdown ${open ? "is-open" : ""}`}>
-        {links.map((l) => (
-          <NavLink key={l.to} to={l.to} onClick={() => setOpen(false)}>
-            {l.label}
-          </NavLink>
-        ))}
+        {links.map((l) => {
+          const qIndex = l.to.indexOf("?");
+          const linkPath = qIndex === -1 ? l.to : l.to.slice(0, qIndex);
+          const linkQuery = qIndex === -1 ? "" : l.to.slice(qIndex + 1);
+          const isActive =
+            pathname === linkPath &&
+            (linkQuery
+              ? currentQuery === linkQuery ||
+                (pathname === "/usluge" && !currentQuery && linkQuery === "kat=ginekologija")
+              : !currentQuery);
+
+          return (
+            <Link
+              key={l.to}
+              to={l.to}
+              className={isActive ? "is-active" : undefined}
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 export function AppShell({ children }) {
+  const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [compactNav, setCompactNav] = useState(false);
   const closeMenu = () => setMenuOpen(false);
+  const forceSolidHeader = SOLID_HEADER_PATHS.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  );
+  const pageMeta = PAGE_TITLES[pathname] ?? null;
+  const pageTall = Boolean(pageMeta) && !scrolled;
+  // Na mobilnom / uslugama je header uvek bel — mauve logo odmah.
+  const solidHeader = scrolled || compactNav || forceSolidHeader;
+  const solidLogo = solidHeader;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setScrolled(window.scrollY > 40);
+  }, [pathname]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setCompactNav(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   return (
-    <div className="site-root">
+    <div
+      className={[
+        "site-root",
+        pageMeta ? "site-root--page-header" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
 
       {/* Sticky header */}
-      <header className="site-header">
+      <header
+        className={[
+          "site-header",
+          solidHeader ? "is-scrolled" : "",
+          solidLogo ? "has-solid-logo" : "",
+          pageMeta ? "site-header--page" : "",
+          pageTall ? "site-header--page-tall" : "",
+          pageMeta && scrolled ? "site-header--page-compact" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
         <div className="site-shell site-header__inner">
           <Link className="site-brand" to="/" aria-label="RAOVIC početna" onClick={closeMenu}>
-            <img className="site-brand__logo" src="/images/brand/logo.jpg" alt="RAOVIC" />
+            <span className="site-brand__mark">
+              <img
+                className="site-brand__wordmark"
+                src={solidLogo ? logoWordmarkScrolled : logoWordmark}
+                alt="RAOVIC"
+              />
+              <span className="site-brand__spin" aria-hidden="true">
+                <img src={solidLogo ? logoCircleScrolled : logoCircle} alt="" />
+              </span>
+            </span>
           </Link>
-          <nav className="site-nav" aria-label="Glavna navigacija">
-            <NavLink to="/" end>Početna</NavLink>
-            <NavDropdown
-              to="/usluge"
-              label="Usluge"
-              links={serviceCategories.map((cat) => ({
-                to: `/usluge?kat=${cat.id}`,
-                label: cat.label,
-              }))}
-            />
-            <NavLink to="/tim">Tim</NavLink>
-            {/* Sekcija na pocetnoj - obican link, da se ne pali kao aktivna strana */}
-            <Link to="/" state={{ scrollTo: "o-nama" }}>O nama</Link>
-            <NavDropdown
-              to="/vodic"
-              label="Vodič"
-              links={blogCategories
-                .filter((c) => c.id !== "sve")
-                .map((cat) => ({ to: `/vodic?kategorija=${cat.id}`, label: cat.label }))}
-            />
-            <NavLink to="/kontakt">Kontakt</NavLink>
-          </nav>
-          <a className="button button--primary site-header__cta" href={PHONE_HREF}>
-            Zakažite pregled
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="7" y1="17" x2="17" y2="7" />
-              <polyline points="7 7 17 7 17 17" />
-            </svg>
-          </a>
+
+          <div className="site-header__pill">
+            <nav className="site-nav" aria-label="Glavna navigacija">
+              <NavLink to="/" end>Početna</NavLink>
+              <NavDropdown
+                to="/usluge"
+                label="Usluge"
+                links={serviceCategories.map((cat) => ({
+                  to: `/usluge?kat=${cat.id}`,
+                  label: cat.label,
+                }))}
+              />
+              <NavLink to="/tim">Tim</NavLink>
+              {/* Sekcija na pocetnoj - obican link, da se ne pali kao aktivna strana */}
+              <Link to="/" state={{ scrollTo: "o-nama" }}>O nama</Link>
+              <NavLink to="/blog">Blog</NavLink>
+              <NavLink to="/kontakt">Kontakt</NavLink>
+            </nav>
+            <a className="button button--primary site-header__cta" href={PHONE_HREF}>
+              Zakažite pregled
+            </a>
+          </div>
+
           <button
             className={`site-header__burger ${menuOpen ? "is-open" : ""}`}
             aria-label="Meni"
@@ -77,6 +180,15 @@ export function AppShell({ children }) {
           </button>
         </div>
 
+        {pageMeta && (
+          <div className="site-shell site-header__page" aria-hidden={!pageTall}>
+            <div className="site-header__page-inner">
+              <h1>{pageMeta.title}</h1>
+              {pageMeta.lead && <p>{pageMeta.lead}</p>}
+            </div>
+          </div>
+        )}
+
         {/* Mobilni meni */}
         <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`}>
           <nav className="mobile-menu__nav" aria-label="Mobilna navigacija">
@@ -84,7 +196,7 @@ export function AppShell({ children }) {
             <NavLink to="/usluge" onClick={closeMenu}>Usluge</NavLink>
             <NavLink to="/tim" onClick={closeMenu}>Tim</NavLink>
             <Link to="/" state={{ scrollTo: "o-nama" }} onClick={closeMenu}>O nama</Link>
-            <NavLink to="/vodic" onClick={closeMenu}>Vodič</NavLink>
+            <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/kontakt" onClick={closeMenu}>Kontakt</NavLink>
           </nav>
           <a className="button button--primary" href={PHONE_HREF} onClick={closeMenu}>
@@ -120,7 +232,7 @@ export function AppShell({ children }) {
 
           <div className="site-footer__brand">
             <Link className="site-brand" to="/" aria-label="RAOVIC početna">
-              <img className="site-brand__logo site-footer__logo" src="/images/brand/logo.jpg" alt="RAOVIC" />
+              <img className="site-brand__logo site-footer__logo" src={logoRaovic} alt="RAOVIC" />
             </Link>
             <p>
               Kompletna ginekološka zaštita i nega žena u svim fazama života.
@@ -149,7 +261,7 @@ export function AppShell({ children }) {
               <Link to="/usluge">Usluge</Link>
               <Link to="/tim">Tim</Link>
               <Link to="/" state={{ scrollTo: "o-nama" }}>O nama</Link>
-              <Link to="/vodic">Vodič</Link>
+              <Link to="/blog">Blog</Link>
               <Link to="/kontakt">Kontakt</Link>
             </nav>
           </div>
@@ -157,11 +269,11 @@ export function AppShell({ children }) {
           <div className="site-footer__col">
             <h4>Usluge</h4>
             <nav>
-              <Link to="/usluge">Ginekologija</Link>
-              <Link to="/usluge">Trudnoća</Link>
-              <Link to="/usluge">Intervencije</Link>
-              <Link to="/usluge">Sterilitet</Link>
-              <Link to="/usluge">Konsultativni pregledi</Link>
+              <Link to="/usluge?kat=ginekologija">Ginekologija</Link>
+              <Link to="/usluge?kat=trudnoca">Trudnoća</Link>
+              <Link to="/usluge?kat=intervencije">Intervencije</Link>
+              <Link to="/usluge?kat=sterilitet">Sterilitet</Link>
+              <Link to="/usluge?kat=konsultativni">Konsultativni pregledi</Link>
             </nav>
           </div>
 

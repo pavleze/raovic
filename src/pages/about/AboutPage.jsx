@@ -65,7 +65,7 @@ export function AboutPage() {
             </div>
             <div className="about-feature">
               <span className="about-feature-dot" />
-              <p>9 lekara specijalista, uključujući profesora i docenta medicine</p>
+              <p>10 lekara specijalista, uključujući profesora i docenta medicine</p>
             </div>
             <div className="about-feature">
               <span className="about-feature-dot" />
