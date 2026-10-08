@@ -484,6 +484,20 @@ export const blogArticles = [
   },
   {
     category: "trudnoca",
+    title: "Medikamentozni prekid trudnoće",
+    desc: "Nehirurška metoda prekida rane trudnoće primenom terapije u dve faze, pod nadzorom ginekologa, uz kontrolni pregled nakon intervencije.",
+    content: [
+      "Medikamentozni prekid trudnoće je nehirurška metoda prekida rane trudnoće primenom odgovarajuće terapije, pod nadzorom lekara specijaliste ginekologije.",
+      "## Priprema",
+      "Pre započinjanja procedure obavlja se ultrazvučni pregled kako bi se potvrdilo prisustvo trudnoće u materici i procenila mogućnost sprovođenja intervencije. Nakon pregleda i potpisivanja informisanog pristanka pacijentkinje, lekar primenjuje medikamentoznu terapiju prema utvrđenom protokolu.",
+      "## Sprovođenje terapije",
+      "Terapija se sprovodi u dve faze, u razmaku od približno 48 sati, nakon čega dolazi do izbacivanja trudnoće, praćenog krvarenjem i grčevima.",
+      "## Posle procedure",
+      "Nakon završetka procedure obavlja se kontrolni pregled radi potvrde uspešnosti intervencije. Povratak menstrualnog ciklusa očekuje se najčešće nakon 4–6 nedelja.",
+    ],
+  },
+  {
+    category: "trudnoca",
     title: "Laboratorijske analize u trudnoći",
     desc: "Kompletni laboratorijski pregledi koji su sastavni deo praćenja trudnoće - brisevi i analize za otkrivanje infekcija i praćenje zdravlja majke i ploda.",
     content: [

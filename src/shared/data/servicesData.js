@@ -51,7 +51,7 @@ export const serviceCategories = [
       "Ginekološke intervencije su manji hirurški poduhvati koje je obično moguće uraditi u ambulantnim uslovima.",
     items: [
       { name: "Biopsija", article: "Biopsija grlića materice", dur: "15 min", price: "27.000 RSD" },
-      { name: "Medikamentozni prekid trudnoće", article: "Prekid trudnoće", dur: "45 min", price: "38.000 RSD" },
+      { name: "Medikamentozni prekid trudnoće", article: "Medikamentozni prekid trudnoće", dur: "45 min", price: "38.000 RSD" },
       { name: "Hirurški prekid trudnoće (abortus)", article: "Prekid trudnoće", dur: "45 min", price: "38.000 RSD" },
       { name: "Eksplorativna kiretaža", article: "Eksplorativna kiretaža", dur: "45 min", price: "38.000 RSD" },
       { name: "Biopsija grlića sa kiretažom kanala", article: "Biopsija grlića materice", dur: "30 min", price: "30.000 RSD" },
