@@ -9,7 +9,7 @@ import photoMirko from "../../assets/dr-mirko-mackic.png";
 import photoJelena from "../../assets/jelena-radojevic.png";
 import photoDrasko from "../../assets/dr-drasko-subotic.png";
 import photoJovana from "../../assets/jovana-ivkovic.png";
-import photoVera from "../../assets/dr-vera-stankic.png";
+import photoTatjana from "../../assets/dr-tatjana-dragisic.png";
 import photoMilina from "../../assets/dr-milina-gajic-tancic.png";
 import photoLjiljana from "../../assets/dr-ljiljana-marina.png";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.png";
@@ -147,16 +147,16 @@ export const associates = [
     name: "Dr Tatjana Dragišić",
     role: "Spec. interne medicine · Hematolog",
     initials: "TD",
+    photo: photoTatjana,
+    cutout: true,
+    photoZoom: 1.08,
+    photoFocus: "center top",
+    photoOrigin: "top center",
   },
   {
     name: "Dr Vera Stankić",
     role: "Spec. interne medicine · Kardiolog",
     initials: "VS",
-    photo: photoVera,
-    cutout: true,
-    photoZoom: 1.08,
-    photoFocus: "center top",
-    photoOrigin: "top center",
   },
   {
     name: "Prof. dr Radomir Naumović",
