@@ -15,6 +15,7 @@ import photoMilina from "../../assets/dr-milina-gajic-tancic.png";
 import photoLjiljana from "../../assets/dr-ljiljana-marina.png";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.png";
 import photoSkrijelj from "../../assets/dr-danijel-skrijelj.png";
+import photoVeljovic from "../../assets/dr-milic-veljovic.png";
 
 export const founders = [
   {
@@ -43,6 +44,16 @@ export const founders = [
 ];
 
 export const associates = [
+  {
+    name: "Dr Milić Veljović",
+    role: "Anesteziolog",
+    initials: "MV",
+    photo: photoVeljovic,
+    cutout: true,
+    photoZoom: 1.08,
+    photoFocus: "center top",
+    photoOrigin: "top center",
+  },
   {
     name: "Prof. dr Dejan Filimonović",
     role: "Spec. ginekologije i akušerstva",
