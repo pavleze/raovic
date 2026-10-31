@@ -1,7 +1,8 @@
 # Podesavanja za cPanel (Apache) hosting. Vite ovaj fajl kopira u dist/.
 # Isto sto vercel.json radi za Vercel: preusmeravanja starih Wix linkova i ciste adrese.
 
-Options -Indexes
+# -MultiViews: inace Apache za /kontakt sam izabere kontakt.php umesto stranice Kontakt
+Options -Indexes -MultiViews
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
