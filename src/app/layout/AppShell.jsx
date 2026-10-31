@@ -10,9 +10,13 @@ import logoCircleScrolled from "../../assets/roze-lila-krug.png";
 const PHONE_HREF = "tel:+381112447763";
 
 /** Unutrašnje stranice - beli header sa radijusom odmah, bez čekanja skrola */
-const SOLID_HEADER_PATHS = ["/usluge", "/tim", "/blog", "/kontakt"];
+const SOLID_HEADER_PATHS = ["/o-nama", "/usluge", "/tim", "/blog", "/kontakt"];
 
 const PAGE_TITLES = {
+  "/o-nama": {
+    title: "O nama",
+    lead: "Ginekološko-akušerska ordinacija u srcu Vračara, posvećena zdravlju žena od 2004. godine.",
+  },
   "/usluge": {
     title: "Usluge",
     lead: "Kompletna ginekološka zaštita u svim fazama ženskog života - od preventive do složenih dijagnostičkih procedura.",

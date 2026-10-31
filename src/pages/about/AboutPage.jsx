@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { PageHeader } from "../../shared/ui/PageHeader";
 import { TeamCard } from "../../shared/ui/TeamCard";
 import { ImageCarousel } from "../../shared/ui/ImageCarousel";
 import { founders } from "../../shared/data/teamData";
@@ -7,12 +6,7 @@ import { ordinacijaGallery } from "../../shared/data/galleryData";
 
 export function AboutPage() {
   return (
-    <div className="inner-page">
-      <PageHeader
-        eyebrow="Ginekološka ordinacija Raović"
-        title="O nama"
-        lead="Specijalistička ginekološko-akušerska ordinacija Raović smeštena u samom srcu Vračara, brine o Vašem zdravlju od 2004. godine."
-      />
+    <div className="inner-page inner-page--onama">
       <div className="site-shell inner-page__content">
 
         {/* ── Intro ── */}
@@ -87,7 +81,7 @@ export function AboutPage() {
             <h3 className="at-group__label">Osnivači</h3>
             <div className="at-grid at-grid--founders">
               {founders.map((d) => (
-                <TeamCard key={d.name} {...d} accent />
+                <TeamCard key={d.name} {...d} accent panel />
               ))}
             </div>
           </div>
