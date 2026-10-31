@@ -1,12 +1,28 @@
-import { useEffect } from "react";
-import { instagramPosts } from "../../shared/data/instagramPosts";
+import { useEffect, useState } from "react";
 
 const EMBED_SCRIPT = "https://www.instagram.com/embed.js";
 
+// Objave se dodaju preko /admin (blog-posts.php na hostingu). Gde PHP ne radi
+// (Vercel, lokalni dev), koriste se početne objave iz blog-posts-default.json.
+async function loadPosts() {
+  for (const url of ["/blog-posts.php", "/blog-posts-default.json"]) {
+    try {
+      const res = await fetch(url, { cache: "no-cache" });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const posts = Array.isArray(data) ? data : data.posts;
+      if (Array.isArray(posts)) return posts;
+    } catch {
+      // probaj sledeći izvor
+    }
+  }
+  return [];
+}
+
 // Instagram-ova skripta pretvara <blockquote class="instagram-media"> u ugrađen post.
-function useInstagramEmbeds(count) {
+function useInstagramEmbeds(posts) {
   useEffect(() => {
-    if (!count) return;
+    if (!posts?.length) return;
     if (window.instgrm) {
       window.instgrm.Embeds.process();
       return;
@@ -16,22 +32,32 @@ function useInstagramEmbeds(count) {
     script.src = EMBED_SCRIPT;
     script.async = true;
     document.body.appendChild(script);
-  }, [count]);
+  }, [posts]);
 }
 
 export function BlogPage() {
-  useInstagramEmbeds(instagramPosts.length);
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    loadPosts().then((list) => active && setPosts(list));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useInstagramEmbeds(posts);
 
   return (
     <div className="inner-page inner-page--blog">
       <div className="site-shell inner-page__content">
-        {instagramPosts.length === 0 ? (
+        {posts === null ? null : posts.length === 0 ? (
           <div className="blog-empty">
             <p>Uskoro novi članci i saveti iz ordinacije Raović.</p>
           </div>
         ) : (
           <div className="ig-grid">
-            {instagramPosts.map((post) => (
+            {posts.map((post) => (
               <article className="ig-post" key={post.url}>
                 <h2 className="ig-post__title">{post.title}</h2>
                 {post.description && <p className="ig-post__text">{post.description}</p>}

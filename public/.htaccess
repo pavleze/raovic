@@ -42,6 +42,10 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule ^(.*)$ https://www.raovic.rs/$1 [L,R=301]
 
+# Admin za blog (/admin -> admin.php); podaci admina nisu dostupni preko weba
+RewriteRule ^admin/?$ admin.php [L]
+RewriteRule ^raovic-data(/|$) - [F,L]
+
 # Ciste adrese (/kontakt, /tim...): sve sto nije pravi fajl otvara index.html, a React bira stranicu
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

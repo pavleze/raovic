@@ -8434,6 +8434,7 @@ a.contact-quick__val:hover {
 
 .ig-post__text {
   margin: 0 0 14px;
+  white-space: pre-line;
   color: #6b5e52;
   font-size: 0.95rem;
   line-height: 1.55;
