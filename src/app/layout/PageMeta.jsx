@@ -7,7 +7,7 @@ const SITE_NAME = "Ginekološka ordinacija Raović";
 // Naslov i opis koje Google prikazuje za svaku stranicu.
 const PAGES = {
   "/": {
-    title: `${SITE_NAME} – Vračar, Beograd`,
+    title: `${SITE_NAME} - Vračar, Beograd`,
     description:
       "Specijalistička ginekološko-akušerska ordinacija Raović na Vračaru, od 2004. godine. Ginekološki pregledi, ultrazvuk, kontrola trudnoće, intervencije i lečenje steriliteta.",
   },
@@ -28,7 +28,7 @@ const PAGES = {
   "/kontakt": {
     title: `Kontakt i zakazivanje | ${SITE_NAME}`,
     description:
-      "Zakažite pregled u ordinaciji Raović: Golsvordijeva 6, Vračar, Beograd. Tel. 011 244 77 63. Radno vreme pon–pet 08–20h, subota 08–14h.",
+      "Zakažite pregled u ordinaciji Raović: Golsvordijeva 6, Vračar, Beograd. Tel. 011 244 77 63. Radno vreme pon-pet 08-20h, subota 08-14h.",
   },
 };
 
