@@ -1544,8 +1544,7 @@ img {
 .inner-page--usluge,
 .inner-page--tim,
 .inner-page--kontakt,
-.inner-page--blog,
-.inner-page--onama {
+.inner-page--blog {
   background: #f7f2ec;
 }
 
@@ -1556,54 +1555,50 @@ img {
 .site-root--page-header:has(.inner-page--kontakt),
 .site-root--page-header:has(.inner-page--kontakt) .site-main,
 .site-root--page-header:has(.inner-page--blog),
-.site-root--page-header:has(.inner-page--blog) .site-main,
-.site-root--page-header:has(.inner-page--onama),
-.site-root--page-header:has(.inner-page--onama) .site-main {
+.site-root--page-header:has(.inner-page--blog) .site-main {
   background: #f7f2ec;
 }
 
 .inner-page--usluge .inner-page__content,
-:is(.inner-page--tim, .inner-page--onama) .inner-page__content,
+.inner-page--tim .inner-page__content,
 .inner-page--kontakt .inner-page__content,
-.inner-page--blog .inner-page__content,
-.inner-page--onama .inner-page__content {
+.inner-page--blog .inner-page__content {
   padding-top: 56px;
   padding-bottom: 40px;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .site-shell,
+.inner-page--tim .site-shell,
 .inner-page--usluge .site-shell,
 .inner-page--kontakt .site-shell,
-.inner-page--blog .site-shell,
-.inner-page--onama .site-shell {
+.inner-page--blog .site-shell {
   width: min(1280px, calc(100% - 48px));
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-grid,
-:is(.inner-page--tim, .inner-page--onama) .at-grid--founders {
+.inner-page--tim .at-grid,
+.inner-page--tim .at-grid--founders {
   grid-template-columns: repeat(auto-fill, minmax(0, 260px));
   gap: 18px;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel {
+.inner-page--tim .at-card--panel {
   box-shadow: 0 5px 16px rgba(90, 60, 40, 0.12);
   width: 100%;
   max-width: 260px;
   border: 0;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel:hover {
+.inner-page--tim .at-card--panel:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(90, 60, 40, 0.16);
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--accent .at-card__avatar,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__avatar,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo.at-card--accent .at-card__avatar,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout.at-card__avatar--bg {
+.inner-page--tim .at-card--panel .at-card__avatar,
+.inner-page--tim .at-card--panel.at-card--accent .at-card__avatar,
+.inner-page--tim .at-card--panel.at-card--photo .at-card__avatar,
+.inner-page--tim .at-card--panel.at-card--photo.at-card--accent .at-card__avatar,
+.inner-page--tim .at-card--panel .at-card__avatar--photo,
+.inner-page--tim .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout,
+.inner-page--tim .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout.at-card__avatar--bg {
   aspect-ratio: 1 / 1.05;
   position: relative;
   overflow: hidden;
@@ -1622,50 +1617,50 @@ img {
   background-repeat: no-repeat, repeat, no-repeat !important;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar::before {
+.inner-page--tim .at-card--panel .at-card__avatar::before {
   display: none;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar::after {
+.inner-page--tim .at-card--panel .at-card__avatar::after {
   display: none;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar img {
+.inner-page--tim .at-card--panel .at-card__avatar img {
   position: relative;
   z-index: 1;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__body,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__body {
+.inner-page--tim .at-card--panel.at-card--photo .at-card__body,
+.inner-page--tim .at-card--panel .at-card__body {
   background: #fff;
   padding: 14px 14px 16px;
   border-top: 0;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__name,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__name {
+.inner-page--tim .at-card--panel .at-card__name,
+.inner-page--tim .at-card--panel.at-card--photo .at-card__name {
   font-size: 0.92rem;
   color: #1a1d26;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__role,
-:is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__role {
+.inner-page--tim .at-card--panel .at-card__role,
+.inner-page--tim .at-card--panel.at-card--photo .at-card__role {
   font-size: 0.78rem;
   color: #6b6470;
   white-space: pre-line;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-group__label {
+.inner-page--tim .at-group__label {
   color: #5f3b58;
   font-family: var(--font-body);
   letter-spacing: 0.14em;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-group__label::after {
+.inner-page--tim .at-group__label::after {
   background: linear-gradient(to right, rgba(122, 79, 114, 0.45), transparent);
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-associates-panel {
+.inner-page--tim .at-associates-panel {
   position: relative;
   display: grid;
   gap: 12px;
@@ -1683,7 +1678,7 @@ img {
   overflow: hidden;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-associates-panel::before {
+.inner-page--tim .at-associates-panel::before {
   content: "";
   position: absolute;
   left: 0;
@@ -1693,74 +1688,74 @@ img {
   background: linear-gradient(180deg, #b08f6e 0%, #9a6b8c 50%, #7a4f72 100%);
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-associates-panel p {
+.inner-page--tim .at-associates-panel p {
   margin: 0;
   color: #5c5562;
   font-size: 0.95rem;
   line-height: 1.55;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-section {
+.inner-page--tim .at-section {
   margin-bottom: 0;
 }
 
-:is(.inner-page--tim, .inner-page--onama) .at-group--associates {
+.inner-page--tim .at-group--associates {
   margin-bottom: 0;
 }
 
 @media (max-width: 700px) {
-  :is(.inner-page--tim, .inner-page--onama) .at-grid,
-  :is(.inner-page--tim, .inner-page--onama) .at-grid--founders {
+  .inner-page--tim .at-grid,
+  .inner-page--tim .at-grid--founders {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel {
+  .inner-page--tim .at-card--panel {
     max-width: none;
   }
 
   /* Desktop photoZoom/shift seku lice na uskim karticama */
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--accent .at-card__avatar,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__avatar,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout {
+  .inner-page--tim .at-card--panel .at-card__avatar,
+  .inner-page--tim .at-card--panel.at-card--accent .at-card__avatar,
+  .inner-page--tim .at-card--panel.at-card--photo .at-card__avatar,
+  .inner-page--tim .at-card--panel .at-card__avatar--photo,
+  .inner-page--tim .at-card--panel .at-card__avatar--photo.at-card__avatar--cutout {
     aspect-ratio: 1 / 1.15;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar img {
+  .inner-page--tim .at-card--panel .at-card__avatar img {
     transform: none !important;
     object-fit: contain;
     object-position: center bottom;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__avatar--photo:not(.at-card__avatar--cutout) img {
+  .inner-page--tim .at-card--panel .at-card__avatar--photo:not(.at-card__avatar--cutout) img {
     object-fit: cover;
     object-position: center 22%;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__body {
+  .inner-page--tim .at-card--panel .at-card__body {
     padding: 12px 12px 14px;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__name,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__name {
+  .inner-page--tim .at-card--panel .at-card__name,
+  .inner-page--tim .at-card--panel.at-card--photo .at-card__name {
     font-size: 0.82rem;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel .at-card__role,
-  :is(.inner-page--tim, .inner-page--onama) .at-card--panel.at-card--photo .at-card__role {
+  .inner-page--tim .at-card--panel .at-card__role,
+  .inner-page--tim .at-card--panel.at-card--photo .at-card__role {
     font-size: 0.7rem;
   }
 
-  :is(.inner-page--tim, .inner-page--onama) .at-associates-panel {
+  .inner-page--tim .at-associates-panel {
     padding: 18px 18px 16px 22px;
   }
 }
 
 @media (max-width: 420px) {
-  :is(.inner-page--tim, .inner-page--onama) .at-grid,
-  :is(.inner-page--tim, .inner-page--onama) .at-grid--founders {
+  .inner-page--tim .at-grid,
+  .inner-page--tim .at-grid--founders {
     grid-template-columns: 1fr;
     max-width: 280px;
     margin-inline: auto;
@@ -8402,50 +8397,12 @@ a.contact-quick__val:hover {
   }
 }
 
-/* O nama u istim bež/braon tonovima kao Tim, Usluge i Kontakt */
-.inner-page--onama .eyebrow.eyebrow--dash,
-.inner-page--onama .about-tag,
-.inner-page--onama .about-quote__label,
-.inner-page--onama .text-link {
-  color: #8f7358;
-}
-
-.inner-page--onama .about-content > p {
-  color: #4a4540;
-}
-
-.inner-page--onama .text-link:hover {
-  color: #5f4a37;
-}
-
-.inner-page--onama .about-content h2,
-.inner-page--onama .at-section__title {
-  font-family: var(--font-serif);
-  color: #1a1d26;
-}
-
-.inner-page--onama .about-quote--plain::before,
-.inner-page--onama .about-quote--plain .about-quote__text::after {
-  color: #b08f6e;
-}
-
-.inner-page--onama .about-feature {
-  background: #fff;
-  border: 1px solid rgba(176, 143, 110, 0.16);
-  box-shadow: 0 8px 22px rgba(90, 60, 40, 0.05);
-}
-
-.inner-page--onama .about-feature-dot {
-  background: #b08f6e;
-}
-
 /* Na telefonu manji razmak između headera i sadržaja */
 @media (max-width: 600px) {
   .inner-page--usluge .inner-page__content,
   .inner-page--tim .inner-page__content,
   .inner-page--kontakt .inner-page__content,
-  .inner-page--blog .inner-page__content,
-  .inner-page--onama .inner-page__content {
+  .inner-page--blog .inner-page__content {
     padding-top: 0;
   }
 }

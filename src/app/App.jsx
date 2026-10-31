@@ -3,7 +3,6 @@ import { AppShell } from "./layout/AppShell";
 import { ScrollToTop } from "./layout/ScrollToTop";
 import { PageMeta } from "./layout/PageMeta";
 import { HomePage } from "../pages/home/HomePage";
-import { AboutPage } from "../pages/about/AboutPage";
 import { ServicesPage } from "../pages/services/ServicesPage";
 import { TeamPage } from "../pages/team/TeamPage";
 import { ContactPage } from "../pages/contact/ContactPage";
@@ -27,7 +26,8 @@ export function App() {
       <AppShell>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/o-nama" element={<AboutPage />} />
+          {/* O nama je deo početne strane; stari /o-nama linkovi skroluju do njega */}
+          <Route path="/o-nama" element={<Navigate to="/" replace state={{ scrollTo: "o-nama" }} />} />
           <Route path="/usluge" element={<ServicesPage />} />
           <Route path="/tim" element={<TeamPage />} />
           <Route path="/blog" element={<BlogPage />} />
