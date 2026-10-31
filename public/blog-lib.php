@@ -76,3 +76,45 @@ function blog_clean_text($value, $max, $multiline = false) {
     $value = preg_replace($multiline ? '/[\x00-\x09\x0B-\x1F\x7F]+/u' : '/[\x00-\x1F\x7F]+/u', ' ', $value);
     return mb_substr(trim($value), 0, $max);
 }
+
+// Preuzima tekst opisa sa javne "embed" verzije Instagram objave (ista koju koristi ugradjeni prikaz).
+// Vraca [tekst, null] ili [null, poruka greske]. Instagram moze da promeni stranicu, pa je ovo pomoc, ne garancija.
+function blog_fetch_instagram_caption($url) {
+    $url = blog_normalize_instagram_url($url);
+    if ($url === null) return [null, 'Prvo unesite ispravan link ka objavi na Instagramu.'];
+
+    $html = blog_http_get($url . 'embed/captioned/');
+    if ($html === null) return [null, 'Instagram trenutno ne odgovara. Pokušajte ponovo ili prepišite opis ručno.'];
+
+    if (!preg_match('~<div class="Caption">(.*?)</div>~s', $html, $m)) {
+        return [null, 'Objava nema opis ili Instagram nije dozvolio da se pročita.'];
+    }
+    $caption = preg_replace('~<a class="CaptionUsername".*?</a>~s', '', $m[1]);
+    $caption = preg_replace('~<br\s*/?>~i', "\n", $caption);
+    $caption = html_entity_decode(strip_tags($caption), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $caption = trim(preg_replace("/\n{3,}/", "\n\n", $caption));
+    if ($caption === '') return [null, 'Objava nema opis.'];
+
+    return [mb_substr($caption, 0, BLOG_DESCRIPTION_MAX), null];
+}
+
+function blog_http_get($url) {
+    $headers = "User-Agent: Mozilla/5.0 (compatible; RaovicSajt/1.0; +https://www.raovic.rs)\r\nAccept-Language: sr,en;q=0.8\r\n";
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_HTTPHEADER => array_filter(explode("\r\n", $headers)),
+        ]);
+        $body = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return ($body !== false && $status === 200) ? $body : null;
+    }
+    $context = stream_context_create(['http' => ['timeout' => 10, 'header' => $headers, 'follow_location' => 0, 'ignore_errors' => true]]);
+    $body = @file_get_contents($url, false, $context);
+    $status = isset($http_response_header[0]) && preg_match('~\s200\s~', $http_response_header[0]);
+    return ($body !== false && $status) ? $body : null;
+}

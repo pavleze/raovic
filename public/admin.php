@@ -179,6 +179,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!is_logged_in()) redirect_self();
 
+    // Dugme "Preuzmi opis iz objave": vraca JSON, stranica ostaje otvorena.
+    if ($action === 'fetch_caption') {
+        list($caption, $captionError) = blog_fetch_instagram_caption($_POST['url'] ?? '');
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($captionError ? ['ok' => false, 'error' => $captionError] : ['ok' => true, 'caption' => $caption], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     if ($action === 'logout') {
         $_SESSION = [];
         session_destroy();
@@ -270,6 +278,9 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
   .btn--ghost { background: transparent; color: var(--brown); border: 1px solid var(--line); }
   .btn--small { padding: 6px 12px; font-size: 0.85rem; }
   .btn--danger { background: transparent; color: var(--danger); border: 1px solid rgba(163, 32, 79, 0.3); }
+  .fetch { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+  .fetch__status { font-size: 0.85rem; color: var(--muted); }
+  .fetch__status.is-error { color: var(--danger); }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
   .msg { padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; }
   .msg--ok { background: #eef6ee; color: #23582b; border: 1px solid #cfe5cf; }
@@ -334,10 +345,14 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
       <?php if ($editing): ?><input type="hidden" name="id" value="<?= h($editing['id']) ?>"><?php endif; ?>
       <label for="title">Naslov</label>
       <input id="title" type="text" name="title" maxlength="<?= BLOG_TITLE_MAX ?>" value="<?= h($values['title'] ?? '') ?>" required>
-      <label for="description">Opis <small>(nije obavezno)</small></label>
-      <textarea id="description" name="description" maxlength="<?= BLOG_DESCRIPTION_MAX ?>"><?= h($values['description'] ?? '') ?></textarea>
       <label for="url">Link ka objavi na Instagramu</label>
       <input id="url" type="url" name="url" placeholder="https://www.instagram.com/reel/..." value="<?= h($values['url'] ?? '') ?>" required>
+      <label for="description">Opis <small>(nije obavezno)</small></label>
+      <textarea id="description" name="description" maxlength="<?= BLOG_DESCRIPTION_MAX ?>"><?= h($values['description'] ?? '') ?></textarea>
+      <div class="fetch">
+        <button type="button" class="btn btn--ghost btn--small" id="fetch-caption">Preuzmi opis iz objave</button>
+        <span class="fetch__status" id="fetch-status" role="status"></span>
+      </div>
       <div class="actions">
         <button class="btn" name="action" value="<?= $editing ? 'update' : 'add' ?>"><?= $editing ? 'Sačuvaj izmene' : 'Dodaj objavu' ?></button>
         <?php if ($editing): ?><a class="btn btn--ghost" href="/admin">Otkaži</a><?php endif; ?>
@@ -370,5 +385,43 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
     </div>
   <?php endif; ?>
 </div>
+<?php if ($loggedIn): ?>
+<script>
+  // Preuzima opis sa Instagrama za link upisan u formu i upisuje ga u polje Opis.
+  (function () {
+    var button = document.getElementById('fetch-caption');
+    if (!button) return;
+    var status = document.getElementById('fetch-status');
+    var form = button.closest('form');
+    var description = document.getElementById('description');
+    var url = document.getElementById('url');
+
+    function show(text, isError) {
+      status.textContent = text;
+      status.classList.toggle('is-error', !!isError);
+    }
+
+    button.addEventListener('click', function () {
+      if (!url.value.trim()) { show('Prvo upišite link ka objavi.', true); url.focus(); return; }
+      if (description.value.trim() && !confirm('Zameniti postojeći opis tekstom sa Instagrama?')) return;
+      var data = new FormData();
+      data.append('action', 'fetch_caption');
+      data.append('csrf', form.querySelector('input[name=csrf]').value);
+      data.append('url', url.value);
+      button.disabled = true;
+      show('Preuzimam...');
+      fetch('/admin', { method: 'POST', body: data, credentials: 'same-origin' })
+        .then(function (res) { return res.json(); })
+        .then(function (json) {
+          if (!json.ok) { show(json.error, true); return; }
+          description.value = json.caption;
+          show('Opis je preuzet. Pregledajte ga i po potrebi skratite pre čuvanja.');
+        })
+        .catch(function () { show('Preuzimanje nije uspelo. Osvežite stranicu i pokušajte ponovo.', true); })
+        .finally(function () { button.disabled = false; });
+    });
+  })();
+</script>
+<?php endif; ?>
 </body>
 </html>
