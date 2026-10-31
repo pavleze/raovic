@@ -283,7 +283,7 @@ export function AppShell({ children }) {
               <span>Golsvordijeva 6, Vračar</span>
               <span>11000 Beograd</span>
               <a href="tel:+381112447763">011 244 77 63</a>
-              <a href="tel:+381636878890">063 687 889</a>
+              <a href="tel:+38163687889">063 687 889</a>
               <a href="mailto:ordinacijaraovic@gmail.com">ordinacijaraovic@gmail.com</a>
               <span>Pon – Pet: 08:00 – 20:00</span>
               <span>Subota: 08:00 – 14:00</span>

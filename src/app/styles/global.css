@@ -3667,6 +3667,7 @@ img {
 }
 
 .contact-quick__card {
+  min-width: 0;
   padding: 22px 20px;
   background: #fff;
   border: 1px solid rgba(176, 143, 110, 0.16);
@@ -3721,6 +3722,7 @@ img {
   font-weight: 500;
   line-height: 1.55;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 a.contact-quick__val:hover {
@@ -3887,12 +3889,6 @@ a.contact-quick__val:hover {
 .contact-form {
   display: grid;
   gap: 20px;
-}
-
-@media (max-width: 600px) {
-  .contact-quick {
-    grid-template-columns: 1fr;
-  }
 }
 
 .form-row {
@@ -8361,6 +8357,13 @@ a.contact-quick__val:hover {
   }
 
   .edu-cat-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Na telefonu kontakt kartice idu jedna ispod druge (mora posle pravila za 760px). */
+@media (max-width: 600px) {
+  .contact-quick {
     grid-template-columns: 1fr;
   }
 }
