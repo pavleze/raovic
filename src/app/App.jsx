@@ -1,6 +1,7 @@
 import { BrowserRouter, HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppShell } from "./layout/AppShell";
 import { ScrollToTop } from "./layout/ScrollToTop";
+import { PageMeta } from "./layout/PageMeta";
 import { HomePage } from "../pages/home/HomePage";
 import { AboutPage } from "../pages/about/AboutPage";
 import { ServicesPage } from "../pages/services/ServicesPage";
@@ -22,6 +23,7 @@ export function App() {
   return (
     <Router>
       <ScrollToTop />
+      <PageMeta />
       <AppShell>
         <Routes>
           <Route path="/" element={<HomePage />} />
