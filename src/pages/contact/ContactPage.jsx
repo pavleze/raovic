@@ -57,6 +57,25 @@ const quickInfo = [
 
 export function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setSending(true);
+    setError("");
+    try {
+      // kontakt.php je u public/ i na hostingu stoji pored index.html
+      const res = await fetch("/kontakt.php", { method: "POST", body: new FormData(e.currentTarget) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Slanje nije uspelo.");
+      setSent(true);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <div className="inner-page inner-page--kontakt">
@@ -97,33 +116,34 @@ export function ContactPage() {
                 <p>Poruka je poslata! Javićemo vam se uskoro.</p>
               </div>
             ) : (
-              <form
-                className="contact-form-inner"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
-              >
+              <form className="contact-form-inner" onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-field">
                     <label>Ime</label>
-                    <input type="text" placeholder="Vaše ime" required />
+                    <input type="text" name="ime" placeholder="Vaše ime" maxLength={80} required />
                   </div>
                   <div className="form-field">
                     <label>Prezime</label>
-                    <input type="text" placeholder="Vaše prezime" required />
+                    <input type="text" name="prezime" placeholder="Vaše prezime" maxLength={80} required />
                   </div>
                 </div>
                 <div className="form-field">
                   <label>Telefon</label>
-                  <input type="tel" placeholder="06x xxx xxxx" required />
+                  <input type="tel" name="telefon" placeholder="06x xxx xxxx" maxLength={40} required />
                 </div>
                 <div className="form-field">
                   <label>Poruka</label>
-                  <textarea placeholder="Za koji pregled se javljate ili šta vas zanima?" rows={5} />
+                  <textarea name="poruka" placeholder="Za koji pregled se javljate ili šta vas zanima?" rows={5} maxLength={3000} />
                 </div>
-                <button className="contact-form__submit" type="submit">
-                  Pošalji upit
+                {/* Zamka za botove: ljudi ne vide ovo polje, pa ostaje prazno. */}
+                <input type="text" name="website" className="contact-form__trap" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                {error && (
+                  <p className="contact-form__error" role="alert">
+                    {error} Pokušajte ponovo ili nas pozovite na <a href={PHONE_HREF}>011 244 77 63</a>.
+                  </p>
+                )}
+                <button className="contact-form__submit" type="submit" disabled={sending}>
+                  {sending ? "Šaljem..." : "Pošalji upit"}
                 </button>
               </form>
             )}

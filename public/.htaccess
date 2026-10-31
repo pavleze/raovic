@@ -1,0 +1,60 @@
+# Podesavanja za cPanel (Apache) hosting. Vite ovaj fajl kopira u dist/.
+# Isto sto vercel.json radi za Vercel: preusmeravanja starih Wix linkova i ciste adrese.
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Stari linkovi sa Wix sajta (odmah na https://www, u jednom koraku)
+RewriteRule ^about-1/?$ https://www.raovic.rs/o-nama [L,R=301]
+RewriteRule ^(booking|book-online)/?$ https://www.raovic.rs/usluge [L,R=301]
+RewriteRule ^service-page/(endokrinologija|radiologija)/?$ https://www.raovic.rs/usluge?kat=konsultativni [L,R=301]
+RewriteRule ^service-page(/.*)?$ https://www.raovic.rs/usluge [L,R=301]
+RewriteRule ^items-1(/.*)?$ https://www.raovic.rs/usluge?kat=ginekologija [L,R=301]
+RewriteRule ^items-2(/.*)?$ https://www.raovic.rs/usluge?kat=intervencije [L,R=301]
+RewriteRule ^items-3(/.*)?$ https://www.raovic.rs/usluge?kat=trudnoca [L,R=301]
+RewriteRule ^items-5(/.*)?$ https://www.raovic.rs/usluge?kat=sterilitet [L,R=301]
+RewriteRule ^items-[^/]+(/.*)?$ https://www.raovic.rs/blog [L,R=301]
+RewriteRule ^post(/.*)?$ https://www.raovic.rs/blog [L,R=301]
+RewriteRule ^blog/.+$ https://www.raovic.rs/blog [L,R=301]
+
+# Sve na https://www.raovic.rs (osim provera za SSL sertifikat)
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.raovic.rs/$1 [L,R=301]
+
+# Ciste adrese (/kontakt, /tim...): sve sto nije pravi fajl otvara index.html, a React bira stranicu
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(images|assets|\.well-known)/
+RewriteRule ^ index.html [L]
+</IfModule>
+
+FileETag None
+<IfModule mod_headers.c>
+Header unset ETag
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-Content-Type-Options "nosniff"
+# index.html se uvek proverava, da posetioci odmah vide novu verziju
+<FilesMatch "\.html$">
+  Header set Cache-Control "no-cache"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 week"
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType text/css "access plus 1 year"
+ExpiresByType text/javascript "access plus 1 year"
+ExpiresByType application/javascript "access plus 1 year"
+</IfModule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css text/plain text/javascript application/javascript application/json image/svg+xml
+</IfModule>

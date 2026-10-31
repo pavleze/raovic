@@ -3793,6 +3793,35 @@ a.contact-quick__val:hover {
   transform: translateY(-1px);
 }
 
+.contact-form__submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.contact-form__trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.contact-form__error {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(191, 31, 111, 0.08);
+  border: 1px solid rgba(191, 31, 111, 0.25);
+  color: #8a1650;
+  font-size: 0.92rem;
+}
+
+.contact-form__error a {
+  color: inherit;
+  font-weight: 700;
+}
+
 .contact-sent {
   display: flex;
   align-items: center;
