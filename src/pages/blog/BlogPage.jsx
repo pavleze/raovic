@@ -35,16 +35,19 @@ export function BlogPage() {
               <article className="ig-post" key={post.url}>
                 <h2 className="ig-post__title">{post.title}</h2>
                 {post.description && <p className="ig-post__text">{post.description}</p>}
-                <blockquote
-                  className="instagram-media ig-post__embed"
-                  data-instgrm-permalink={post.url}
-                  data-instgrm-version="14"
-                >
-                  {/* Vidi se dok se objava ne učita ili ako je Instagram blokiran */}
-                  <a href={post.url} target="_blank" rel="noopener noreferrer">
-                    Pogledajte objavu na Instagramu
-                  </a>
-                </blockquote>
+                {/* Omotač drži Instagram-ov okvir u kartici i dok se učitava */}
+                <div className="ig-post__media">
+                  <blockquote
+                    className="instagram-media ig-post__embed"
+                    data-instgrm-permalink={post.url}
+                    data-instgrm-version="14"
+                  >
+                    {/* Vidi se dok se objava ne učita ili ako je Instagram blokiran */}
+                    <a href={post.url} target="_blank" rel="noopener noreferrer">
+                      Pogledajte objavu na Instagramu
+                    </a>
+                  </blockquote>
+                </div>
               </article>
             ))}
           </div>

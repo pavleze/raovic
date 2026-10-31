@@ -8439,9 +8439,14 @@ a.contact-quick__val:hover {
   line-height: 1.55;
 }
 
+.ig-post__media {
+  position: relative;
+}
+
 /* Instagram sam postavlja dimenzije okvira; ovde samo da stane u karticu */
 .ig-post .instagram-media,
 .ig-post iframe {
+  position: static !important;
   min-width: 0 !important;
   width: 100% !important;
   max-width: 100% !important;
