@@ -1,0 +1,21 @@
+{
+  "redirects": [
+    { "source": "/about-1", "destination": "/o-nama", "permanent": true },
+    { "source": "/booking", "destination": "/usluge", "permanent": true },
+    { "source": "/book-online", "destination": "/usluge", "permanent": true },
+    { "source": "/service-page/endokrinologija", "destination": "/usluge?kat=konsultativni", "permanent": true },
+    { "source": "/service-page/radiologija", "destination": "/usluge?kat=konsultativni", "permanent": true },
+    { "source": "/service-page/:slug*", "destination": "/usluge", "permanent": true },
+    { "source": "/items-1/:slug*", "destination": "/usluge?kat=ginekologija", "permanent": true },
+    { "source": "/items-2/:slug*", "destination": "/usluge?kat=intervencije", "permanent": true },
+    { "source": "/items-3/:slug*", "destination": "/usluge?kat=trudnoca", "permanent": true },
+    { "source": "/items-5/:slug*", "destination": "/usluge?kat=sterilitet", "permanent": true },
+    { "source": "/items-:n/:slug*", "destination": "/blog", "permanent": true },
+    { "source": "/items-:n", "destination": "/blog", "permanent": true },
+    { "source": "/post/:slug*", "destination": "/blog", "permanent": true },
+    { "source": "/blog/:slug+", "destination": "/blog", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/((?!images/).*)", "destination": "/index.html" }
+  ]
+}
