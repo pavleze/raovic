@@ -7,7 +7,7 @@ const quickInfo = [
     label: "Telefon",
     values: [
       { text: "011 244 77 63", href: "tel:+381112447763" },
-      { text: "063 687 889", href: "tel:+381636878890" },
+      { text: "063 687 889", href: "tel:+38163687889" },
     ],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
