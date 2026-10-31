@@ -11,11 +11,6 @@ const PAGES = {
     description:
       "Specijalistička ginekološko-akušerska ordinacija Raović na Vračaru, od 2004. godine. Ginekološki pregledi, ultrazvuk, kontrola trudnoće, intervencije i lečenje steriliteta.",
   },
-  "/o-nama": {
-    title: `O nama | ${SITE_NAME}`,
-    description:
-      "Ginekološko-akušerska ordinacija Raović u srcu Vračara brine o zdravlju žena od 2004. godine. Upoznajte našu priču, prostor i način rada.",
-  },
   "/usluge": {
     title: `Usluge i cenovnik | ${SITE_NAME}`,
     description:

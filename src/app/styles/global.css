@@ -8396,3 +8396,13 @@ a.contact-quick__val:hover {
     grid-template-columns: 1fr;
   }
 }
+
+/* Na telefonu manji razmak između headera i sadržaja */
+@media (max-width: 600px) {
+  .inner-page--usluge .inner-page__content,
+  .inner-page--tim .inner-page__content,
+  .inner-page--kontakt .inner-page__content,
+  .inner-page--blog .inner-page__content {
+    padding-top: 0;
+  }
+}
