@@ -283,7 +283,11 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
   .post__buttons form { margin: 0; }
   .muted { color: var(--muted); }
   code { background: #f1e9df; padding: 2px 6px; border-radius: 6px; word-break: break-all; }
-  @media (max-width: 600px) { .post { grid-template-columns: 1fr; } .post__buttons { justify-content: flex-start; } }
+  @media (max-width: 600px) {
+    header { flex-direction: column; align-items: flex-start; }
+    .post { grid-template-columns: 1fr; }
+    .post__buttons { justify-content: flex-start; }
+  }
 </style>
 </head>
 <body>
