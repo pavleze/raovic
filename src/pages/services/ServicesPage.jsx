@@ -9,6 +9,22 @@ import drugoPitanje from "../../assets/drugo-pitanje.jpg";
 import trecePitanje from "../../assets/3pitanje.jpg";
 
 const articleByTitle = new Map(blogArticles.map((a) => [a.title, a]));
+
+// "Ultrazvučno snimanje ... (HSSG)" -> "ultrazvucno-snimanje-...-hssg", za kratke linkove
+// i preusmeravanja sa starog sajta (/usluge?clanak=konizacija).
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/đ/g, "dj")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function findArticle(param) {
+  return articleByTitle.get(param) || blogArticles.find((a) => slugify(a.title) === param) || null;
+}
 const blogCatLabel = new Map(blogCategories.map((c) => [c.id, c.label]));
 
 const PHONE_HREF = "tel:+381112447763";
@@ -67,7 +83,7 @@ export function ServicesPage() {
   const activeId = katParam || "ginekologija";
   const active = serviceCategories.find((c) => c.id === activeId) ?? serviceCategories[0];
   const selectedArticle = clanakParam
-    ? blogArticles.find((a) => a.title === clanakParam) || null
+    ? findArticle(clanakParam)
     : null;
 
   useEffect(() => {
