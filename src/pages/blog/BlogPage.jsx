@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const EMBED_SCRIPT = "https://www.instagram.com/embed.js";
 
@@ -35,8 +35,64 @@ function useInstagramEmbeds(posts) {
   }, [posts]);
 }
 
+// Kartice su iste visine: naslov ima mesta za 2 reda, opis za 4. Duži tekst
+// se skraćuje i dobija dugme „Pročitaj više“; otvorena je najviše jedna kartica.
+function IgPostCard({ post, expanded, onToggle }) {
+  const titleRef = useRef(null);
+  const textRef = useRef(null);
+  const [overflows, setOverflows] = useState(false);
+
+  useLayoutEffect(() => {
+    if (expanded) return;
+    const check = () => {
+      const cut = (el) => el && el.scrollHeight > el.clientHeight + 1;
+      setOverflows(cut(titleRef.current) || cut(textRef.current));
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [expanded, post.title, post.description]);
+
+  return (
+    <article className={`ig-post${expanded ? " is-expanded" : ""}`}>
+      <h2 className="ig-post__title" ref={titleRef}>
+        {post.title}
+      </h2>
+      <div className="ig-post__body">
+        <p className="ig-post__text" ref={textRef}>
+          {post.description}
+        </p>
+        {(overflows || expanded) && (
+          <button
+            type="button"
+            className="ig-post__more"
+            aria-expanded={expanded}
+            onClick={onToggle}
+          >
+            {expanded ? "Prikaži manje" : "Pročitaj više"}
+          </button>
+        )}
+      </div>
+      {/* Omotač drži Instagram-ov okvir u kartici i dok se učitava */}
+      <div className="ig-post__media">
+        <blockquote
+          className="instagram-media ig-post__embed"
+          data-instgrm-permalink={post.url}
+          data-instgrm-version="14"
+        >
+          {/* Vidi se dok se objava ne učita ili ako je Instagram blokiran */}
+          <a href={post.url} target="_blank" rel="noopener noreferrer">
+            Pogledajte objavu na Instagramu
+          </a>
+        </blockquote>
+      </div>
+    </article>
+  );
+}
+
 export function BlogPage() {
   const [posts, setPosts] = useState(null);
+  const [expandedUrl, setExpandedUrl] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -58,23 +114,12 @@ export function BlogPage() {
         ) : (
           <div className="ig-grid">
             {posts.map((post) => (
-              <article className="ig-post" key={post.url}>
-                <h2 className="ig-post__title">{post.title}</h2>
-                {post.description && <p className="ig-post__text">{post.description}</p>}
-                {/* Omotač drži Instagram-ov okvir u kartici i dok se učitava */}
-                <div className="ig-post__media">
-                  <blockquote
-                    className="instagram-media ig-post__embed"
-                    data-instgrm-permalink={post.url}
-                    data-instgrm-version="14"
-                  >
-                    {/* Vidi se dok se objava ne učita ili ako je Instagram blokiran */}
-                    <a href={post.url} target="_blank" rel="noopener noreferrer">
-                      Pogledajte objavu na Instagramu
-                    </a>
-                  </blockquote>
-                </div>
-              </article>
+              <IgPostCard
+                key={post.url}
+                post={post}
+                expanded={expandedUrl === post.url}
+                onToggle={() => setExpandedUrl((url) => (url === post.url ? null : post.url))}
+              />
             ))}
           </div>
         )}

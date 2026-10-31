@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($formError) {
             $_SESSION['form'] = ['title' => $_POST['title'] ?? '', 'description' => $_POST['description'] ?? '', 'url' => $_POST['url'] ?? ''];
             flash($formError, 'error');
-            redirect_self($action === 'update' ? 'izmeni=' . rawurlencode($id) : '');
+            redirect_self($action === 'update' ? 'izmeni=' . rawurlencode($id) : 'nova=1');
         }
         if ($action === 'add') {
             if (count($posts) >= BLOG_POSTS_MAX) {
@@ -252,6 +252,8 @@ $editId = $loggedIn ? (string) ($_GET['izmeni'] ?? '') : '';
 $editIndex = $editId !== '' ? find_post_index($posts, $editId) : null;
 $editing = $editIndex !== null ? $posts[$editIndex] : null;
 $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => '']);
+// Forma se otvara tek na klik „Dodaj objavu“ (?nova=1), za izmenu, ili kad treba ispraviti grešku.
+$showForm = $loggedIn && ($editing || $form || isset($_GET['nova']));
 ?>
 <!doctype html>
 <html lang="sr">
@@ -278,9 +280,10 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
   .btn--ghost { background: transparent; color: var(--brown); border: 1px solid var(--line); }
   .btn--small { padding: 6px 12px; font-size: 0.85rem; }
   .btn--danger { background: transparent; color: var(--danger); border: 1px solid rgba(163, 32, 79, 0.3); }
-  .fetch { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+  .fetch { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 8px; text-align: right; }
   .fetch__status { font-size: 0.85rem; color: var(--muted); }
   .fetch__status.is-error { color: var(--danger); }
+  .add-bar { margin-bottom: 20px; }
   .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
   .msg { padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; }
   .msg--ok { background: #eef6ee; color: #23582b; border: 1px solid #cfe5cf; }
@@ -338,26 +341,33 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
       <div class="actions"><button class="btn" name="action" value="login">Prijavi se</button></div>
     </form>
 
-  <?php else: ?>
+  <?php elseif (!$showForm): ?>
+    <div class="add-bar"><a class="btn" href="/admin?nova=1">+ Dodaj objavu</a></div>
+  <?php endif; ?>
+
+  <?php if ($showForm): ?>
     <form class="card" method="post">
       <h2><?= $editing ? 'Izmena objave' : 'Nova objava' ?></h2>
       <?= csrf_field() ?>
       <?php if ($editing): ?><input type="hidden" name="id" value="<?= h($editing['id']) ?>"><?php endif; ?>
       <label for="title">Naslov</label>
-      <input id="title" type="text" name="title" maxlength="<?= BLOG_TITLE_MAX ?>" value="<?= h($values['title'] ?? '') ?>" required>
+      <input id="title" type="text" name="title" maxlength="<?= BLOG_TITLE_MAX ?>" value="<?= h($values['title'] ?? '') ?>" required<?= $editing ? '' : ' autofocus' ?>>
       <label for="url">Link ka objavi na Instagramu</label>
       <input id="url" type="url" name="url" placeholder="https://www.instagram.com/reel/..." value="<?= h($values['url'] ?? '') ?>" required>
       <label for="description">Opis <small>(nije obavezno)</small></label>
       <textarea id="description" name="description" maxlength="<?= BLOG_DESCRIPTION_MAX ?>"><?= h($values['description'] ?? '') ?></textarea>
       <div class="fetch">
-        <button type="button" class="btn btn--ghost btn--small" id="fetch-caption">Preuzmi opis iz objave</button>
         <span class="fetch__status" id="fetch-status" role="status"></span>
+        <button type="button" class="btn btn--ghost btn--small" id="fetch-caption">Preuzmi opis iz objave</button>
       </div>
       <div class="actions">
-        <button class="btn" name="action" value="<?= $editing ? 'update' : 'add' ?>"><?= $editing ? 'Sačuvaj izmene' : 'Dodaj objavu' ?></button>
-        <?php if ($editing): ?><a class="btn btn--ghost" href="/admin">Otkaži</a><?php endif; ?>
+        <button class="btn" name="action" value="<?= $editing ? 'update' : 'add' ?>"><?= $editing ? 'Sačuvaj izmene' : 'Objavi' ?></button>
+        <a class="btn btn--ghost" href="/admin">Otkaži</a>
       </div>
     </form>
+  <?php endif; ?>
+
+  <?php if ($loggedIn): ?>
 
     <div class="card">
       <h2>Objave na blogu (<?= count($posts) ?>)</h2>
