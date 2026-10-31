@@ -36,11 +36,10 @@ function useInstagramEmbeds(posts) {
 }
 
 // Kartice su iste visine: naslov ima mesta za 2 reda, opis za 4. Duži tekst
-// se skraćuje i dobija dugme „Pročitaj više“.
-function IgPostCard({ post }) {
+// se skraćuje i dobija dugme „Pročitaj više“; otvorena je najviše jedna kartica.
+function IgPostCard({ post, expanded, onToggle }) {
   const titleRef = useRef(null);
   const textRef = useRef(null);
-  const [expanded, setExpanded] = useState(false);
   const [overflows, setOverflows] = useState(false);
 
   useLayoutEffect(() => {
@@ -68,7 +67,7 @@ function IgPostCard({ post }) {
             type="button"
             className="ig-post__more"
             aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
+            onClick={onToggle}
           >
             {expanded ? "Prikaži manje" : "Pročitaj više"}
           </button>
@@ -93,6 +92,7 @@ function IgPostCard({ post }) {
 
 export function BlogPage() {
   const [posts, setPosts] = useState(null);
+  const [expandedUrl, setExpandedUrl] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -114,7 +114,12 @@ export function BlogPage() {
         ) : (
           <div className="ig-grid">
             {posts.map((post) => (
-              <IgPostCard key={post.url} post={post} />
+              <IgPostCard
+                key={post.url}
+                post={post}
+                expanded={expandedUrl === post.url}
+                onToggle={() => setExpandedUrl((url) => (url === post.url ? null : post.url))}
+              />
             ))}
           </div>
         )}

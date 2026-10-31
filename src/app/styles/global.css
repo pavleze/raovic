@@ -8412,7 +8412,8 @@ a.contact-quick__val:hover {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 24px;
-  align-items: stretch;
+  /* Otvorena kartica raste sama; ostale ostaju osnovne visine */
+  align-items: start;
 }
 
 .ig-post {

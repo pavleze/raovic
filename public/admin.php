@@ -280,7 +280,7 @@ $showForm = $loggedIn && ($editing || $form || isset($_GET['nova']));
   .btn--ghost { background: transparent; color: var(--brown); border: 1px solid var(--line); }
   .btn--small { padding: 6px 12px; font-size: 0.85rem; }
   .btn--danger { background: transparent; color: var(--danger); border: 1px solid rgba(163, 32, 79, 0.3); }
-  .fetch { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+  .fetch { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 8px; text-align: right; }
   .fetch__status { font-size: 0.85rem; color: var(--muted); }
   .fetch__status.is-error { color: var(--danger); }
   .add-bar { margin-bottom: 20px; }
@@ -357,8 +357,8 @@ $showForm = $loggedIn && ($editing || $form || isset($_GET['nova']));
       <label for="description">Opis <small>(nije obavezno)</small></label>
       <textarea id="description" name="description" maxlength="<?= BLOG_DESCRIPTION_MAX ?>"><?= h($values['description'] ?? '') ?></textarea>
       <div class="fetch">
-        <button type="button" class="btn btn--ghost btn--small" id="fetch-caption">Preuzmi opis iz objave</button>
         <span class="fetch__status" id="fetch-status" role="status"></span>
+        <button type="button" class="btn btn--ghost btn--small" id="fetch-caption">Preuzmi opis iz objave</button>
       </div>
       <div class="actions">
         <button class="btn" name="action" value="<?= $editing ? 'update' : 'add' ?>"><?= $editing ? 'Sačuvaj izmene' : 'Objavi' ?></button>
