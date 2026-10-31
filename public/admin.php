@@ -144,7 +144,7 @@ function post_from_form() {
     $description = blog_clean_text($_POST['description'] ?? '', BLOG_DESCRIPTION_MAX, true);
     $url = blog_normalize_instagram_url($_POST['url'] ?? '');
     if ($title === '') return [null, 'Unesite naslov.'];
-    if ($url === null) return [null, 'Link mora biti link ka objavi na Instagramu, npr. https://www.instagram.com/reel/…'];
+    if ($url === null) return [null, 'Link mora biti link ka objavi na Instagramu, npr. https://www.instagram.com/reel/...'];
     return [['title' => $title, 'description' => $description, 'url' => $url], null];
 }
 
@@ -251,7 +251,7 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Admin – Blog | Ordinacija Raović</title>
+<title>Admin - Blog | Ordinacija Raović</title>
 <style>
   :root { --ink: #1a1d26; --brown: #8f7358; --muted: #6b5e52; --bg: #f7f2ec; --line: rgba(176, 143, 110, 0.25); --danger: #a3204f; }
   * { box-sizing: border-box; }
@@ -293,7 +293,7 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
 <body>
 <div class="wrap">
   <header>
-    <h1>Blog – objave</h1>
+    <h1>Blog - objave</h1>
     <?php if ($loggedIn): ?>
       <div class="actions" style="margin:0">
         <a class="btn btn--ghost btn--small" href="/blog" target="_blank" rel="noopener">Pogledaj blog ↗</a>
@@ -337,7 +337,7 @@ $values = $form ?: ($editing ?: ['title' => '', 'description' => '', 'url' => ''
       <label for="description">Opis <small>(nije obavezno)</small></label>
       <textarea id="description" name="description" maxlength="<?= BLOG_DESCRIPTION_MAX ?>"><?= h($values['description'] ?? '') ?></textarea>
       <label for="url">Link ka objavi na Instagramu</label>
-      <input id="url" type="url" name="url" placeholder="https://www.instagram.com/reel/…" value="<?= h($values['url'] ?? '') ?>" required>
+      <input id="url" type="url" name="url" placeholder="https://www.instagram.com/reel/..." value="<?= h($values['url'] ?? '') ?>" required>
       <div class="actions">
         <button class="btn" name="action" value="<?= $editing ? 'update' : 'add' ?>"><?= $editing ? 'Sačuvaj izmene' : 'Dodaj objavu' ?></button>
         <?php if ($editing): ?><a class="btn btn--ghost" href="/admin">Otkaži</a><?php endif; ?>
