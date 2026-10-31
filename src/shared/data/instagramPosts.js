@@ -3,6 +3,8 @@
 export const instagramPosts = [
   {
     url: "https://www.instagram.com/reel/Dc_BISatBjP/",
-    title: "Objava sa Instagrama",
+    title: "Hormoni u različitim fazama života",
+    description:
+      "U zavisnosti od faze života u kojoj se nalazite, vaši hormoni drugačije deluju. Njihov rad se razlikuje u reproduktivnom periodu, u perimenopauzi i u menopauzi.",
   },
 ];
