@@ -96,7 +96,7 @@ export const associates = [
   },
   {
     name: "Mr sci. med. Miloš Radović",
-    role: "Spec. uroginekologije",
+    role: "Spec. ginekologije i akušerstva",
     initials: "MR",
     photo: photoMilos,
     cutout: true,
