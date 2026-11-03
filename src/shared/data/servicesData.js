@@ -106,7 +106,7 @@ export const serviceCategories = [
       },
       { name: "Hematologija", dur: "30 min", price: "9.000 RSD" },
       { name: "Radiologija", dur: "30 min", price: "8.000 RSD" },
-      { name: "Ultrazvuk i pregled – Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
+      { name: "Nefrološki pregled – Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
     ],
   },
 ];
