@@ -67,6 +67,7 @@ export const serviceCategories = [
       { name: "Indiba radiotalasna rejuvenacija", article: "INDIBA® – Deep Care", dur: "30 min", price: "15.000 RSD" },
       { name: "Biopsija horionskih čupica (intervencija)", article: "Biopsija horionskih čupica", dur: "15 min", price: "55.000 RSD" },
       { name: "Amniocenteza (intervencija)", article: "Amniocenteza", dur: "15 min", price: "55.000 RSD" },
+      { name: "Ispitivanje prohodnosti jajovoda (HyCoSy)" },
     ],
   },
   {
@@ -106,7 +107,7 @@ export const serviceCategories = [
       },
       { name: "Hematologija", dur: "30 min", price: "9.000 RSD" },
       { name: "Radiologija", dur: "30 min", price: "8.000 RSD" },
-      { name: "Ultrazvuk i pregled – Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
+      { name: "Nefrološki pregled – Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
     ],
   },
 ];
