@@ -15,6 +15,7 @@ import photoMilina from "../../assets/dr-milina-gajic-tancic.png";
 import photoLjiljana from "../../assets/dr-ljiljana-marina.png";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.png";
 import photoSkrijelj from "../../assets/dr-danijel-skrijelj.png";
+import photoAna from "../../assets/ana-ilic.png";
 import photoVeljovic from "../../assets/dr-milic-veljovic.png";
 
 export const founders = [
@@ -208,9 +209,11 @@ export const staff = [
     name: "Ana Ilić",
     role: "Ginekološko-akušerska sestra",
     initials: "AI",
-    photo: "/images/tim/ana-ilic.jpg",
-    photoZoom: 1.28,
-    photoFocus: "center 28%",
+    photo: photoAna,
+    cutout: true,
+    photoZoom: 1.32,
+    photoFocus: "center top",
+    photoOrigin: "center 35%",
   },
   {
     name: "Jovana Ivković",
