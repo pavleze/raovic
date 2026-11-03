@@ -211,9 +211,9 @@ export const staff = [
     initials: "AI",
     photo: photoAna,
     cutout: true,
-    photoZoom: 1.32,
+    photoZoom: 1.08,
     photoFocus: "center top",
-    photoOrigin: "center 35%",
+    photoOrigin: "top center",
   },
   {
     name: "Jovana Ivković",
