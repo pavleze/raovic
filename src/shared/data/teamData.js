@@ -16,6 +16,7 @@ import photoLjiljana from "../../assets/dr-ljiljana-marina.png";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.png";
 import photoSkrijelj from "../../assets/dr-danijel-skrijelj.png";
 import photoAna from "../../assets/ana-ilic.png";
+import photoMaja from "../../assets/maja-stojilkovic.png";
 import photoVeljovic from "../../assets/dr-milic-veljovic.png";
 
 export const founders = [
@@ -229,8 +230,10 @@ export const staff = [
     name: "Maja Stojilković",
     role: "Strukovna med. sestra – babica",
     initials: "MS",
-    photo: "/images/tim/maja-stojilkovic.jpg",
-    photoZoom: 1.28,
-    photoFocus: "center 28%",
+    photo: photoMaja,
+    cutout: true,
+    photoZoom: 1.08,
+    photoFocus: "center top",
+    photoOrigin: "top center",
   },
 ];
