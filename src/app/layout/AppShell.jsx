@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { serviceCategories } from "../../shared/data/servicesData";
+import { PhoneDialog } from "./PhoneDialog";
 import logoRaovic from "../../assets/logo_raovic.png";
 import logoWordmark from "../../assets/Ravovic-bez-kruga.png";
 import logoWordmarkScrolled from "../../assets/Ravovic-mauve-bez-kruga.png";
@@ -210,6 +211,8 @@ export function AppShell({ children }) {
       </header>
 
       <main className="site-main">{children}</main>
+
+      <PhoneDialog />
 
       {/* Plutajući brzi linkovi */}
       <div className="quick-contact" aria-label="Brzi kontakt">
