@@ -22,6 +22,8 @@ export function AppRoutes() {
           {/* O nama je deo početne strane; stari /o-nama linkovi skroluju do njega */}
           <Route path="/o-nama" element={<Navigate to="/" replace state={{ scrollTo: "o-nama" }} />} />
           <Route path="/usluge" element={<ServicesPage />} />
+          <Route path="/usluge/:kat" element={<ServicesPage />} />
+          <Route path="/usluge/:kat/:clanak" element={<ServicesPage />} />
           <Route path="/tim" element={<TeamPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/kontakt" element={<ContactPage />} />

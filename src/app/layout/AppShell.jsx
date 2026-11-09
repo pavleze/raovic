@@ -35,8 +35,7 @@ const PAGE_TITLES = {
 // Nav stavka sa dropdown-om (otvara se na hover, zatvara na klik i na izlazak miša)
 function NavDropdown({ to, label, links }) {
   const [open, setOpen] = useState(false);
-  const { pathname, search } = useLocation();
-  const currentQuery = search.startsWith("?") ? search.slice(1) : search;
+  const { pathname } = useLocation();
 
   return (
     <div
@@ -52,15 +51,11 @@ function NavDropdown({ to, label, links }) {
       </NavLink>
       <div className={`nav-dropdown ${open ? "is-open" : ""}`}>
         {links.map((l) => {
-          const qIndex = l.to.indexOf("?");
-          const linkPath = qIndex === -1 ? l.to : l.to.slice(0, qIndex);
-          const linkQuery = qIndex === -1 ? "" : l.to.slice(qIndex + 1);
+          // /usluge bez kategorije prikazuje Ginekologiju
           const isActive =
-            pathname === linkPath &&
-            (linkQuery
-              ? currentQuery === linkQuery ||
-                (pathname === "/usluge" && !currentQuery && linkQuery === "kat=ginekologija")
-              : !currentQuery);
+            pathname === l.to ||
+            pathname.startsWith(`${l.to}/`) ||
+            (pathname === to && l.to === `${to}/ginekologija`);
 
           return (
             <Link
@@ -87,7 +82,14 @@ export function AppShell({ children }) {
   const forceSolidHeader = SOLID_HEADER_PATHS.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`)
   );
-  const pageMeta = PAGE_TITLES[pathname] ?? null;
+  // Kategorija usluga (/usluge/intervencije) ima svoj naslov u headeru; članak zadržava
+  // naslov kategorije, ali kao običan tekst, jer je glavni naslov (h1) naslov članka.
+  const [, section, katId, articleSlug] = pathname.split("/");
+  const serviceCategory = section === "usluge" ? serviceCategories.find((c) => c.id === katId) : null;
+  const pageMeta =
+    PAGE_TITLES[pathname] ??
+    (serviceCategory ? { title: serviceCategory.label, lead: PAGE_TITLES["/usluge"].lead } : null);
+  const HeaderTitle = serviceCategory && articleSlug ? "p" : "h1";
   const pageTall = Boolean(pageMeta) && !scrolled;
   // Na mobilnom / uslugama je header uvek bel — mauve logo odmah.
   const solidHeader = scrolled || compactNav || forceSolidHeader;
@@ -156,7 +158,7 @@ export function AppShell({ children }) {
                 to="/usluge"
                 label="Usluge"
                 links={serviceCategories.map((cat) => ({
-                  to: `/usluge?kat=${cat.id}`,
+                  to: `/usluge/${cat.id}`,
                   label: cat.label,
                 }))}
               />
@@ -184,7 +186,7 @@ export function AppShell({ children }) {
         {pageMeta && (
           <div className="site-shell site-header__page" aria-hidden={!pageTall}>
             <div className="site-header__page-inner">
-              <h1>{pageMeta.title}</h1>
+              <HeaderTitle className="site-header__title">{pageMeta.title}</HeaderTitle>
               {pageMeta.lead && <p>{pageMeta.lead}</p>}
             </div>
           </div>
@@ -272,11 +274,11 @@ export function AppShell({ children }) {
           <div className="site-footer__col">
             <h4>Usluge</h4>
             <nav>
-              <Link to="/usluge?kat=ginekologija">Ginekologija</Link>
-              <Link to="/usluge?kat=trudnoca">Trudnoća</Link>
-              <Link to="/usluge?kat=intervencije">Intervencije</Link>
-              <Link to="/usluge?kat=sterilitet">Sterilitet</Link>
-              <Link to="/usluge?kat=konsultativni">Konsultativni pregledi</Link>
+              <Link to="/usluge/ginekologija">Ginekologija</Link>
+              <Link to="/usluge/trudnoca">Trudnoća</Link>
+              <Link to="/usluge/intervencije">Intervencije</Link>
+              <Link to="/usluge/sterilitet">Sterilitet</Link>
+              <Link to="/usluge/konsultativni">Konsultativni pregledi</Link>
             </nav>
           </div>
 

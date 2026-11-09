@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { PAGES, SITE_URL } from "../pageMeta";
+import { getPageMeta, SITE_URL } from "../pageMeta";
 
 function setMeta(selector, attr, value) {
   const el = document.head.querySelector(selector);
@@ -11,8 +11,8 @@ export function PageMeta() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const page = PAGES[pathname] ?? PAGES["/"];
-    const url = SITE_URL + (PAGES[pathname] ? pathname : "/");
+    const page = getPageMeta(pathname);
+    const url = SITE_URL + page.path;
 
     document.title = page.title;
     setMeta('meta[name="description"]', "content", page.description);

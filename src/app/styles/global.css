@@ -193,7 +193,8 @@ img {
   min-height: 0;
 }
 
-.site-header__page h1 {
+.site-header__page h1,
+.site-header__page .site-header__title {
   margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(2.1rem, 4.5vw, 3rem);
@@ -203,7 +204,7 @@ img {
   color: #1a1d26;
 }
 
-.site-header__page p {
+.site-header__page p:not(.site-header__title) {
   margin: 8px auto 0;
   max-width: 36rem;
   color: #8f7358;
@@ -233,11 +234,12 @@ img {
     margin-top: 16px;
   }
 
-  .site-header__page h1 {
+  .site-header__page h1,
+.site-header__page .site-header__title {
     font-size: clamp(1.85rem, 7vw, 2.4rem);
   }
 
-  .site-header__page p {
+  .site-header__page p:not(.site-header__title) {
     font-size: 0.9rem;
     line-height: 1.45;
     max-width: 28rem;
