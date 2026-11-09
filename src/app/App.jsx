@@ -9,18 +9,11 @@ import { ContactPage } from "../pages/contact/ContactPage";
 import { BlogPage } from "../pages/blog/BlogPage";
 import { VodicRedirect } from "../pages/blog/VodicRedirect";
 
-// Na pravom sajtu adrese su čiste (/kontakt) da bi ih Google indeksirao.
-// Kad se build otvori direktno kao fajl (file://), čiste adrese ne rade, pa ostaje hash.
-const Router = window.location.protocol === "file:" ? HashRouter : BrowserRouter;
-
-// Stari linkovi oblika /#/tim prebacuju se na /tim.
-if (Router === BrowserRouter && window.location.hash.startsWith("#/")) {
-  window.history.replaceState(null, "", window.location.hash.slice(1));
-}
-
-export function App() {
+// Stranice sajta bez rutera, da ih koriste i browser (App) i pravljenje
+// gotovog HTML-a za Google (src/entry-server.jsx).
+export function AppRoutes() {
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <PageMeta />
       <AppShell>
@@ -36,6 +29,23 @@ export function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AppShell>
+    </>
+  );
+}
+
+export function App() {
+  // Na pravom sajtu adrese su čiste (/kontakt) da bi ih Google indeksirao.
+  // Kad se build otvori direktno kao fajl (file://), čiste adrese ne rade, pa ostaje hash.
+  const Router = window.location.protocol === "file:" ? HashRouter : BrowserRouter;
+
+  // Stari linkovi oblika /#/tim prebacuju se na /tim.
+  if (Router === BrowserRouter && window.location.hash.startsWith("#/")) {
+    window.history.replaceState(null, "", window.location.hash.slice(1));
+  }
+
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }
