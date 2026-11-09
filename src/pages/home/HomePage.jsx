@@ -120,6 +120,10 @@ const testimonials = [
     text: "Pet zvezdica i ubuduće moj stalni doktor 🌟 Doktori, anesteziolog kao i celo osoblje ordinacije apsolutno prijatni i komunikativni. Sve objasnili pre i nakon intervencije i samim tim maksimalno olakšali ceo proces.",
   },
   {
+    name: "Tamara Cvejić",
+    text: "Moje tople preporuke za Dr.Mirka Mackica. Divan Lekar totalna posvecenos pacijentu jako otvoren za sva pitanja pun razumevanja i strpljenja. Uvek na svako pitanje detaljno odgovori i objasni sve sto me zanima.Ordinacija uredna i cista osoblje jako prijatno 😊",
+  },
+  {
     name: "Black Ivy",
     text: "Divno osoblje. Prijatan ambijent. Za doktorku Slađanu Raović samo reči hvale. Pravi profesionalac i pre svega izuzetna osoba. Njen pacijent sam 15 godina. Sve preporuke za ovu ordinaciju.",
   },
@@ -128,14 +132,14 @@ const testimonials = [
     text: "Ginekološkoj ordinaciji Raović je ordinacija koju preporučujem svim ženama kada me pitaju da preporučim ginekologa. Tim je izuzetno stručan i posvećen, što se odmah oseti čim uđete u ordinaciju. Posebno bih želela da pohvalim doktore Slađanu i Zorana Raovića. Njihov profesionalizam, pažnja prema pacijentima i detaljno objašnjavanje svakog koraka u procesu su za svaku pohvalu. Uvek su spremni da saslušaju i pruže podršku, što mi je ulilo veliko poverenje. Toplo preporučujem ovu ordinaciju svima koji traže visok nivo stručnosti i brige za pacijente.",
   },
   {
+    name: "mis misic",
+    text: "Najbolja ordinacija i najbolji dr Anicic ❤️",
+  },
+  {
     name: "Milena Lazić",
     text: "I would like to commend the doctor for her exceptional kindness, professionalism and dedication. During the examination, she explained everything in detail, answered all my questions and made me feel safe and calm. The examination was performed very thoroughly, with a lot of patience and attention. I sincerely recommend Dr. Sladjana Raovic to everyone looking for a professional, attentive and humane gynecologist. Thank you for your wonderful approach and the sense of trust she instilled. 🥰 Also to the receptionist.",
     // Google-ov prevod; original nije prepisan
     note: "Google recenzija · prevod Google-a",
-  },
-  {
-    name: "Ivan Voda",
-    text: "Devojka je upravo završila danas intervenciju u ovoj klinici. Čekajući je ispred, na samom ulazu su nas dočekali fenomenalno, i jako profesionalno! Posle intervencije, koja je protekla bez teškoća, takođe su se raspitivali sve vreme i bili maksimalno, maksimalno uljudni i profesionalni... Jako retko dobijete ovakav nivo usluge!! Prosto sam morao da ostavim jako pozitivne utiske, od oboje!!! 🙏🙏🙏",
   },
 ];
 
