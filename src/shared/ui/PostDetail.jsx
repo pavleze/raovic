@@ -29,13 +29,14 @@ export function PostDetail({ article, catLabel, hasBooking, onBack }) {
           <article className="post-detail__content">
             <p className="post-detail__eyebrow">{catLabel}</p>
             <h1 className="post-detail__title">{article.title}</h1>
-            {article.aka?.length > 0 && (
-              <p className="post-detail__aka">Poznato i kao: {article.aka.join(", ")}</p>
-            )}
             {article.desc && <p className="post-detail__lead">{article.desc}</p>}
             <div className="post-detail__body">
               {renderContent(article.content)}
             </div>
+            {/* Druga imena pod kojima se usluga traži (HSG, spirala...), diskretno na dnu */}
+            {article.aka?.length > 0 && (
+              <p className="post-detail__aka">Drugi nazivi: {article.aka.join(", ")}</p>
+            )}
           </article>
 
           <aside className="post-detail__aside">
