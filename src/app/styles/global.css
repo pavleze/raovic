@@ -212,13 +212,13 @@ img {
   line-height: 1.5;
 }
 
-/* Bež iza krivina headera — bez belog „čepa” u uglovima */
+/* Bež iza krivina headera - bez belog „čepa” u uglovima */
 .site-root--page-header,
 .site-root--page-header .site-main {
   background: #d5c3ac;
 }
 
-/* Razmak do sadržaja ostaje kao sa proširenim headerom — ne skače na skrol */
+/* Razmak do sadržaja ostaje kao sa proširenim headerom - ne skače na skrol */
 .site-root--page-header .site-main {
   padding-top: 210px;
 }
@@ -246,7 +246,7 @@ img {
     padding: 0 8px;
   }
 
-  /* Naslov + lead u fiksnom headeru — treba više mesta ispod */
+  /* Naslov + lead u fiksnom headeru - treba više mesta ispod */
   .site-root--page-header .site-main {
     padding-top: 236px;
   }
@@ -3321,14 +3321,14 @@ img {
   box-shadow: var(--shadow-md);
 }
 
-/* Poslednja kartica sama u redu — centriraj je */
+/* Poslednja kartica sama u redu - centriraj je */
 .service-grid .service-card:last-child:nth-child(odd) {
   grid-column: 1 / -1;
   max-width: calc(50% - 12px);
   justify-self: center;
 }
 
-/* Spoljni uglovi zaobljeni — grupa izgleda kao uokviren blok */
+/* Spoljni uglovi zaobljeni - grupa izgleda kao uokviren blok */
 .service-grid .service-card:nth-child(1) {
   border-top-left-radius: var(--radius-lg);
 }
@@ -4553,7 +4553,7 @@ a.contact-quick__val:hover {
 }
 
 /* ════════════════════════════════════════
-   Why Raović — zigzag feature section
+   Why Raović - zigzag feature section
 ════════════════════════════════════════ */
 
 .why-section {
@@ -6323,7 +6323,7 @@ a.contact-quick__val:hover {
 }
 
 /* ════════════════════════════════════════
-   Contact Band — Telefon / Radno vreme / Lokacija
+   Contact Band - Telefon / Radno vreme / Lokacija
 ════════════════════════════════════════ */
 
 .contact-band {
@@ -6751,7 +6751,7 @@ a.contact-quick__val:hover {
 }
 
 /* ════════════════════════════════════════
-   Booking Modal — 3-step wizard
+   Booking Modal - 3-step wizard
 ════════════════════════════════════════ */
 
 .booking-overlay {
@@ -7991,7 +7991,7 @@ a.contact-quick__val:hover {
 }
 
 /* ════════════════════════════════════════
-   Shared PostCard — blog-style article card
+   Shared PostCard - blog-style article card
 ════════════════════════════════════════ */
 
 .post-card-grid {
@@ -8146,7 +8146,7 @@ a.contact-quick__val:hover {
 }
 
 /* ════════════════════════════════════════
-   Shared PostDetail — full blog post view
+   Shared PostDetail - full blog post view
 ════════════════════════════════════════ */
 
 .post-detail__shell {

@@ -91,7 +91,7 @@ export function AppShell({ children }) {
     (serviceCategory ? { title: serviceCategory.label, lead: PAGE_TITLES["/usluge"].lead } : null);
   const HeaderTitle = serviceCategory && articleSlug ? "p" : "h1";
   const pageTall = Boolean(pageMeta) && !scrolled;
-  // Na mobilnom / uslugama je header uvek bel — mauve logo odmah.
+  // Na mobilnom / uslugama je header uvek bel - mauve logo odmah.
   const solidHeader = scrolled || compactNav || forceSolidHeader;
   const solidLogo = solidHeader;
 
@@ -290,8 +290,8 @@ export function AppShell({ children }) {
               <a href="tel:+381112447763">011 244 77 63</a>
               <a href="tel:+38163687889">063 687 889</a>
               <a href="mailto:ordinacijaraovic@gmail.com">ordinacijaraovic@gmail.com</a>
-              <span>Pon – Pet: 08:00 – 20:00</span>
-              <span>Subota: 08:00 – 14:00</span>
+              <span>Pon - Pet: 08:00 - 20:00</span>
+              <span>Subota: 08:00 - 14:00</span>
             </div>
           </div>
 

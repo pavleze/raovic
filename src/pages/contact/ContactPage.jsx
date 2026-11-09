@@ -43,8 +43,8 @@ const quickInfo = [
   {
     label: "Radno vreme",
     values: [
-      { text: "Pon – Pet: 08:00 – 20:00" },
-      { text: "Subota: 08:00 – 14:00" },
+      { text: "Pon - Pet: 08:00 - 20:00" },
+      { text: "Subota: 08:00 - 14:00" },
     ],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
