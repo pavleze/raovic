@@ -5,6 +5,7 @@ import { AppRoutes } from "./app/App";
 export { getPageMeta, PRERENDER_ROUTES, SITE_URL } from "./app/pageMeta";
 export { articleRoutes, categoryPath, serviceItemArticle, articlePath, slugify } from "./shared/serviceRoutes";
 export { serviceCategories } from "./shared/data/servicesData";
+export { founders, associates, staff } from "./shared/data/teamData";
 
 // Pravi HTML stranice za datu adresu (koristi ga scripts/prerender.mjs pri build-u).
 export function render(url) {

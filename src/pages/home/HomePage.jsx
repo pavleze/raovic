@@ -4,15 +4,15 @@ import { TeamCard } from "../../shared/ui/TeamCard";
 import { FocusGallery } from "../../shared/ui/FocusGallery";
 import { founders, associates } from "../../shared/data/teamData";
 import { ordinacijaGallery } from "../../shared/data/galleryData";
-import heroDoktor from "../../assets/doktor-i-trudnica-hero.png";
-import heroStolice from "../../assets/stolice-landscape.png";
-import heroBeba from "../../assets/beba-i-mama-hero.png";
+import heroDoktor from "../../assets/doktor-i-trudnica-hero.webp";
+import heroStolice from "../../assets/stolice-landscape.webp";
+import heroBeba from "../../assets/beba-i-mama-hero.webp";
 import orbitLogo from "../../assets/mauve-braon-krug.png";
 import missionMark from "../../assets/mauve-krug-beli.png";
-import photoWhy from "../../assets/novaslika-zxast-izabrati.png";
-import servicesBandBg from "../../assets/usluge-bg-soft.png";
+import photoWhy from "../../assets/novaslika-zxast-izabrati.webp";
+import servicesBandBg from "../../assets/usluge-bg-soft.webp";
 import dnaPattern from "../../assets/dna-helix-pattern.svg";
-import missionVisual from "../../assets/prostor_lepse.png";
+import missionVisual from "../../assets/prostor_lepse.webp";
 
 const HERO_SLIDES = [heroStolice, heroBeba, heroDoktor];
 const homeTeam = [...founders, ...associates];
@@ -65,24 +65,28 @@ function CountUp({ to, suffix = "", duration = 1600 }) {
 const services = [
   {
     title: "Ginekologija",
+    to: "/usluge/ginekologija",
     text: "Konsultativni pregledi, ultrazvuk, Papa test, pregled dojki, kontracepcija i bakteriološke analize.",
     image: "/images/usluge/ginekologija.jpg",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="5"/><line x1="12" y1="13" x2="12" y2="21"/><line x1="9" y1="18" x2="15" y2="18"/></svg>,
   },
   {
     title: "Trudnoća",
+    to: "/usluge/trudnoca",
     text: "Praćenje trudnoće kroz redovne kontrole, ultrazvučne preglede i Kolor Dopler u svakom trimestru.",
     image: "/images/usluge/trudnoca.jpg",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>,
   },
   {
     title: "Intervencije",
+    to: "/usluge/intervencije",
     text: "Ambulantne procedure, Papa test, kolposkopija i dijagnostičko-terapijske intervencije.",
     image: "/images/usluge/intervencije.webp",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>,
   },
   {
     title: "Konsultativni pregledi",
+    to: "/usluge/konsultativni",
     text: "Specijalistički konsultativni pregledi - endokrinologija, hematologija, radiologija i drugi.",
     image: "/images/usluge/konsultativni.webp",
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>,
@@ -453,7 +457,11 @@ export function HomePage() {
                   <h3>{service.title}</h3>
                 </div>
                 <p>{service.text}</p>
-                <Link className="services-band__more" to="/usluge">
+                <Link
+                  className="services-band__more"
+                  to={service.to}
+                  aria-label={`Pročitaj više: ${service.title}`}
+                >
                   Pročitaj više
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="5" y1="12" x2="19" y2="12" />

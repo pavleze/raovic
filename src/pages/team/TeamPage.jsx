@@ -1,6 +1,6 @@
 import { TeamCard } from "../../shared/ui/TeamCard";
 import { founders, associates, staff } from "../../shared/data/teamData";
-import servicesBandBg from "../../assets/usluge-bg-soft.png";
+import servicesBandBg from "../../assets/usluge-bg-soft.webp";
 import dnaPattern from "../../assets/dna-helix-pattern.svg";
 
 export function TeamPage() {

@@ -64,13 +64,13 @@ function articleMeta(article) {
 
 // Naslov i opis za bilo koju adresu sajta (nepoznata adresa -> početna).
 export function getPageMeta(pathname) {
-  if (PAGES[pathname]) return { path: pathname, ...PAGES[pathname] };
+  if (PAGES[pathname]) return { path: pathname, kind: "page", ...PAGES[pathname] };
   const [, section, katId, slug] = pathname.split("/");
   const cat = section === "usluge" ? findCategory(katId) : null;
-  if (cat && !slug) return { path: pathname, ...categoryMeta(cat) };
+  if (cat && !slug) return { path: pathname, kind: "category", category: cat, ...categoryMeta(cat) };
   const article = cat && slug ? findArticle(slug) : null;
-  if (article) return { path: pathname, ...articleMeta(article) };
-  return { path: "/", ...PAGES["/"] };
+  if (article) return { path: pathname, kind: "article", category: cat, article, ...articleMeta(article) };
+  return { path: "/", kind: "page", ...PAGES["/"] };
 }
 
 // Sve adrese za koje se pravi gotov HTML i koje idu u sitemap.xml.
