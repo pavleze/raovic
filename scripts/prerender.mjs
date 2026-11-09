@@ -95,7 +95,19 @@ function structuredData(page) {
   if (page.path !== "/") {
     return [crumb([["Početna", "/"], [page.title.split(" | ")[0], page.path]])];
   }
-  return [];
+  // Početna: sve usluge ordinacije (Google i AI pretraga znaju šta se tačno radi)
+  return [
+    {
+      ...CLINIC,
+      "@type": "MedicalClinic",
+      availableService: articleRoutes.map(({ article, path }) => ({
+        "@type": "MedicalProcedure",
+        name: article.seoTitle || article.title,
+        ...(article.aka?.length ? { alternateName: article.aka } : {}),
+        url: SITE_URL + path,
+      })),
+    },
+  ];
 }
 
 const jsonLdTag = (data) =>
@@ -171,5 +183,44 @@ const htaccess = await readFile(DIST + ".htaccess", "utf8");
 if (!MARKER.test(htaccess)) throw new Error("U .htaccess nema oznake @generisana-preusmeravanja");
 await writeFile(DIST + ".htaccess", htaccess.replace(MARKER, (line) => `${line}\n${rules.join("\n")}`));
 console.log(`.htaccess: ${rules.length} preusmeravanja starih linkova usluga`);
+
+// llms.txt: kratak opis ordinacije za AI pretragu (ChatGPT, Perplexity, Google AI odgovori).
+// Pravi se iz istih podataka kao sajt, pa je uvek usklađen sa njim.
+const roleText = (role) => role.replace(/\s*\n\s*/g, ", ");
+const llms = [
+  "# Ginekološka ordinacija Raović",
+  "",
+  "> Specijalistička ginekološko-akušerska ordinacija na Vračaru u Beogradu, od 2004. godine. Ginekološki pregledi, ultrazvuk, kontrola trudnoće, intervencije, lečenje steriliteta i konsultativni pregledi specijalista.",
+  "",
+  "- Adresa: Golsvordijeva 6, 11000 Beograd (Vračar)",
+  "- Telefon: 011 244 77 63, 063 687 889",
+  "- E-mail: ordinacijaraovic@gmail.com",
+  "- Radno vreme: ponedeljak - petak 08:00 - 20:00, subota 08:00 - 14:00",
+  `- Sajt: ${SITE_URL}/`,
+  `- Zakazivanje: telefonom ili preko forme ${SITE_URL}/kontakt`,
+  "",
+  ...serviceCategories.flatMap((cat) => {
+    const articles = articleRoutes.filter(({ path }) => path.startsWith(`${categoryPath(cat.id)}/`));
+    return [
+      `## ${cat.label}`,
+      "",
+      `${cat.description ? `${cat.description} ` : ""}Sve usluge: ${SITE_URL}${categoryPath(cat.id)}`,
+      "",
+      ...articles.map(({ article, path }) => {
+        const aka = article.aka?.length ? ` (poznato i kao: ${article.aka.join(", ")})` : "";
+        return `- [${article.title}](${SITE_URL}${path})${aka}: ${article.desc || ""}`.trim();
+      }),
+      "",
+    ];
+  }),
+  "## Tim",
+  "",
+  ...[...founders, ...associates].map((p) => `- ${p.name} - ${roleText(p.role)}${p.note ? ` (${p.note.toLowerCase()})` : ""}`),
+  "",
+  `Ceo tim: ${SITE_URL}/tim`,
+  "",
+].join("\n");
+await writeFile(DIST + "llms.txt", llms);
+console.log(`llms.txt: ${llms.length} znakova`);
 
 await rm(SSR, { recursive: true, force: true });
