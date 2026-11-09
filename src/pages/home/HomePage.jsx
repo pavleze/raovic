@@ -100,46 +100,35 @@ const processSteps = [
   "Jasan nalaz, preporuke i plan sledećih koraka",
 ];
 
+// Prave recenzije sa Google profila ordinacije, prepisane od reči do reči
+// (ćirilica prebačena u latinicu). Ocena i broj recenzija kao na Google-u.
+const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/LCdyRmGiBq4agLt28";
+const GOOGLE_RATING = { score: "4,3", count: 205 };
+
 const testimonials = [
   {
-    name: "Jelena Petrović",
-    text: "Redovna sam pacijentkinja više od 10 godina. Dr Slađana je neverovatno stručna i pažljiva - uvek ima vremena da objasni svaki detalj. Jedina ginekolog kojoj potpuno verujem.",
-    date: "pre mesec dana",
+    name: "Alisa Jevtović",
+    text: "Sve preporuke za ginekološku kliniku Raović. Tokom cele trudnoće sam imala osećaj potpune sigurnosti i poverenja. Dr Slađana i dr Zoran Raović, kao i ceo stručni tim, vodili su trudnoću izuzetno profesionalno, pažljivo i posvećeno. Najbolji mogući utisak i iskrena preporuka svima koji traže vrhunsku negu.",
   },
   {
-    name: "Milica Đorđević",
-    text: "Pratili su moju trudnoću od prvog ultrazvuka do porođaja. Osećala sam se sigurno u svakom trenutku. Dr Zoran jasno objasni sve. Hvala na posvećenosti!",
-    date: "pre 2 meseca",
+    name: "Marija Stanić",
+    text: "Vec dugi niz godina idem u ginekolosku ordinaciju Raovic a posle sam i vodila dve rizicne trudnoce. Zahvaljujuci njihovoj posvecenosti imam dva andjela. Prezadovoljna njihovim radom.",
   },
   {
-    name: "Ana Nikolić",
-    text: "Pregled je bio detaljan i pažljiv, a objašnjenje nalaza jasno i smirujuće. Osećala sam se bezbedno od prvog dolaska. Definitivno preporučujem svim ženama!",
-    date: "pre 3 meseca",
+    name: "Vukica Adžić",
+    text: "Neki ljudi svojim znanjem leče, a svojom ljudskošću ostavljaju trag u srcu. ❤️ Dr Radomir Ančičić je upravo takav – veliki stručnjak, ali pre svega veliki čovek, kome se divite ne samo zbog njegovog znanja već i zbog njegove dobrote, pristupa i odnosa prema ljudima. Sve pohvale i divnom osoblju ordinacije Raović, koje svojom ljubaznošću i toplinom upotpunjuje ovaj poseban tim. Od srca hvala za sve. Poštovanje i zahvalnost koje osećam ne mogu se opisati u nekoliko reči. ❤️",
   },
   {
-    name: "Tijana B.",
-    text: "Pratili su moju trudnoću od početka do kraja. Svaki pregled je bio detaljno objašnjen, nikada nisam izašla bez potpunog razumevanja nalaza. Hvala dr Slađani na svemu.",
-    date: "pre 3 meseca",
+    name: "Black Ivy",
+    text: "Divno osoblje. Prijatan ambijent. Za doktorku Slađanu Raović samo reči hvale. Pravi profesionalac i pre svega izuzetna osoba. Njen pacijent sam 15 godina. Sve preporuke za ovu ordinaciju.",
   },
   {
-    name: "Tamara Savić",
-    text: "Sve pohvale za ceo tim! Ambijent je miran i diskretan, osoblje ljubazno i toplo, a lekari vrhunski stručnjaci. Preporučujem svima iz okruženja.",
-    date: "pre 3 nedelje",
+    name: "Apoteka Valerijana",
+    text: "Ginekološkoj ordinaciji Raović je ordinacija koju preporučujem svim ženama kada me pitaju da preporučim ginekologa. Tim je izuzetno stručan i posvećen, što se odmah oseti čim uđete u ordinaciju. Posebno bih želela da pohvalim doktore Slađanu i Zorana Raovića. Njihov profesionalizam, pažnja prema pacijentima i detaljno objašnjavanje svakog koraka u procesu su za svaku pohvalu. Uvek su spremni da saslušaju i pruže podršku, što mi je ulilo veliko poverenje. Toplo preporučujem ovu ordinaciju svima koji traže visok nivo stručnosti i brige za pacijente.",
   },
   {
-    name: "Ivana Marković",
-    text: "Dolazim zbog kontrole trudnoće i ne mogu da zamislim bolju ordinaciju. Sve je savremeno, uvek na vreme. Dr Zoran mi je pomogao i sa sterilitetom - sada čekamo bebu!",
-    date: "pre mesec dana",
-  },
-  {
-    name: "Katarina Simić",
-    text: "Ultrazvuk koji sam radila bio je neverovatno detaljan. Sve je objašnjeno jasno, dobila sam nalaz na vreme. Profesionalizam na svakom koraku - vratiću se sigurno.",
-    date: "pre 2 nedelje",
-  },
-  {
-    name: "Vesna Jovanović",
-    text: "Koristim usluge ordinacije Raović za sve ginekološke preglede već 7 godina. Cenim individualnost u pristupu i činjenicu da nikada ne osećam žurbu. Pravi profesionalci.",
-    date: "pre 2 meseca",
+    name: "Ivan Voda",
+    text: "Devojka je upravo završila danas intervenciju u ovoj klinici. Čekajući je ispred, na samom ulazu su nas dočekali fenomenalno, i jako profesionalno! Posle intervencije, koja je protekla bez teškoća, takođe su se raspitivali sve vreme i bili maksimalno, maksimalno uljudni i profesionalni... Jako retko dobijete ovakav nivo usluge!! Prosto sam morao da ostavim jako pozitivne utiske, od oboje!!! 🙏🙏🙏",
   },
 ];
 
@@ -625,6 +614,16 @@ export function HomePage() {
           <div className="testimonials-header reveal">
             <h2>Šta kažu naše pacijentkinje</h2>
             <p>Iskustva pacijentkinja koje nam ukazuju poverenje.</p>
+            <a
+              className="testimonials-rating"
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <strong>{GOOGLE_RATING.score}</strong>
+              <span aria-hidden="true">★</span>
+              <span>{GOOGLE_RATING.count} recenzija na Google-u</span>
+            </a>
           </div>
 
           <div className="t-slider reveal">
@@ -655,7 +654,7 @@ export function HomePage() {
                       <div className="t-card__avatar">{t.name[0]}</div>
                       <div>
                         <div className="t-card__name">{t.name}</div>
-                        <div className="t-card__date">{t.date}</div>
+                        <div className="t-card__date">Google recenzija</div>
                       </div>
                     </div>
                   </article>
@@ -675,6 +674,14 @@ export function HomePage() {
                   />
                 ))}
               </div>
+              <a
+                className="t-google-link"
+                href={GOOGLE_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Pogledajte sve recenzije na Google-u
+              </a>
               <div className="t-navs">
                 <button type="button" className="t-nav" onClick={prevT} disabled={activeT === 0} aria-label="Prethodna">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

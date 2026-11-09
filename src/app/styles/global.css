@@ -8586,3 +8586,53 @@ a.contact-quick__val:hover {
   font-weight: 600;
   color: #8f7358;
 }
+
+/* Recenzije: ocena i link ka Google profilu */
+.testimonials-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 252, 248, 0.14);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.testimonials-rating strong {
+  font-size: 1.2rem;
+}
+
+.testimonials-rating span[aria-hidden] {
+  color: #f5b301;
+}
+
+.testimonials-rating:hover {
+  background: rgba(255, 252, 248, 0.24);
+}
+
+.t-google-link {
+  margin: 0 16px;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .t-footer {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .t-google-link {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+}
