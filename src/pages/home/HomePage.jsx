@@ -101,7 +101,8 @@ const processSteps = [
 ];
 
 // Prave recenzije sa Google profila ordinacije, prepisane od reči do reči
-// (ćirilica prebačena u latinicu). Ocena i broj recenzija kao na Google-u.
+// (ćirilica prebačena u latinicu); prevod Google-a je označen u `note`.
+// Ocena i broj recenzija kao na Google-u.
 const GOOGLE_REVIEWS_URL = "https://maps.app.goo.gl/LCdyRmGiBq4agLt28";
 const GOOGLE_RATING = { score: "4,3", count: 205 };
 
@@ -125,6 +126,12 @@ const testimonials = [
   {
     name: "Apoteka Valerijana",
     text: "Ginekološkoj ordinaciji Raović je ordinacija koju preporučujem svim ženama kada me pitaju da preporučim ginekologa. Tim je izuzetno stručan i posvećen, što se odmah oseti čim uđete u ordinaciju. Posebno bih želela da pohvalim doktore Slađanu i Zorana Raovića. Njihov profesionalizam, pažnja prema pacijentima i detaljno objašnjavanje svakog koraka u procesu su za svaku pohvalu. Uvek su spremni da saslušaju i pruže podršku, što mi je ulilo veliko poverenje. Toplo preporučujem ovu ordinaciju svima koji traže visok nivo stručnosti i brige za pacijente.",
+  },
+  {
+    name: "Milena Lazić",
+    text: "I would like to commend the doctor for her exceptional kindness, professionalism and dedication. During the examination, she explained everything in detail, answered all my questions and made me feel safe and calm. The examination was performed very thoroughly, with a lot of patience and attention. I sincerely recommend Dr. Sladjana Raovic to everyone looking for a professional, attentive and humane gynecologist. Thank you for your wonderful approach and the sense of trust she instilled. 🥰 Also to the receptionist.",
+    // Google-ov prevod; original nije prepisan
+    note: "Google recenzija · prevod Google-a",
   },
   {
     name: "Ivan Voda",
@@ -654,7 +661,7 @@ export function HomePage() {
                       <div className="t-card__avatar">{t.name[0]}</div>
                       <div>
                         <div className="t-card__name">{t.name}</div>
-                        <div className="t-card__date">Google recenzija</div>
+                        <div className="t-card__date">{t.note || "Google recenzija"}</div>
                       </div>
                     </div>
                   </article>
