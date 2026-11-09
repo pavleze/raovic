@@ -3,10 +3,10 @@ import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-r
 import { serviceCategories } from "../../shared/data/servicesData";
 import { blogCategories } from "../../shared/data/blogData";
 import { PostDetail } from "../../shared/ui/PostDetail";
-import mamaHero from "../../assets/beba-i-mama-hero.png";
-import heroNova from "../../assets/hero-nova.jpg";
-import drugoPitanje from "../../assets/drugo-pitanje.jpg";
-import trecePitanje from "../../assets/3pitanje.jpg";
+import mamaHero from "../../assets/beba-i-mama-hero.webp";
+import heroNova from "../../assets/hero-nova.webp";
+import drugoPitanje from "../../assets/drugo-pitanje.webp";
+import trecePitanje from "../../assets/3pitanje.webp";
 
 import {
   articleCategoryId,

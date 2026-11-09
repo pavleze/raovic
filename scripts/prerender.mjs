@@ -20,6 +20,9 @@ const {
   serviceCategories,
   serviceItemArticle,
   slugify,
+  founders,
+  associates,
+  staff,
 } = await import(pathToFileURL(SSR + "entry-server.js").href);
 const template = await readFile(DIST + "index.html", "utf8");
 
@@ -31,6 +34,73 @@ function setAttr(html, pattern, value) {
   return html.replace(pattern, (_, before) => `${before}"${escapeAttr(value)}"`);
 }
 
+// Strukturirani podaci (schema.org) za Google: putanja (breadcrumbs), stranica usluge/članka, tim.
+const CLINIC = { "@id": `${SITE_URL}/#ordinacija` };
+const crumb = (items) => ({
+  "@type": "BreadcrumbList",
+  itemListElement: items.map(([name, path], i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name,
+    item: SITE_URL + path,
+  })),
+});
+
+function structuredData(page) {
+  const url = SITE_URL + page.path;
+  if (page.kind === "category") {
+    return [
+      crumb([["Početna", "/"], ["Usluge", "/usluge"], [page.category.label, page.path]]),
+      {
+        "@type": "MedicalWebPage",
+        url,
+        name: page.title,
+        description: page.description,
+        inLanguage: "sr",
+        specialty: "Gynecologic",
+        publisher: CLINIC,
+      },
+    ];
+  }
+  if (page.kind === "article") {
+    return [
+      crumb([
+        ["Početna", "/"],
+        ["Usluge", "/usluge"],
+        [page.category.label, categoryPath(page.category.id)],
+        [page.article.title, page.path],
+      ]),
+      {
+        "@type": "MedicalWebPage",
+        url,
+        name: page.article.title,
+        headline: page.article.title,
+        description: page.description,
+        inLanguage: "sr",
+        specialty: "Gynecologic",
+        publisher: CLINIC,
+        about: { "@type": "MedicalEntity", name: page.article.title },
+      },
+    ];
+  }
+  if (page.path === "/tim") {
+    const people = [...founders, ...associates, ...staff].map((p) => ({
+      "@type": "Person",
+      name: p.name,
+      jobTitle: p.role.replace(/\s*\n\s*/g, ", "),
+      worksFor: CLINIC,
+    }));
+    return [crumb([["Početna", "/"], ["Tim", "/tim"]]), { "@type": "ItemList", itemListElement: people.map((item, i) => ({ "@type": "ListItem", position: i + 1, item })) }];
+  }
+  if (page.path !== "/") {
+    return [crumb([["Početna", "/"], [page.title.split(" | ")[0], page.path]])];
+  }
+  return [];
+}
+
+const jsonLdTag = (data) =>
+  `<script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@graph": data }).replace(/</g, "\\u003c")}</script>`;
+
 for (const route of PRERENDER_ROUTES) {
   const page = getPageMeta(route);
   if (page.path !== route) throw new Error(`Nema podataka za stranicu ${route}`);
@@ -41,6 +111,9 @@ for (const route of PRERENDER_ROUTES) {
   html = setAttr(html, /(<meta property="og:title" content=)"[^"]*"/, page.title);
   html = setAttr(html, /(<meta property="og:description" content=)"[^"]*"/, page.description);
   html = setAttr(html, /(<meta property="og:url" content=)"[^"]*"/, url);
+
+  const schema = structuredData(page);
+  if (schema.length) html = html.replace("</head>", `    ${jsonLdTag(schema)}\n  </head>`);
 
   const body = render(route);
   if (!html.includes('<div id="root"></div>')) throw new Error("Nije pronađen <div id=\"root\">");
