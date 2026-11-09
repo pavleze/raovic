@@ -8701,3 +8701,45 @@ a.contact-quick__val:hover {
 .services-articles a:hover {
   text-decoration: underline;
 }
+
+/* Početna: najtraženije usluge kao linkovi */
+.services-band__popular {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.services-band__popular h3 {
+  margin: 0 0 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 252, 248, 0.85);
+}
+
+.services-band__popular ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.services-band__popular a {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 252, 248, 0.16);
+  border: 1px solid rgba(255, 252, 248, 0.28);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.services-band__popular a:hover {
+  background: rgba(255, 252, 248, 0.3);
+}

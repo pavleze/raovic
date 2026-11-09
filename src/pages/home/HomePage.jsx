@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { articlePath, findArticle } from "../../shared/serviceRoutes";
 import { TeamCard } from "../../shared/ui/TeamCard";
 import { FocusGallery } from "../../shared/ui/FocusGallery";
 import { founders, associates } from "../../shared/data/teamData";
@@ -141,6 +142,25 @@ const testimonials = [
     // Google-ov prevod; original nije prepisan
     note: "Google recenzija · prevod Google-a",
   },
+];
+
+// Najtraženije usluge na početnoj, redom kako ih je naveo dr Raović: [naslov članka, kratak natpis]
+const popularServices = [
+  ["Ultrazvučno snimanje prohodnosti jajovoda (HSSG)", "HSG - prohodnost jajovoda"],
+  ["Biopsija grlića materice", "Biopsija grlića materice"],
+  ["Konizacija", "Konizacija"],
+  ["Amniocenteza", "Amniocenteza"],
+  ["Biopsija horionskih čupica", "Biopsija horionskih čupica"],
+  ["Kontracepcija", "Stavljanje spirale"],
+  ["Ultrazvuk dojki", "Ultrazvuk dojki"],
+  ["Kolposkopija", "Kolposkopija"],
+  ["Ultrazvuk u trudnoći", "Ultrazvuk u trudnoći (3D/4D)"],
+  ["Kolor Dopler", "Kolor Dopler"],
+  ["Prekid trudnoće", "Prekid trudnoće"],
+  ["Histeroskopija", "Histeroskopija"],
+  ["Endokrinološki pregled", "Endokrinolog"],
+  ["Hematološki pregled", "Hematolog"],
+  ["Nefrološki pregled", "Nefrolog"],
 ];
 
 const PHONE_HREF = "tel:+381112447763";
@@ -471,6 +491,22 @@ export function HomePage() {
               </article>
             ))}
           </div>
+
+          {/* Najtraženije usluge (spisak dr Raovića): direktni linkovi, i za posetioce i za Google */}
+          <nav className="services-band__popular reveal" aria-label="Najtraženije usluge">
+            <h3>Najtraženije usluge</h3>
+            <ul>
+              {popularServices.map(([title, label]) => {
+                const article = findArticle(title);
+                if (!article) return null;
+                return (
+                  <li key={title}>
+                    <Link to={articlePath(article)}>{label}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
           <div className="services-band__cta reveal">
             <Link className="services-band__all" to="/usluge">
