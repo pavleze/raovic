@@ -116,6 +116,10 @@ const testimonials = [
     text: "Vec dugi niz godina idem u ginekolosku ordinaciju Raovic a posle sam i vodila dve rizicne trudnoce. Zahvaljujuci njihovoj posvecenosti imam dva andjela. Prezadovoljna njihovim radom.",
   },
   {
+    name: "Janja Pejić",
+    text: "Pet zvezdica i ubuduće moj stalni doktor 🌟 Doktori, anesteziolog kao i celo osoblje ordinacije apsolutno prijatni i komunikativni. Sve objasnili pre i nakon intervencije i samim tim maksimalno olakšali ceo proces.",
+  },
+  {
     name: "Black Ivy",
     text: "Divno osoblje. Prijatan ambijent. Za doktorku Slađanu Raović samo reči hvale. Pravi profesionalac i pre svega izuzetna osoba. Njen pacijent sam 15 godina. Sve preporuke za ovu ordinaciju.",
   },
