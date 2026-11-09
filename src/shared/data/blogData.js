@@ -878,12 +878,12 @@ export const blogArticles = [
     seoTitle: "Endokrinolog - endokrinološki pregled",
     aka: ["endokrinolog", "endokrinologija"],
     desc: "Pregled kod endokrinologa u ordinaciji Raović: Doc. dr Milina Gajić Tančić i Doc. dr Ljiljana Marina, subspecijalisti endokrinologije.",
+    // Članci prikazani kao linkovi na dnu stranice
+    related: ["Amenoreja", "Policistični jajnici (PCOS)", "Hirzutizam", "Ovarijalna insuficijencija", "Ultrazvuk štitaste žlezde", "Hormonski status"],
     content: [
       "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
       "## Ko obavlja pregled",
       "• Doc. dr Milina Gajić Tančić - spec. interne medicine, subspec. endokrinologije\n• Doc. dr Ljiljana Marina - spec. interne medicine, subspec. endokrinologije",
-      "## Teme iz endokrinologije na našem sajtu",
-      "• Amenoreja\n• Policistični jajnici (PCOS)\n• Hirzutizam\n• Ovarijalna insuficijencija\n• Ultrazvuk štitaste žlezde\n• Hormonski status",
       "## Zakazivanje",
       "Pregled kod endokrinologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
     ],

@@ -9,6 +9,7 @@ import drugoPitanje from "../../assets/drugo-pitanje.webp";
 import trecePitanje from "../../assets/3pitanje.webp";
 
 import {
+  articleRoutes,
   articleCategoryId,
   articlePath,
   categoryPath,
@@ -115,6 +116,9 @@ export function ServicesPage() {
       </div>
     );
   }
+
+  // Svi članci kategorije, da svaki ima link sa sajta (i za Google)
+  const categoryArticles = articleRoutes.filter(({ path }) => path.startsWith(`${categoryPath(active.id)}/`));
 
   return (
     <div className="inner-page inner-page--usluge">
@@ -240,6 +244,18 @@ export function ServicesPage() {
                     );
                   })}
                 </div>
+                {categoryArticles.length > 0 && (
+                  <div className="services-articles">
+                    <h3>Članci iz oblasti: {active.label}</h3>
+                    <ul>
+                      {categoryArticles.map(({ article, path }) => (
+                        <li key={path}>
+                          <Link to={path}>{article.title}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </section>
             )}
           </div>

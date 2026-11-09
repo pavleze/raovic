@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import { articlePath, findArticle } from "../serviceRoutes";
+
 function renderContent(content) {
   return content.map((block, i) => {
     if (block.startsWith("## ")) return <h3 key={i}>{block.slice(3)}</h3>;
@@ -15,6 +18,11 @@ function renderContent(content) {
 }
 
 export function PostDetail({ article, catLabel, hasBooking, onBack }) {
+  const related = (article.related || [])
+    .map(findArticle)
+    .filter(Boolean)
+    .map((r) => ({ article: r, path: articlePath(r) }));
+
   return (
     <div className="post-detail">
       <div className="site-shell post-detail__shell">
@@ -33,6 +41,18 @@ export function PostDetail({ article, catLabel, hasBooking, onBack }) {
             <div className="post-detail__body">
               {renderContent(article.content)}
             </div>
+            {related.length > 0 && (
+              <div className="post-detail__related">
+                <h3>Teme iz ove oblasti</h3>
+                <ul>
+                  {related.map((r) => (
+                    <li key={r.path}>
+                      <Link to={r.path}>{r.article.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {/* Druga imena pod kojima se usluga traži (HSG, spirala...), diskretno na dnu */}
             {article.aka?.length > 0 && (
               <p className="post-detail__aka">Drugi nazivi: {article.aka.join(", ")}</p>
