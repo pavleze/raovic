@@ -151,11 +151,14 @@ const addTarget = (title, path) => {
     if (slug && !targets.has(slug)) targets.set(slug, path);
   }
 };
-for (const { article, path } of articleRoutes) addTarget(article.title, path);
+for (const { article, path } of articleRoutes) {
+  addTarget(article.title, path);
+  for (const name of article.aka || []) addTarget(name, path);
+}
 for (const cat of serviceCategories) {
   for (const item of cat.items) {
     // Usluga koja vodi na opštu temu (npr. endokrinologija), a ne na svoj članak -> lista kategorije
-    const article = item.category ? null : serviceItemArticle(item);
+    const article = item.article || !item.category ? serviceItemArticle(item) : null;
     addTarget(item.name, article ? articlePath(article) : categoryPath(cat.id));
   }
 }

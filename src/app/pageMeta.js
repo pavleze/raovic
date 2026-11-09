@@ -8,9 +8,9 @@ export const SITE_NAME = "Ginekološka ordinacija Raović";
 
 export const PAGES = {
   "/": {
-    title: `${SITE_NAME} - Vračar, Beograd`,
+    title: `Ginekolog Vračar, Beograd - ${SITE_NAME}`,
     description:
-      "Specijalistička ginekološko-akušerska ordinacija Raović na Vračaru, od 2004. godine. Ginekološki pregledi, ultrazvuk, kontrola trudnoće, intervencije i lečenje steriliteta.",
+      "Ginekolog na Vračaru: specijalistička ginekološko-akušerska ordinacija Raović, od 2004. godine. Ginekološki pregledi, ultrazvuk, kontrola trudnoće, intervencije i lečenje steriliteta.",
   },
   "/usluge": {
     title: `Usluge i cenovnik | ${SITE_NAME}`,
@@ -57,7 +57,7 @@ function categoryMeta(cat) {
 
 function articleMeta(article) {
   return {
-    title: `${article.title} - Beograd, Vračar | Ordinacija Raović`,
+    title: `${article.seoTitle || article.title} - Beograd, Vračar | Ordinacija Raović`,
     description: shorten(article.desc || article.title),
   };
 }

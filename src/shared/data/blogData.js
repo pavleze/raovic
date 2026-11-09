@@ -74,6 +74,9 @@ export const blogArticles = [
   {
     category: "ginekologija",
     title: "Kolor Dopler",
+    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    seoTitle: "Kolor Dopler (Color Doppler) ultrazvuk",
+    aka: ["Color Doppler", "Doppler ultrazvuk"],
     desc: "Kolor Dopler je moderna ultrazvučna dijagnostika koja precizno meri protok krvi u krvnim sudovima materice, jajnika i pupčane vrpce.",
     content: [
       "Kolor dopler ima važan uticaj na procenu protoka krvi i kiseonika koji prolazi kroz pupčane vene i može uticati na odluku o hitnom prijemu ili prevremenom porođaju. Ova moderna ultrazvučna dijagnostika precizno meri protok krvi u krvnim sudovima materice i jajnika.",
@@ -126,6 +129,9 @@ export const blogArticles = [
   {
     category: "ginekologija",
     title: "Kontracepcija",
+    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    seoTitle: "Stavljanje spirale i kontracepcija",
+    aka: ["stavljanje spirale", "aplikacija spirale", "IUD"],
     desc: "Savetovanje o svim metodama kontracepcije - od hormonskih pilula i spirale do barijerne kontracepcije i hitne zaštite.",
     content: [
       "Kontracepcija obuhvata skup metoda i postupaka koje imaju za cilj privremeno sprečavanje nastanka neželjene trudnoće. Izbor metode zahteva konsultaciju sa ginekologom, uzimajući u obzir zdravstveno stanje, životne navike i planove za buduće trudnoće.",
@@ -366,6 +372,9 @@ export const blogArticles = [
   {
     category: "trudnoca",
     title: "Ultrazvuk u trudnoći",
+    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    seoTitle: "Ultrazvuk u trudnoći, 3D i 4D ultrazvuk",
+    aka: ["3D ultrazvuk", "4D ultrazvuk", "ekspertski ultrazvuk"],
     desc: "Ultrazvučni pregledi u prvom, drugom i trećem trimestru za praćenje rasta fetusa, dijagnostiku anomalija i procenu zdravlja trudnice.",
     content: [
       "Ultrazvuk u trudnoći predstavlja ključnu dijagnostičku metodu koja se koristi tokom svih faza trudnoće. Ultrazvučni talasi visoke frekvencije prolaze kroz matericu i odbijaju se od bebe, stvarajući sliku na ekranu.",
@@ -468,6 +477,9 @@ export const blogArticles = [
   {
     category: "trudnoca",
     title: "Prekid trudnoće",
+    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    seoTitle: "Prekid trudnoće (abortus)",
+    aka: ["abortus", "hirurški prekid trudnoće"],
     desc: "Medicinska intervencija dostupna do 10. nedelje trudnoće iz medicinskih i ličnih razloga, uz potpunu diskreciju i stručnu podršku.",
     content: [
       "Prekid trudnoće je intervencija koja se radi do 10. nedelje trudnoće. Postoji nekoliko kategorija razloga: medicinski (problemi sa fetusom), društveni, neplanirana trudnoća ili individualni motivi.",
@@ -738,6 +750,9 @@ export const blogArticles = [
   {
     category: "sterilitet",
     title: "Ultrazvučno snimanje prohodnosti jajovoda (HSSG)",
+    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    seoTitle: "Prohodnost jajovoda (HSG / HSSG)",
+    aka: ["HSG", "hidrosonosalpingografija", "ispitivanje prohodnosti jajovoda"],
     desc: "Inicijalni korak u ispitivanju ženske plodnosti - procena prohodnosti jajovoda kao mogućeg uzroka neplodnosti.",
     content: [
       "Ultrazvučno snimanje prohodnosti jajovoda (HSSG - HidroSonoSalpingoGrafija) je inicijalni korak u ispitivanju ženske plodnosti. Procedura procenjuje da li su jajovodi prohodni - što je ključan uslov za prirodno začeće.",
@@ -853,6 +868,52 @@ export const blogArticles = [
       "Međunarodno udruženje za menopauzu predlaže da se svakoj ženi oko 50. godine prvo uradi sistematski pregled koji obuhvata analize, hormonske testove i ultrazvučne preglede. Terapija počinje kada menstruacije postanu neredovne.",
       "## Napomena",
       "Hormonska terapija se ne sme primenjivati kod žena starijih od 60 godina bez medicinske indikacije, niti kod žena sa karcinomom dojke ili endometrijuma.",
+    ],
+  },
+
+  // ── Konsultativni pregledi (stranice specijalista) ──────────────
+  {
+    category: "konsultativni",
+    title: "Endokrinološki pregled",
+    seoTitle: "Endokrinolog - endokrinološki pregled",
+    aka: ["endokrinolog", "endokrinologija"],
+    desc: "Pregled kod endokrinologa u ordinaciji Raović: Doc. dr Milina Gajić Tančić i Doc. dr Ljiljana Marina, subspecijalisti endokrinologije.",
+    content: [
+      "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
+      "## Ko obavlja pregled",
+      "• Doc. dr Milina Gajić Tančić - spec. interne medicine, subspec. endokrinologije\n• Doc. dr Ljiljana Marina - spec. interne medicine, subspec. endokrinologije",
+      "## Teme iz endokrinologije na našem sajtu",
+      "• Amenoreja\n• Policistični jajnici (PCOS)\n• Hirzutizam\n• Ovarijalna insuficijencija\n• Ultrazvuk štitaste žlezde\n• Hormonski status",
+      "## Zakazivanje",
+      "Pregled kod endokrinologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
+    ],
+  },
+  {
+    category: "konsultativni",
+    title: "Hematološki pregled",
+    seoTitle: "Hematolog - hematološki pregled",
+    aka: ["hematolog", "hematologija"],
+    desc: "Pregled kod hematologa u ordinaciji Raović: Dr Tatjana Dragišić, specijalista interne medicine - hematolog.",
+    content: [
+      "Hematologija je grana interne medicine koja se bavi bolestima krvi i krvotvornih organa.",
+      "## Ko obavlja pregled",
+      "• Dr Tatjana Dragišić - spec. interne medicine, hematolog",
+      "## Zakazivanje",
+      "Pregled kod hematologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
+    ],
+  },
+  {
+    category: "konsultativni",
+    title: "Nefrološki pregled",
+    seoTitle: "Nefrolog - nefrološki pregled",
+    aka: ["nefrolog", "nefrologija"],
+    desc: "Pregled kod nefrologa u ordinaciji Raović: Prof. dr Radomir Naumović, specijalista interne medicine - nefrolog.",
+    content: [
+      "Nefrologija je grana interne medicine koja se bavi bolestima bubrega.",
+      "## Ko obavlja pregled",
+      "• Prof. dr Radomir Naumović - spec. interne medicine, nefrolog",
+      "## Zakazivanje",
+      "Pregled kod nefrologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
     ],
   },
 ];
