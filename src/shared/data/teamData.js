@@ -218,7 +218,7 @@ export const staff = [
   },
   {
     name: "Maja Stojilković",
-    role: "Strukovna med. sestra – babica",
+    role: "Strukovna med. sestra - babica",
     initials: "MS",
     photo: photoMaja,
     cutout: true,
@@ -228,7 +228,7 @@ export const staff = [
   },
   {
     name: "Jovana Ivković",
-    role: "Strukovna med. sestra – babica",
+    role: "Strukovna med. sestra - babica",
     initials: "JI",
     photo: photoJovana,
     cutout: true,

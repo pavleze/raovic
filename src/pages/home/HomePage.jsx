@@ -116,8 +116,8 @@ const testimonials = [
     text: "Vec dugi niz godina idem u ginekolosku ordinaciju Raovic a posle sam i vodila dve rizicne trudnoce. Zahvaljujuci njihovoj posvecenosti imam dva andjela. Prezadovoljna njihovim radom.",
   },
   {
-    name: "Vukica Adžić",
-    text: "Neki ljudi svojim znanjem leče, a svojom ljudskošću ostavljaju trag u srcu. ❤️ Dr Radomir Ančičić je upravo takav – veliki stručnjak, ali pre svega veliki čovek, kome se divite ne samo zbog njegovog znanja već i zbog njegove dobrote, pristupa i odnosa prema ljudima. Sve pohvale i divnom osoblju ordinacije Raović, koje svojom ljubaznošću i toplinom upotpunjuje ovaj poseban tim. Od srca hvala za sve. Poštovanje i zahvalnost koje osećam ne mogu se opisati u nekoliko reči. ❤️",
+    name: "Janja Pejić",
+    text: "Pet zvezdica i ubuduće moj stalni doktor 🌟 Doktori, anesteziolog kao i celo osoblje ordinacije apsolutno prijatni i komunikativni. Sve objasnili pre i nakon intervencije i samim tim maksimalno olakšali ceo proces.",
   },
   {
     name: "Black Ivy",
@@ -376,7 +376,7 @@ export function HomePage() {
                   </svg>
                 </div>
                 <h3>Tim specijalista</h3>
-                <p>Dr Slađana i dr Zoran Raović — više od 20 godina zajedničkog iskustva u ginekologiji, akušerstvu i endokrinologiji.</p>
+                <p>Dr Slađana i dr Zoran Raović - više od 20 godina zajedničkog iskustva u ginekologiji, akušerstvu i endokrinologiji.</p>
               </article>
 
               <article className="why-card reveal reveal--right">
@@ -386,7 +386,7 @@ export function HomePage() {
                   </svg>
                 </div>
                 <h3>Savremena dijagnostika</h3>
-                <p>Ultrazvučna dijagnostika najnovije generacije — brza, precizna i pouzdana, od rutinskog pregleda do složene analize.</p>
+                <p>Ultrazvučna dijagnostika najnovije generacije - brza, precizna i pouzdana, od rutinskog pregleda do složene analize.</p>
               </article>
 
               <article className="why-card reveal reveal--left">
@@ -397,7 +397,7 @@ export function HomePage() {
                   </svg>
                 </div>
                 <h3>Privatnost i diskrecija</h3>
-                <p>Prostor projektovan za komfor i poverljivost. Svaka poseta ostaje između vas i vašeg lekara — bez kompromisa.</p>
+                <p>Prostor projektovan za komfor i poverljivost. Svaka poseta ostaje između vas i vašeg lekara - bez kompromisa.</p>
               </article>
 
               <article className="why-card reveal reveal--right">
@@ -415,7 +415,7 @@ export function HomePage() {
           <figure className="why-media reveal">
             <img
               src={photoWhy}
-              alt="Pregled u ordinaciji Raović — lekar i trudnica uz ultrazvučni snimak"
+              alt="Pregled u ordinaciji Raović - lekar i trudnica uz ultrazvučni snimak"
               loading="lazy"
             />
           </figure>
