@@ -8645,3 +8645,59 @@ a.contact-quick__val:hover {
   font-size: 0.78rem;
   color: #a39486;
 }
+
+/* Članak: povezane teme (linkovi) */
+.post-detail__related {
+  margin-top: 28px;
+}
+
+.post-detail__related h3 {
+  margin: 0 0 10px;
+  font-family: var(--font-serif);
+}
+
+.post-detail__related ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.post-detail__related a {
+  color: #8f7358;
+  font-weight: 600;
+}
+
+/* Usluge: svi članci kategorije ispod liste usluga */
+.services-articles {
+  margin-top: 28px;
+  padding: 22px 24px;
+  background: #fff;
+  border: 1px solid rgba(176, 143, 110, 0.16);
+  border-radius: 18px;
+}
+
+.services-articles h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: #1a1d26;
+}
+
+.services-articles ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.services-articles a {
+  color: #8f7358;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.services-articles a:hover {
+  text-decoration: underline;
+}
