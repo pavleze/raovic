@@ -1,13 +1,26 @@
 // Posle build-a pravi gotov HTML za svaku stranicu (naslov, opis, adresa i ceo sadržaj),
 // da Google i društvene mreže odmah vide pravu stranicu, a ne prazan okvir koji popunjava JavaScript.
-// /usluge -> dist/usluge.html, / -> dist/index.html. .htaccess i vercel.json ih služe na čistim adresama.
-import { readFile, writeFile, rm } from "node:fs/promises";
+// /usluge -> dist/usluge.html, /usluge/intervencije -> dist/usluge/intervencije.html, / -> dist/index.html.
+// .htaccess i vercel.json ih služe na čistim adresama. Pravi i dist/sitemap.xml sa svim stranicama.
+import { mkdir, readFile, writeFile, rm } from "node:fs/promises";
+import { dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const DIST = fileURLToPath(new URL("../dist/", import.meta.url));
 const SSR = fileURLToPath(new URL("../dist-ssr/", import.meta.url));
 
-const { render, PAGES, SITE_URL } = await import(pathToFileURL(SSR + "entry-server.js").href);
+const {
+  render,
+  getPageMeta,
+  PRERENDER_ROUTES,
+  SITE_URL,
+  articleRoutes,
+  articlePath,
+  categoryPath,
+  serviceCategories,
+  serviceItemArticle,
+  slugify,
+} = await import(pathToFileURL(SSR + "entry-server.js").href);
 const template = await readFile(DIST + "index.html", "utf8");
 
 const escapeAttr = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -18,7 +31,9 @@ function setAttr(html, pattern, value) {
   return html.replace(pattern, (_, before) => `${before}"${escapeAttr(value)}"`);
 }
 
-for (const [route, page] of Object.entries(PAGES)) {
+for (const route of PRERENDER_ROUTES) {
+  const page = getPageMeta(route);
+  if (page.path !== route) throw new Error(`Nema podataka za stranicu ${route}`);
   const url = SITE_URL + route;
   let html = template.replace(/<title>[^<]*<\/title>/, `<title>${escapeText(page.title)}</title>`);
   html = setAttr(html, /(<meta name="description" content=)"[^"]*"/, page.description);
@@ -32,8 +47,53 @@ for (const [route, page] of Object.entries(PAGES)) {
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
 
   const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
+  await mkdir(dirname(DIST + file), { recursive: true });
   await writeFile(DIST + file, html);
-  console.log(`Prerender: ${route} -> dist/${file} (${Math.round(html.length / 1024)} KB)`);
 }
+console.log(`Prerender: ${PRERENDER_ROUTES.length} stranica`);
+
+const sitemap = [
+  '<?xml version="1.0" encoding="UTF-8"?>',
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+  ...PRERENDER_ROUTES.map((route) => `  <url><loc>${SITE_URL}${route}</loc></url>`),
+  "</urlset>",
+  "",
+].join("\n");
+await writeFile(DIST + "sitemap.xml", sitemap);
+console.log(`sitemap.xml: ${PRERENDER_ROUTES.length} adresa`);
+
+// Stari Wix linkovi usluga i članaka (/service-page/hsg, /items-2/biopsija-grlića-materice...)
+// -> nova stranica te usluge. Wix je pravio adresu od naslova, sa č/ć/š/ž; pravi se i oblik bez njih.
+const wixSlug = (title) =>
+  title
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}()]+/gu, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+const regexEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const targets = new Map();
+const addTarget = (title, path) => {
+  for (const slug of [wixSlug(title), slugify(title)]) {
+    if (slug && !targets.has(slug)) targets.set(slug, path);
+  }
+};
+for (const { article, path } of articleRoutes) addTarget(article.title, path);
+for (const cat of serviceCategories) {
+  for (const item of cat.items) {
+    // Usluga koja vodi na opštu temu (npr. endokrinologija), a ne na svoj članak -> lista kategorije
+    const article = item.category ? null : serviceItemArticle(item);
+    addTarget(item.name, article ? articlePath(article) : categoryPath(cat.id));
+  }
+}
+
+const rules = [...targets].map(
+  ([slug, path]) => `RewriteRule ^(?:service-page|items-[0-9]+)/${regexEscape(slug)}/?$ ${SITE_URL}${path} [L,R=301,NC]`
+);
+const MARKER = /^# @generisana-preusmeravanja.*$/m;
+const htaccess = await readFile(DIST + ".htaccess", "utf8");
+if (!MARKER.test(htaccess)) throw new Error("U .htaccess nema oznake @generisana-preusmeravanja");
+await writeFile(DIST + ".htaccess", htaccess.replace(MARKER, (line) => `${line}\n${rules.join("\n")}`));
+console.log(`.htaccess: ${rules.length} preusmeravanja starih linkova usluga`);
 
 await rm(SSR, { recursive: true, force: true });

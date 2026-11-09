@@ -3,6 +3,8 @@
 
 # -MultiViews: inace Apache za /kontakt sam izabere kontakt.php umesto stranice Kontakt
 Options -Indexes -MultiViews
+# /usluge je i stranica (usluge.html) i folder (usluge/), pa Apache ne sme sam da dodaje kosu crtu
+DirectorySlash Off
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -12,24 +14,26 @@ RewriteBase /
 RewriteRule ^about-1/?$ https://www.raovic.rs/o-nama [L,R=301]
 RewriteRule ^(booking|book-online)/?$ https://www.raovic.rs/usluge [L,R=301]
 # Konkretne usluge sa starog sajta -> odgovarajući članak na novom
-RewriteRule ^service-page/eksplorativna-kireta.+a/?$ https://www.raovic.rs/usluge?kat=intervencije&clanak=eksplorativna-kiretaza [L,R=301]
-RewriteRule ^service-page/uklanjanje-kondiloma/?$ https://www.raovic.rs/usluge?kat=ginekologija&clanak=uklanjanje-kondiloma [L,R=301]
-RewriteRule ^service-page/konizacija/?$ https://www.raovic.rs/usluge?kat=intervencije&clanak=konizacija [L,R=301]
-RewriteRule ^service-page/hsg/?$ https://www.raovic.rs/usluge?kat=sterilitet&clanak=ultrazvucno-snimanje-prohodnosti-jajovoda-hssg [L,R=301]
-RewriteRule ^service-page/cervikalni-bris.*$ https://www.raovic.rs/usluge?kat=ginekologija&clanak=papa-test [L,R=301]
-RewriteRule ^service-page/aplikacija-spirale/?$ https://www.raovic.rs/usluge?kat=ginekologija&clanak=kontracepcija [L,R=301]
-RewriteRule ^service-page/ultrazvu.+-pregled-prof-filimonovi.+$ https://www.raovic.rs/usluge?kat=trudnoca [L,R=301]
-RewriteRule ^service-page/incizija-himena/?$ https://www.raovic.rs/usluge?kat=intervencije [L,R=301]
-RewriteRule ^items-1/ginekolo.+ki-pregled/?$ https://www.raovic.rs/usluge?kat=ginekologija&clanak=ginekoloski-pregled [L,R=301]
-RewriteRule ^items-5/ultrazvu.+no-snimanje-prohodnosti-jajovoda.*$ https://www.raovic.rs/usluge?kat=sterilitet&clanak=ultrazvucno-snimanje-prohodnosti-jajovoda-hssg [L,R=301]
-RewriteRule ^service-page/amniocenteza.*$ https://www.raovic.rs/usluge?kat=trudnoca&clanak=amniocenteza [L,R=301]
-RewriteRule ^items-2/biopsija-grli.+a-materice/?$ https://www.raovic.rs/usluge?kat=intervencije&clanak=biopsija-grlica-materice [L,R=301]
-RewriteRule ^service-page/(endokrinologija|radiologija)/?$ https://www.raovic.rs/usluge?kat=konsultativni [L,R=301]
+RewriteRule ^service-page/eksplorativna-kireta.+a/?$ https://www.raovic.rs/usluge/intervencije/eksplorativna-kiretaza [L,R=301]
+RewriteRule ^service-page/uklanjanje-kondiloma/?$ https://www.raovic.rs/usluge/intervencije/uklanjanje-kondiloma [L,R=301]
+RewriteRule ^service-page/konizacija/?$ https://www.raovic.rs/usluge/intervencije/konizacija [L,R=301]
+RewriteRule ^service-page/hsg/?$ https://www.raovic.rs/usluge/sterilitet/ultrazvucno-snimanje-prohodnosti-jajovoda-hssg [L,R=301]
+RewriteRule ^service-page/cervikalni-bris.*$ https://www.raovic.rs/usluge/ginekologija/papa-test [L,R=301]
+RewriteRule ^service-page/aplikacija-spirale/?$ https://www.raovic.rs/usluge/ginekologija/kontracepcija [L,R=301]
+RewriteRule ^service-page/ultrazvu.+-pregled-prof-filimonovi.+$ https://www.raovic.rs/usluge/trudnoca [L,R=301]
+RewriteRule ^service-page/incizija-himena/?$ https://www.raovic.rs/usluge/intervencije [L,R=301]
+RewriteRule ^items-1/ginekolo.+ki-pregled/?$ https://www.raovic.rs/usluge/ginekologija/ginekoloski-pregled [L,R=301]
+RewriteRule ^items-5/ultrazvu.+no-snimanje-prohodnosti-jajovoda.*$ https://www.raovic.rs/usluge/sterilitet/ultrazvucno-snimanje-prohodnosti-jajovoda-hssg [L,R=301]
+RewriteRule ^service-page/amniocenteza.*$ https://www.raovic.rs/usluge/trudnoca/amniocenteza [L,R=301]
+RewriteRule ^service-page/prekid-trudno.+e-abortus/?$ https://www.raovic.rs/usluge/trudnoca/prekid-trudnoce [L,R=301]
+RewriteRule ^items-2/biopsija-grli.+a-materice/?$ https://www.raovic.rs/usluge/intervencije/biopsija-grlica-materice [L,R=301]
+# @generisana-preusmeravanja (scripts/prerender.mjs dodaje pravila za sve usluge i članke)
+RewriteRule ^service-page/(endokrinologija|radiologija)/?$ https://www.raovic.rs/usluge/konsultativni [L,R=301]
 RewriteRule ^service-page(/.*)?$ https://www.raovic.rs/usluge [L,R=301]
-RewriteRule ^items-1(/.*)?$ https://www.raovic.rs/usluge?kat=ginekologija [L,R=301]
-RewriteRule ^items-2(/.*)?$ https://www.raovic.rs/usluge?kat=intervencije [L,R=301]
-RewriteRule ^items-3(/.*)?$ https://www.raovic.rs/usluge?kat=trudnoca [L,R=301]
-RewriteRule ^items-5(/.*)?$ https://www.raovic.rs/usluge?kat=sterilitet [L,R=301]
+RewriteRule ^items-1(/.*)?$ https://www.raovic.rs/usluge/ginekologija [L,R=301]
+RewriteRule ^items-2(/.*)?$ https://www.raovic.rs/usluge/intervencije [L,R=301]
+RewriteRule ^items-3(/.*)?$ https://www.raovic.rs/usluge/trudnoca [L,R=301]
+RewriteRule ^items-5(/.*)?$ https://www.raovic.rs/usluge/sterilitet [L,R=301]
 RewriteRule ^items-[^/]+(/.*)?$ https://www.raovic.rs/blog [L,R=301]
 RewriteRule ^post(/.*)?$ https://www.raovic.rs/blog [L,R=301]
 RewriteRule ^blog/.+$ https://www.raovic.rs/blog [L,R=301]
@@ -43,14 +47,14 @@ RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule ^(.*)$ https://www.raovic.rs/$1 [L,R=301]
 
 # Bez kose crte na kraju (/usluge/ -> /usluge), da Google ne vidi dve adrese za istu stranicu
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(assets|images|raovic-data)/
 RewriteRule ^(.+)/$ /$1 [R=301,L]
 
 # Gotove stranice (scripts/prerender.mjs): /usluge -> usluge.html, a /usluge.html -> /usluge
-RewriteCond %{THE_REQUEST} \s/+(?!index\.)([a-z-]+)\.html[\s?]
+RewriteCond %{THE_REQUEST} \s/+(?!index\.)([a-z0-9/-]+)\.html[\s?]
 RewriteRule ^ /%1 [R=301,L]
 RewriteCond %{DOCUMENT_ROOT}/$1.html -f
-RewriteRule ^([a-z-]+)$ $1.html [L]
+RewriteRule ^([a-z0-9/-]+)$ $1.html [L]
 
 # Admin za blog (/admin -> admin.php); podaci admina nisu dostupni preko weba
 RewriteRule ^admin/?$ admin.php [L]

@@ -1,46 +1,29 @@
 import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { serviceCategories } from "../../shared/data/servicesData";
-import { blogArticles, blogCategories } from "../../shared/data/blogData";
+import { blogCategories } from "../../shared/data/blogData";
 import { PostDetail } from "../../shared/ui/PostDetail";
 import mamaHero from "../../assets/beba-i-mama-hero.png";
 import heroNova from "../../assets/hero-nova.jpg";
 import drugoPitanje from "../../assets/drugo-pitanje.jpg";
 import trecePitanje from "../../assets/3pitanje.jpg";
 
-const articleByTitle = new Map(blogArticles.map((a) => [a.title, a]));
+import {
+  articleCategoryId,
+  articlePath,
+  categoryPath,
+  findArticle,
+  findCategory,
+  serviceItemArticle,
+} from "../../shared/serviceRoutes";
 
-// "Ultrazvučno snimanje ... (HSSG)" -> "ultrazvucno-snimanje-...-hssg", za kratke linkove
-// i preusmeravanja sa starog sajta (/usluge?clanak=konizacija).
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .replace(/đ/g, "dj")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function findArticle(param) {
-  return articleByTitle.get(param) || blogArticles.find((a) => slugify(a.title) === param) || null;
-}
 const blogCatLabel = new Map(blogCategories.map((c) => [c.id, c.label]));
 
 const PHONE_HREF = "tel:+381112447763";
 
-function serviceArticleHref(item, katId) {
-  const byName = articleByTitle.get(item.article || item.name);
-  if (byName) {
-    return `/usluge?kat=${katId}&clanak=${encodeURIComponent(byName.title)}`;
-  }
-  if (item.category) {
-    const first = blogArticles.find((a) => a.category === item.category);
-    if (first) {
-      return `/usluge?kat=${katId}&clanak=${encodeURIComponent(first.title)}`;
-    }
-  }
-  return null;
+function serviceArticleHref(item) {
+  const article = serviceItemArticle(item);
+  return article ? articlePath(article) : null;
 }
 
 const CATEGORY_ICONS = {
@@ -77,16 +60,24 @@ const CATEGORY_ICONS = {
 };
 
 export function ServicesPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const katParam = searchParams.get("kat");
-  const clanakParam = searchParams.get("clanak");
-  const activeId = katParam || "ginekologija";
-  const active = serviceCategories.find((c) => c.id === activeId) ?? serviceCategories[0];
-  const selectedArticle = clanakParam
-    ? findArticle(clanakParam)
-    : null;
+  const { kat: katParam, clanak: clanakParam } = useParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const category = katParam ? findCategory(katParam) : null;
+  const active = category ?? serviceCategories[0];
+  const selectedArticle = clanakParam ? findArticle(clanakParam) : null;
+
+  // Stari linkovi /usluge?kat=...&clanak=... -> nove adrese /usluge/kategorija/clanak
+  const legacyKat = searchParams.get("kat");
+  const legacyArticle = findArticle(searchParams.get("clanak"));
+  const legacyTarget = legacyArticle
+    ? articlePath(legacyArticle)
+    : findCategory(legacyKat)
+      ? categoryPath(legacyKat)
+      : null;
 
   useEffect(() => {
+    if (legacyTarget) return;
     if (clanakParam) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
@@ -94,20 +85,22 @@ export function ServicesPage() {
     if (!katParam) return;
     const el = document.getElementById("usluge-lista");
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [katParam, clanakParam]);
+  }, [katParam, clanakParam, legacyTarget]);
+
+  if (legacyTarget) return <Navigate to={legacyTarget} replace />;
+
+  // Nepostojeća kategorija ili članak -> Usluge
+  if ((katParam && !category) || (clanakParam && !selectedArticle)) {
+    return <Navigate to="/usluge" replace />;
+  }
+
+  // Članak uvek na svojoj jednoj adresi (npr. ako je kategorija u linku pogrešna)
+  if (selectedArticle && articleCategoryId(selectedArticle) !== katParam) {
+    return <Navigate to={articlePath(selectedArticle)} replace />;
+  }
 
   if (selectedArticle) {
-    const backKat =
-      katParam && serviceCategories.some((c) => c.id === katParam)
-        ? katParam
-        : serviceCategories.find((c) =>
-            c.items.some(
-              (it) =>
-                it.article === selectedArticle.title ||
-                it.name === selectedArticle.title ||
-                it.category === selectedArticle.category
-            )
-          )?.id || "ginekologija";
+    const backKat = katParam;
 
     return (
       <div className="inner-page inner-page--usluge">
@@ -116,7 +109,7 @@ export function ServicesPage() {
             article={selectedArticle}
             catLabel={blogCatLabel.get(selectedArticle.category) || active.label}
             hasBooking
-            onBack={() => setSearchParams({ kat: backKat })}
+            onBack={() => navigate(categoryPath(backKat))}
           />
         </div>
       </div>
@@ -131,7 +124,7 @@ export function ServicesPage() {
             <Link
               key={cat.id}
               className={`services-catalog__card${active?.id === cat.id ? " is-active" : ""}`}
-              to={`/usluge?kat=${cat.id}`}
+              to={categoryPath(cat.id)}
             >
               <div className="services-catalog__icon" aria-hidden="true">
                 {CATEGORY_ICONS[cat.id]}
@@ -210,11 +203,11 @@ export function ServicesPage() {
                 </div>
                 <div className="services-list">
                   {active.items.map((item, index) => {
-                    const article = articleByTitle.get(item.article || item.name);
+                    const article = serviceItemArticle(item);
                     const teaser = item.teaser || article?.desc || "";
                     const short =
                       teaser.length > 140 ? `${teaser.slice(0, 137).trim()}…` : teaser;
-                    const to = serviceArticleHref(item, active.id);
+                    const to = serviceArticleHref(item);
                     return (
                       <article className="service-item" key={item.name}>
                         <div className="service-item__top">

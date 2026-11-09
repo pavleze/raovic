@@ -1,6 +1,6 @@
 // Jedini izvor istine za usluge (ono što se zakazuje).
 // `article` (opciono) povezuje uslugu sa člankom — tada se prikazuje
-// mali tizer i "Pročitaj više" otvara /usluge?clanak=...
+// mali tizer i "Pročitaj više" otvara stranicu članka /usluge/<kategorija>/<članak>.
 // `category` (opciono) vodi na prvi članak te teme.
 
 export const serviceCategories = [
