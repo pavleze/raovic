@@ -33,6 +33,10 @@ export function PostDetail({ article, catLabel, hasBooking, onBack }) {
             <div className="post-detail__body">
               {renderContent(article.content)}
             </div>
+            {/* Druga imena pod kojima se usluga traži (HSG, spirala...), diskretno na dnu */}
+            {article.aka?.length > 0 && (
+              <p className="post-detail__aka">Drugi nazivi: {article.aka.join(", ")}</p>
+            )}
           </article>
 
           <aside className="post-detail__aside">

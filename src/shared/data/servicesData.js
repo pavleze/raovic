@@ -93,6 +93,7 @@ export const serviceCategories = [
       },
       {
         name: "Endokrinologija - dr Milina Tančić Gajić",
+        article: "Endokrinološki pregled",
         teaser: "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
         category: "endokrinologija",
         dur: "30 min",
@@ -100,14 +101,15 @@ export const serviceCategories = [
       },
       {
         name: "Endokrinologija - dr Ljiljana Marina",
+        article: "Endokrinološki pregled",
         teaser: "Endokrinologija se bavi poremećajima u radu žlezda sa unutrašnjim lučenjem, kao i oboljenjima koja nastaju kao posledica tih poremećaja.",
         category: "endokrinologija",
         dur: "30 min",
         price: "10.000 RSD",
       },
-      { name: "Hematologija", dur: "30 min", price: "9.000 RSD" },
+      { name: "Hematologija", article: "Hematološki pregled", dur: "30 min", price: "9.000 RSD" },
       { name: "Radiologija", dur: "30 min", price: "8.000 RSD" },
-      { name: "Nefrološki pregled - Prof. dr R. Naumović", dur: "30 min", price: "16.000 RSD" },
+      { name: "Nefrološki pregled - Prof. dr R. Naumović", article: "Nefrološki pregled", dur: "30 min", price: "16.000 RSD" },
     ],
   },
 ];

@@ -8636,3 +8636,12 @@ a.contact-quick__val:hover {
     text-align: center;
   }
 }
+
+/* Članak: druga imena pod kojima se usluga traži (HSG, spirala, 4D...) - sitno, na dnu */
+.post-detail__aka {
+  margin: 28px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid rgba(176, 143, 110, 0.18);
+  font-size: 0.78rem;
+  color: #a39486;
+}
