@@ -67,6 +67,9 @@ export function PostDetail({ article, catLabel, hasBooking, onBack }) {
                 <a className="post-detail__phone" href="tel:+381112447763">
                   011 244 77 63
                 </a>
+                <a className="post-detail__phone" href="tel:+38163687889">
+                  063 687 889
+                </a>
               </div>
             )}
             <div className="post-detail__why-card">

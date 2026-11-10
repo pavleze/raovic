@@ -8551,7 +8551,12 @@ a.contact-quick__val:hover {
   gap: 12px;
 }
 
-.phone-dialog__numbers p {
+.phone-dialog__number {
+  display: block;
+  text-decoration: none;
+}
+
+.phone-dialog__numbers .phone-dialog__number {
   margin: 0;
   padding: 12px 16px;
   border: 1px solid rgba(176, 143, 110, 0.25);
@@ -8742,4 +8747,19 @@ a.contact-quick__val:hover {
 
 .services-band__popular a:hover {
   background: rgba(255, 252, 248, 0.3);
+}
+
+a.phone-dialog__number:active {
+  background: #efe5da;
+}
+
+.phone-dialog__hint {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: #8f7358;
+}
+
+/* Okvir fokusa na × samo pri radu tastaturom, ne posle dodira/klika */
+.phone-dialog__close:focus:not(:focus-visible) {
+  outline: none;
 }

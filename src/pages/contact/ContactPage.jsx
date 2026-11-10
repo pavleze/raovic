@@ -139,7 +139,7 @@ export function ContactPage() {
                 <input type="text" name="website" className="contact-form__trap" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                 {error && (
                   <p className="contact-form__error" role="alert">
-                    {error} Pokušajte ponovo ili nas pozovite na <a href={PHONE_HREF}>011 244 77 63</a>.
+                    {error} Pokušajte ponovo ili nas pozovite na <a href={PHONE_HREF}>011 244 77 63</a> ili <a href="tel:+38163687889">063 687 889</a>.
                   </p>
                 )}
                 <button className="contact-form__submit" type="submit" disabled={sending}>

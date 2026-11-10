@@ -885,7 +885,7 @@ export const blogArticles = [
       "## Ko obavlja pregled",
       "• Doc. dr Milina Gajić Tančić - spec. interne medicine, subspec. endokrinologije\n• Doc. dr Ljiljana Marina - spec. interne medicine, subspec. endokrinologije",
       "## Zakazivanje",
-      "Pregled kod endokrinologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
+      "Pregled kod endokrinologa zakazuje se telefonom ordinacije, 011 244 77 63 ili 063 687 889, ili putem kontakt forme na sajtu.",
     ],
   },
   {
@@ -899,7 +899,7 @@ export const blogArticles = [
       "## Ko obavlja pregled",
       "• Dr Tatjana Dragišić - spec. interne medicine, hematolog",
       "## Zakazivanje",
-      "Pregled kod hematologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
+      "Pregled kod hematologa zakazuje se telefonom ordinacije, 011 244 77 63 ili 063 687 889, ili putem kontakt forme na sajtu.",
     ],
   },
   {
@@ -913,7 +913,7 @@ export const blogArticles = [
       "## Ko obavlja pregled",
       "• Prof. dr Radomir Naumović - spec. interne medicine, nefrolog",
       "## Zakazivanje",
-      "Pregled kod nefrologa zakazuje se telefonom ordinacije, 011 244 77 63, ili putem kontakt forme na sajtu.",
+      "Pregled kod nefrologa zakazuje se telefonom ordinacije, 011 244 77 63 ili 063 687 889, ili putem kontakt forme na sajtu.",
     ],
   },
 ];
