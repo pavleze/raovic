@@ -29,7 +29,7 @@ export const PAGES = {
   "/kontakt": {
     title: `Kontakt i zakazivanje | ${SITE_NAME}`,
     description:
-      "Zakažite pregled u ordinaciji Raović: Golsvordijeva 6, Vračar, Beograd. Tel. 011 244 77 63. Radno vreme pon-pet 08-20h, subota 08-14h.",
+      "Zakažite pregled u ordinaciji Raović: Golsvordijeva 6, Vračar, Beograd. Tel. 011 244 77 63 i 063 687 889. Radno vreme pon-pet 08-20h, subota 08-14h.",
   },
 };
 
