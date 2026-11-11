@@ -8643,12 +8643,28 @@ a.contact-quick__val:hover {
 }
 
 /* Članak: druga imena pod kojima se usluga traži (HSG, spirala, 4D...) - sitno, na dnu */
-.post-detail__aka {
+.post-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: 28px 0 0;
-  padding-top: 14px;
+  padding: 14px 0 0;
   border-top: 1px solid rgba(176, 143, 110, 0.18);
+  list-style: none;
+}
+
+.post-detail__tags li {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #f4ede5;
+  color: #8f7358;
   font-size: 0.78rem;
-  color: #a39486;
+}
+
+.post-detail__tags li::before {
+  content: "#";
+  opacity: 0.6;
+  margin-right: 1px;
 }
 
 /* Članak: povezane teme (linkovi) */

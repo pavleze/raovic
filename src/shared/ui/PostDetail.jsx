@@ -53,9 +53,13 @@ export function PostDetail({ article, catLabel, hasBooking, onBack }) {
                 </ul>
               </div>
             )}
-            {/* Druga imena pod kojima se usluga traži (HSG, spirala...), diskretno na dnu */}
+            {/* Druga imena pod kojima se usluga traži (HSG, spirala...), kao tagovi na dnu */}
             {article.aka?.length > 0 && (
-              <p className="post-detail__aka">Drugi nazivi: {article.aka.join(", ")}</p>
+              <ul className="post-detail__tags" aria-label="Tagovi">
+                {article.aka.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
             )}
           </article>
 
