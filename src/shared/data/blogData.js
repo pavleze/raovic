@@ -74,7 +74,7 @@ export const blogArticles = [
   {
     category: "ginekologija",
     title: "Kolor Dopler",
-    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    // Kako ljudi pretražuju (naslov za Google i tagovi na dnu stranice)
     seoTitle: "Kolor Dopler (Color Doppler) ultrazvuk",
     aka: ["Color Doppler", "Doppler ultrazvuk"],
     desc: "Kolor Dopler je moderna ultrazvučna dijagnostika koja precizno meri protok krvi u krvnim sudovima materice, jajnika i pupčane vrpce.",
@@ -129,7 +129,7 @@ export const blogArticles = [
   {
     category: "ginekologija",
     title: "Kontracepcija",
-    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    // Kako ljudi pretražuju (naslov za Google i tagovi na dnu stranice)
     seoTitle: "Stavljanje spirale i kontracepcija",
     aka: ["stavljanje spirale", "aplikacija spirale", "IUD"],
     desc: "Savetovanje o svim metodama kontracepcije - od hormonskih pilula i spirale do barijerne kontracepcije i hitne zaštite.",
@@ -372,7 +372,7 @@ export const blogArticles = [
   {
     category: "trudnoca",
     title: "Ultrazvuk u trudnoći",
-    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    // Kako ljudi pretražuju (naslov za Google i tagovi na dnu stranice)
     seoTitle: "Ultrazvuk u trudnoći, 3D i 4D ultrazvuk",
     aka: ["3D ultrazvuk", "4D ultrazvuk", "ekspertski ultrazvuk"],
     desc: "Ultrazvučni pregledi u prvom, drugom i trećem trimestru za praćenje rasta fetusa, dijagnostiku anomalija i procenu zdravlja trudnice.",
@@ -477,7 +477,7 @@ export const blogArticles = [
   {
     category: "trudnoca",
     title: "Prekid trudnoće",
-    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    // Kako ljudi pretražuju (naslov za Google i tagovi na dnu stranice)
     seoTitle: "Prekid trudnoće (abortus)",
     aka: ["abortus", "hirurški prekid trudnoće"],
     desc: "Medicinska intervencija dostupna do 10. nedelje trudnoće iz medicinskih i ličnih razloga, uz potpunu diskreciju i stručnu podršku.",
@@ -750,7 +750,7 @@ export const blogArticles = [
   {
     category: "sterilitet",
     title: "Ultrazvučno snimanje prohodnosti jajovoda (HSSG)",
-    // Kako ljudi pretražuju (naslov za Google i „Poznato i kao“ na stranici)
+    // Kako ljudi pretražuju (naslov za Google i tagovi na dnu stranice)
     seoTitle: "Prohodnost jajovoda (HSG / HSSG)",
     aka: ["HSG", "hidrosonosalpingografija", "ispitivanje prohodnosti jajovoda"],
     desc: "Inicijalni korak u ispitivanju ženske plodnosti - procena prohodnosti jajovoda kao mogućeg uzroka neplodnosti.",
