@@ -16,6 +16,7 @@ import photoLjiljana from "../../assets/dr-ljiljana-marina.webp";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.webp";
 import photoSkrijelj from "../../assets/dr-danijel-skrijelj.png";
 import photoAna from "../../assets/ana-lilic.webp";
+import photoCirkovic from "../../assets/dr-predrag-cirkovic.webp";
 import photoMaja from "../../assets/maja-stojilkovic.webp";
 import photoVeljovic from "../../assets/dr-milic-veljovic.webp";
 
@@ -191,6 +192,11 @@ export const associates = [
     name: "Dr Predrag Ćirković",
     role: "Spec. radiolog",
     initials: "PĆ",
+    photo: photoCirkovic,
+    cutout: true,
+    photoZoom: 1.08,
+    photoFocus: "center top",
+    photoOrigin: "top center",
   },
   {
     name: "Dr Danijel Škrijelj",
