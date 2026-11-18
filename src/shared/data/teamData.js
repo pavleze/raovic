@@ -16,6 +16,7 @@ import photoLjiljana from "../../assets/dr-ljiljana-marina.webp";
 import photoNaumovic from "../../assets/dr-radomir-naumovic.webp";
 import photoSkrijelj from "../../assets/dr-danijel-skrijelj.png";
 import photoAna from "../../assets/ana-lilic.webp";
+import photoMarina from "../../assets/marina-jankovic.webp";
 import photoCirkovic from "../../assets/dr-predrag-cirkovic.webp";
 import photoMaja from "../../assets/maja-stojilkovic.webp";
 import photoVeljovic from "../../assets/dr-milic-veljovic.webp";
@@ -211,7 +212,16 @@ export const associates = [
 ];
 
 export const staff = [
-  { name: "Marina Janković",  role: "Viša medicinska sestra",         initials: "MJ" },
+  {
+    name: "Marina Janković",
+    role: "Viša medicinska sestra",
+    initials: "MJ",
+    photo: photoMarina,
+    cutout: true,
+    photoZoom: 1.08,
+    photoFocus: "center top",
+    photoOrigin: "top center",
+  },
   {
     name: "Ana Lilić",
     role: "Ginekološko-akušerska sestra",
